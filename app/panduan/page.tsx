@@ -170,7 +170,6 @@ export default function HalamanPanduan() {
           </div>
         </section>
 
-        <div className="gelombang" aria-hidden="true" />
 
         {/* Daftar isi berupa tautan lompat. Di HP, halaman sepanjang ini tanpa
             daftar isi memaksa orang menggulir jauh untuk mencari satu bagian. */}

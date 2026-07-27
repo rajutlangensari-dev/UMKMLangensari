@@ -1,92 +1,95 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
 
-// Link absolut supaya tetap jalan saat dibuka dari halaman mana pun.
 const LINKS = [
   { href: '/', label: 'Beranda' },
   { href: '/katalog', label: 'Katalog' },
   { href: '/panduan', label: 'Panduan' },
   { href: '/tentang', label: 'Tentang' },
-  { href: '/#kontak', label: 'Kontak' },
 ];
 
+// Pita pengumuman olive di atas header dibuang. Warna pekat di baris paling atas
+// menarik mata ke keterangan yang tidak bisa diklik, padahal yang perlu ditemukan
+// lebih dulu adalah menu Katalog.
 export default function Header() {
   const [buka, setBuka] = useState(false);
+  const tombolMenuRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!buka) return;
+    function tutupDenganEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') {
+        setBuka(false);
+        tombolMenuRef.current?.focus();
+      }
+    }
+    window.addEventListener('keydown', tutupDenganEscape);
+    return () => window.removeEventListener('keydown', tutupDenganEscape);
+  }, [buka]);
 
   return (
-    <header className="sticky top-0 z-40">
-      {/* Pita atas: keterangan asal barang dan cara pesan, bukan promo palsu. */}
-      <div className="bg-olive px-6 py-2 text-center">
-        <p className="font-body text-[0.68rem] uppercase tracking-label text-olive-ink/85">
-          Produk lokal Langensari. Pesan langsung melalui WhatsApp.
-        </p>
-      </div>
+    <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur-sm">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
+        <Logo />
 
-      <div className="border-b border-ink/10 bg-paper/90 backdrop-blur-sm">
-        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
-          <Logo />
-
-          <nav className="hidden items-center gap-8 md:flex">
-            {LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                className="font-body text-[0.7rem] uppercase tracking-label text-ink/70 transition-colors hover:text-brick"
-              >
-                {l.label}
-              </a>
-            ))}
-            <ThemeToggle />
-          </nav>
-
-          <div className="md:hidden">
-            <button
-              type="button"
-              onClick={() => setBuka((v) => !v)}
-              aria-expanded={buka}
-              aria-controls="navigasi-mobile"
-              className="rounded-full border border-ink/25 px-4 py-1.5 font-body text-[0.68rem] uppercase tracking-label text-ink/80 transition-colors active:scale-[0.97]"
-            >
-              {buka ? 'Tutup' : 'Menu'}
-            </button>
-          </div>
-        </div>
-
-        {buka && (
-          <nav
-            id="navigasi-mobile"
-            aria-label="Navigasi mobile"
-            className="border-t border-ink/10 bg-paper px-5 py-1 md:hidden"
-          >
-            {LINKS.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={() => setBuka(false)}
-                className="block border-b border-ink/8 py-3.5 font-body text-sm uppercase tracking-label text-ink/80 last:border-0"
-              >
-                {l.label}
-              </a>
-            ))}
+        <nav className="hidden items-center gap-8 md:flex">
+          {LINKS.map((l) => (
             <a
-              href="/admin"
-              onClick={() => setBuka(false)}
-              className="block py-3.5 font-body text-sm uppercase tracking-label text-ink/65"
+              key={l.href}
+              href={l.href}
+              className="tautan-nav font-body text-sm text-muted transition-colors hover:text-ink"
             >
-              Admin
+              {l.label}
             </a>
-            <div className="flex items-center justify-between border-t border-ink/10 py-3.5">
-              <span className="font-body text-sm uppercase tracking-label text-ink/65">
-                Tampilan
-              </span>
-              <ThemeToggle />
-            </div>
-          </nav>
-        )}
+          ))}
+          <ThemeToggle />
+        </nav>
+
+        <div className="md:hidden">
+          <button
+            ref={tombolMenuRef}
+            type="button"
+            onClick={() => setBuka((v) => !v)}
+            aria-expanded={buka}
+            aria-controls="navigasi-mobile"
+            aria-label={buka ? 'Tutup menu' : 'Buka menu'}
+            className="tekan tombol-menu relative flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink"
+          >
+            <span aria-hidden="true" className="relative block h-4 w-5">
+              <span className="garis-menu garis-menu-atas" />
+              <span className="garis-menu garis-menu-tengah" />
+              <span className="garis-menu garis-menu-bawah" />
+            </span>
+          </button>
+        </div>
       </div>
+
+      <nav
+        id="navigasi-mobile"
+        aria-label="Navigasi mobile"
+        aria-hidden={!buka}
+        data-open={buka}
+        className="menu-mobile absolute inset-x-0 top-full border-t border-line bg-paper/95 px-5 py-1 backdrop-blur-md md:hidden"
+      >
+        {LINKS.map((l) => (
+          <a
+            key={l.href}
+            href={l.href}
+            onClick={() => setBuka(false)}
+            data-menu-item
+            className="block border-b border-line py-3.5 font-body text-ink last:border-0"
+          >
+            {l.label}
+          </a>
+        ))}
+        <div data-menu-item className="flex items-center justify-between border-t border-line py-3.5">
+          <span className="font-body text-muted">Tampilan</span>
+          <ThemeToggle />
+        </div>
+      </nav>
     </header>
   );
 }

@@ -1,55 +1,47 @@
 import type { Produk } from '@/lib/types';
 import { normalisasiFotoUrl } from '@/lib/api';
 
-// Hero terbelah, bukan terpusat: teks di blok olive kiri, satu foto produk di
-// kanan dalam bingkai label tenun. Blok olive ditutup pembatas bergelombang
-// supaya perpindahan ke kertas terasa dijahit, bukan dipotong lurus.
+// Panel lembut dengan sudut membulat, teks di kiri, foto di kanan. Olive tidak
+// lagi memenuhi seluruh blok; dia hanya muncul di tombol, satu-satunya hal yang
+// perlu langsung terlihat bisa ditekan.
 export default function Hero({ sorot }: { sorot?: Produk }) {
   const foto = sorot ? normalisasiFotoUrl(sorot.foto, 1000) : '';
 
   return (
-    <section>
-      <div className="bg-olive">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-5 pb-14 pt-14 sm:px-8 md:grid-cols-[1.05fr_1fr] md:gap-14 md:pb-16 md:pt-20">
-          <div className="naik">
-            <h1 className="font-display text-4xl font-extrabold leading-[1.04] tracking-[-0.02em] text-olive-ink text-balance md:text-5xl lg:text-6xl">
-              Rajutan Langensari, dibuat satu per satu.
-            </h1>
-            <p className="mt-5 max-w-sm font-body leading-relaxed text-olive-ink/85 text-pretty">
-              Temukan produk buatan perajin Desa Langensari. Harga dan kontak pembuat
-              tersedia pada setiap produk.
-            </p>
-            <a
-              href="/katalog"
-              className="mt-8 inline-block rounded-full bg-brick px-8 py-3.5 font-body text-[0.72rem] font-semibold uppercase tracking-label text-brick-ink transition-colors hover:bg-brick-strong active:translate-y-px"
-            >
-              Lihat semua produk
-            </a>
-          </div>
+    <section className="mx-auto max-w-6xl px-5 pt-8 sm:px-8 sm:pt-12">
+      <div className="naik grid items-center gap-8 rounded-[20px] bg-surface px-6 py-10 sm:px-10 sm:py-14 md:grid-cols-2 md:gap-12 md:px-14">
+        <div>
+          <h1 className="font-display text-3xl font-bold leading-[1.12] tracking-[-0.02em] text-ink text-balance sm:text-4xl lg:text-5xl">
+            Rajutan Langensari, langsung dari perajinnya
+          </h1>
+          <p className="mt-4 max-w-md font-body leading-relaxed text-muted text-pretty">
+            Temukan produk rajut dari Kampung Cibayawak dan Cipaku. Lihat harganya,
+            lalu pesan kepada perajinnya lewat WhatsApp.
+          </p>
+          <a
+            href="/katalog"
+            className="tekan mt-7 inline-block rounded-full bg-olive px-7 py-3 font-body text-sm font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
+          >
+            Lihat semua produk
+          </a>
+        </div>
 
-          <div className="naik [animation-delay:120ms]">
-            {foto ? (
-              <figure className="label-tenun">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={foto}
-                  alt={sorot?.namaProduk ?? ''}
-                  fetchPriority="high"
-                  className="aspect-[4/5] w-full rounded-[14px] object-cover"
-                />
-              </figure>
-            ) : (
-              <div className="label-tenun flex aspect-[4/5] items-center justify-center p-8 text-center">
-                <p className="font-display text-2xl font-bold leading-tight text-ink/60">
-                  Produk pilihan akan tampil di sini.
-                </p>
-              </div>
-            )}
-          </div>
+        <div>
+          {foto ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={foto}
+              alt={sorot?.namaProduk ?? ''}
+              fetchPriority="high"
+              className="aspect-[4/3] w-full rounded-[14px] bg-paper object-cover"
+            />
+          ) : (
+            <div className="flex aspect-[4/3] items-center justify-center rounded-[14px] bg-paper px-6 text-center">
+              <p className="font-body text-muted">Produk pilihan akan tampil di sini.</p>
+            </div>
+          )}
         </div>
       </div>
-
-      <div className="gelombang" aria-hidden="true" />
     </section>
   );
 }

@@ -5,47 +5,44 @@
 /* ============================================================
    Rajut Langensari - token warna
    ------------------------------------------------------------
-   Strategi warna: "committed". Olive membawa 35-40% permukaan
-   halaman sebagai blok penuh, bukan sekadar aksen. Kertas oat
-   sengaja dicondongkan ke hijau (hue benang), bukan ke oranye
-   hangat, supaya tidak jatuh ke krem generik.
-   Brick adalah satu-satunya aksen jenuh; dipakai untuk aksi.
-   Token disimpan sebagai triplet RGB agar utility opacity
-   Tailwind (text-ink/60) tetap jalan dan mode gelap cukup
-   menukar nilai variabel.
+   Arah: modern minimalis. Halaman berlatar hampir putih, olive
+   dipakai HANYA untuk aksi dan penanda merek. Versi sebelumnya
+   membanjiri 35-40% halaman dengan olive dan itu membuat mata
+   sulit menemukan mana yang bisa diklik.
+   Satu warna aksi saja. Tidak ada warna kedua yang bersaing.
    ============================================================ */
 :root {
-  --paper: 239 237 225;
-  --surface: 226 223 206;
-  --olive: 101 107 55;
-  --olive-ink: 242 240 226;
-  --ink: 38 36 24;
-  --brick: 180 71 44;
-  --brick-strong: 151 56 31;
-  --brick-ink: 253 250 245;
+  --paper: 251 251 248;
+  --surface: 243 243 237;
+  --line: 226 226 216;
+  --ink: 26 28 22;
+  --muted: 106 110 96;
+  --olive: 106 116 62;
+  --olive-strong: 84 92 48;
+  --olive-ink: 250 250 245;
 }
 
 :root[data-theme='gelap'] {
-  --paper: 26 28 20;
-  --surface: 38 42 27;
-  --olive: 138 145 80;
-  --olive-ink: 22 24 15;
-  --ink: 233 231 216;
-  --brick: 212 103 74;
-  --brick-strong: 224 123 94;
-  --brick-ink: 26 28 20;
+  --paper: 20 21 15;
+  --surface: 31 33 25;
+  --line: 48 51 40;
+  --ink: 236 236 228;
+  --muted: 160 164 148;
+  --olive: 154 168 96;
+  --olive-strong: 174 187 118;
+  --olive-ink: 20 21 15;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='terang']) {
-    --paper: 26 28 20;
-    --surface: 38 42 27;
-    --olive: 138 145 80;
-    --olive-ink: 22 24 15;
-    --ink: 233 231 216;
-    --brick: 212 103 74;
-    --brick-strong: 224 123 94;
-    --brick-ink: 26 28 20;
+    --paper: 20 21 15;
+    --surface: 31 33 25;
+    --line: 48 51 40;
+    --ink: 236 236 228;
+    --muted: 160 164 148;
+    --olive: 154 168 96;
+    --olive-strong: 174 187 118;
+    --olive-ink: 20 21 15;
   }
 }
 
@@ -59,77 +56,295 @@ body {
 }
 
 :where(a, button, input, select, textarea, label, summary):focus-visible {
-  outline: 2px solid rgb(var(--brick));
+  outline: 2px solid rgb(var(--olive));
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
-/* ------------------------------------------------------------
-   Tanda tangan visual: "label tenun".
-   Foto produk duduk di sumur oat, dikelilingi stroke kertas
-   tebal lalu garis rambut brick yang meleset sedikit, meniru
-   label kain yang dijahit ke karton. Hanya dipakai di foto
-   produk supaya tetap jadi satu hal yang diingat.
-   ------------------------------------------------------------ */
-.label-tenun {
-  position: relative;
-  border-radius: 14px;
-  background-color: rgb(var(--surface));
-  box-shadow:
-    0 0 0 5px rgb(var(--paper)),
-    0 0 0 6px rgb(var(--ink) / 0.14);
+/* ============================================================
+   Gerak
+   ------------------------------------------------------------
+   Kurva easing bawaan CSS terlalu lemah; ketiganya di bawah ini
+   yang dipakai. ease-in tidak pernah dipakai untuk UI: mulainya
+   lambat, persis di detik pertama saat mata pengguna paling
+   memperhatikan, jadi terasa berat.
+   ============================================================ */
+:root {
+  --keluar: cubic-bezier(0.23, 1, 0.32, 1);
+  --masuk-keluar: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.label-tenun::after {
-  content: '';
-  position: absolute;
-  inset: -11px -11px 5px 5px;
-  border: 1px solid rgb(var(--brick) / 0.55);
-  border-radius: 16px;
-  pointer-events: none;
-}
-
-/* Pembatas bergelombang antara pita olive dan kertas. Satu bentuk
-   geometris, digambar dengan mask supaya ikut warna blok di atasnya
-   dan tidak perlu elemen SVG terpisah di tiap pemakaian. */
-.gelombang {
-  height: 26px;
-  background-color: rgb(var(--olive));
-  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 26' preserveAspectRatio='none'%3E%3Cpath d='M0 0h120v9c-12 0-18 8-30 8S72 9 60 9 42 17 30 17 12 9 0 9Z' fill='%23000'/%3E%3C/svg%3E");
-  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 26' preserveAspectRatio='none'%3E%3Cpath d='M0 0h120v9c-12 0-18 8-30 8S72 9 60 9 42 17 30 17 12 9 0 9Z' fill='%23000'/%3E%3C/svg%3E");
-  -webkit-mask-size: 120px 26px;
-  mask-size: 120px 26px;
-  -webkit-mask-repeat: repeat-x;
-  mask-repeat: repeat-x;
-}
-
-/* Muncul naik saat masuk viewport. Konten tetap terlihat kalau
-   animasi tidak jalan (opacity awal 1 di reduced-motion). */
+/* Muncul naik. Dipakai saat elemen benar-benar baru datang:
+   panel hero saat halaman dibuka, kartu produk saat data tiba.
+   Tidak pernah dari scale(0); di dunia nyata tidak ada benda
+   yang muncul dari ketiadaan. */
 @keyframes naik {
-  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(10px) scale(0.99); }
   to { opacity: 1; transform: none; }
 }
 .naik {
-  animation: naik 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  animation: naik 0.32s var(--keluar) backwards;
 }
 
-/* Pita produk berjalan. Isi diduplikat di markup, geser -50% agar mulus. */
-@keyframes geser {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-.pita-jalan {
-  display: inline-flex;
-  white-space: nowrap;
-  animation: geser 44s linear infinite;
-}
-.pita:hover .pita-jalan,
-.pita:focus-within .pita-jalan {
-  animation-play-state: paused;
+/* Reveal saat digulir, tanpa JavaScript sama sekali.
+   Memakai animation-timeline: view(). Browser yang belum
+   mendukung melewatinya dan isinya tetap terlihat penuh, jadi
+   tidak ada risiko halaman kosong kalau fiturnya tidak ada.
+   Berjalan di luar main thread, penting untuk HP murah. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .sembul {
+      animation: naik linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 45%;
+    }
+  }
 }
 
+/* Umpan balik tekan. Dipasang di semua yang bisa ditekan supaya
+   antarmuka terasa mendengar. Nilai di bawah 0.95 mulai terlihat
+   seperti tombol rusak. */
+.tekan {
+  transition: transform 0.12s var(--keluar);
+}
+.tekan:active {
+  transform: scale(0.97);
+}
+
+/* Hover hanya untuk penunjuk presisi. Di layar sentuh, hover ikut
+   menyala saat disentuh dan efeknya tertinggal setelah jari lepas. */
+@media (hover: hover) and (pointer: fine) {
+  .angkat {
+    transition: transform 0.2s var(--keluar);
+  }
+  .angkat:hover {
+    transform: translateY(-3px);
+  }
+  .zoom-produk,
+  .zoom-kategori {
+    transition: transform 0.24s var(--keluar);
+  }
+  .group:hover .zoom-produk {
+    transform: scale(1.03);
+  }
+  .group:hover .zoom-kategori {
+    transform: scale(1.05);
+  }
+  .warna-interaktif {
+    transition: color 0.18s ease;
+  }
+  .group:hover .warna-interaktif {
+    color: rgb(var(--olive));
+  }
+}
+
+/* Garis hamburger bergerak dari titik yang sama saat membuka dan menutup.
+   Menu tetap terpasang supaya transisi bisa dibalik di tengah jalan. */
+.garis-menu {
+  position: absolute;
+  left: 50%;
+  width: 1.25rem;
+  height: 1.5px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translateX(-50%);
+  transition:
+    transform 0.2s var(--keluar),
+    opacity 0.12s ease;
+}
+.garis-menu-atas { top: 1px; }
+.garis-menu-tengah { top: 7px; }
+.garis-menu-bawah { top: 13px; }
+.tombol-menu[aria-expanded='true'] .garis-menu-atas {
+  transform: translate(-50%, 6px) rotate(45deg);
+}
+.tombol-menu[aria-expanded='true'] .garis-menu-tengah {
+  opacity: 0;
+  transform: translateX(-50%) scaleX(0.45);
+}
+.tombol-menu[aria-expanded='true'] .garis-menu-bawah {
+  transform: translate(-50%, -6px) rotate(-45deg);
+}
+
+.menu-mobile {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.985);
+  transform-origin: top right;
+  box-shadow: 0 18px 40px rgb(var(--ink) / 0.08);
+  transition:
+    opacity 0.14s ease,
+    transform 0.18s var(--keluar),
+    visibility 0s linear 0.18s;
+}
+.menu-mobile[data-open='true'] {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.18s ease,
+    transform 0.22s var(--keluar),
+    visibility 0s;
+}
+.menu-mobile [data-menu-item] {
+  opacity: 0;
+  transform: translateY(-4px);
+  transition:
+    opacity 0.12s ease,
+    transform 0.18s var(--keluar);
+}
+.menu-mobile[data-open='true'] [data-menu-item] {
+  opacity: 1;
+  transform: none;
+}
+.menu-mobile[data-open='true'] [data-menu-item]:nth-child(2) { transition-delay: 20ms; }
+.menu-mobile[data-open='true'] [data-menu-item]:nth-child(3) { transition-delay: 40ms; }
+.menu-mobile[data-open='true'] [data-menu-item]:nth-child(4) { transition-delay: 60ms; }
+.menu-mobile[data-open='true'] [data-menu-item]:nth-child(5) { transition-delay: 80ms; }
+
+/* Garis nav tumbuh dari arah perjalanan mata, lalu kembali ke sumbernya. */
+.tautan-nav {
+  position: relative;
+}
+.tautan-nav::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: -0.35rem;
+  left: 0;
+  height: 1px;
+  background: rgb(var(--olive));
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.2s var(--keluar);
+}
+@media (hover: hover) and (pointer: fine) {
+  .tautan-nav:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+.tautan-nav:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Search memakai satu permukaan: border, ikon, dan tombol hapus bereaksi
+   bersama saat fokus, bukan tiga elemen yang bergerak sendiri-sendiri. */
+.kolom-cari {
+  border: 1px solid rgb(var(--line));
+  border-radius: 999px;
+  background: rgb(var(--surface));
+  transition:
+    border-color 0.18s ease,
+    box-shadow 0.22s var(--keluar),
+    transform 0.22s var(--keluar);
+}
+.kolom-cari:focus-within {
+  border-color: rgb(var(--olive));
+  box-shadow:
+    0 0 0 4px rgb(var(--olive) / 0.12),
+    0 8px 24px rgb(var(--ink) / 0.06);
+  transform: translateY(-1px);
+}
+.ikon-cari {
+  transition:
+    color 0.18s ease,
+    transform 0.22s var(--keluar);
+}
+.kolom-cari:focus-within .ikon-cari {
+  color: rgb(var(--olive));
+  transform: translateY(-50%) scale(1.08);
+}
+.input-cari::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  appearance: none;
+}
+.hapus-cari {
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%) scale(0.82);
+  transition:
+    color 0.18s ease,
+    opacity 0.14s ease,
+    transform 0.2s var(--keluar);
+}
+.hapus-cari[data-visible='true'] {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+}
+.hapus-cari[data-visible='true']:active {
+  transform: translateY(-50%) scale(0.94);
+}
+
+/* Kilau pada rangka muat. Menandakan "sedang memuat", bukan
+   "sudah rusak dan kosong". */
+@keyframes kilau {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+.kilau {
+  background-image: linear-gradient(
+    90deg,
+    rgb(var(--surface)) 25%,
+    rgb(var(--line)) 50%,
+    rgb(var(--surface)) 75%
+  );
+  background-size: 200% 100%;
+  animation: kilau 1.4s linear infinite;
+}
+
+/* Pergantian terang/gelap tidak melompat. Sengaja hanya warna,
+   tanpa transisi lain, supaya tidak ikut menganimasikan hal lain
+   saat halaman pertama dirender. */
+body {
+  transition: background-color 0.25s var(--keluar), color 0.25s var(--keluar);
+}
+
+/* Reduced motion bukan berarti tanpa umpan balik. Perpindahan
+   posisi dibuang, opacity dan warna tetap jalan karena keduanya
+   membantu memahami apa yang berubah. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .naik { animation: none; }
-  .pita-jalan { animation: none; }
+  .naik {
+    animation: naik-redup 0.2s ease both;
+    animation-delay: 0s !important;
+  }
+  .tekan:active { transform: none; }
+  .angkat:hover { transform: none; }
+  .group:hover .zoom-produk,
+  .group:hover .zoom-kategori {
+    transform: none;
+  }
+  .kilau { animation: none; }
+  .garis-menu,
+  .menu-mobile,
+  .menu-mobile [data-menu-item],
+  .tautan-nav::after,
+  .kolom-cari,
+  .ikon-cari,
+  .hapus-cari {
+    transition-duration: 0.01ms;
+    transition-delay: 0s !important;
+  }
+  .menu-mobile {
+    transform: none;
+  }
+  .menu-mobile [data-menu-item] {
+    transform: none;
+  }
+  .kolom-cari:focus-within {
+    transform: none;
+  }
+  .kolom-cari:focus-within .ikon-cari {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes naik-redup {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }

@@ -61,18 +61,18 @@ export default async function HalamanDetailProduk({ params }: { params: { id: st
 
 function TidakAda() {
   return (
-    <div className="mx-auto max-w-md px-5 py-24 text-center">
-      <h1 className="font-display text-3xl font-extrabold leading-tight text-ink">
-        Produk tidak ditemukan
+    <div className="mx-auto max-w-sm px-5 py-24 text-center">
+      <h1 className="font-display text-xl font-bold leading-snug text-ink">
+        Produk ini sudah tidak ada
       </h1>
-      <p className="mt-3 font-body text-sm leading-relaxed text-ink/70">
-        Produk mungkin sudah dihapus atau tautannya tidak tepat.
+      <p className="mt-2 font-body text-sm leading-relaxed text-muted">
+        Mungkin sudah ditarik dari katalog, atau tautannya salah ketik.
       </p>
       <Link
         href="/katalog"
-        className="mt-6 inline-block rounded-full bg-brick px-7 py-3 font-body text-[0.66rem] font-semibold uppercase tracking-label text-brick-ink transition-colors hover:bg-brick-strong"
+        className="tekan mt-6 inline-block rounded-full bg-olive px-6 py-2.5 font-body text-sm font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
       >
-        Lihat katalog
+        Lihat produk lain
       </Link>
     </div>
   );
@@ -86,23 +86,23 @@ function Isi({ produk }: { produk: Produk }) {
     <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
       <Link
         href="/katalog"
-        className="font-body text-[0.66rem] uppercase tracking-label text-ink/65 transition-colors hover:text-brick"
+        className="font-body text-sm text-muted transition-colors hover:text-ink"
       >
         Kembali ke katalog
       </Link>
 
-      <div className="mt-8 grid grid-cols-1 gap-12 md:grid-cols-2 md:gap-16">
-        <div className="label-tenun">
+      <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14">
+        <div className="overflow-hidden rounded-kartu border border-line bg-surface">
           {foto ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={foto}
               alt={produk.namaProduk}
-              className="aspect-[4/5] w-full rounded-[14px] object-cover"
+              className="aspect-square w-full object-cover"
             />
           ) : (
-            <div className="flex aspect-[4/5] items-center justify-center">
-              <span className="font-display text-6xl font-extrabold text-ink/25">
+            <div className="flex aspect-square items-center justify-center">
+              <span className="font-display text-5xl font-bold text-muted/50">
                 {produk.namaProduk.charAt(0)}
               </span>
             </div>
@@ -110,39 +110,33 @@ function Isi({ produk }: { produk: Produk }) {
         </div>
 
         <div className="flex flex-col justify-center">
-          <span className="font-body text-[0.66rem] uppercase tracking-label text-ink/65">
-            {produk.kategori}
-          </span>
-          <h1 className="mt-3 font-display text-3xl font-extrabold leading-[1.06] tracking-[-0.02em] text-ink text-balance sm:text-4xl lg:text-5xl">
+          <span className="font-body text-sm text-muted">{produk.kategori}</span>
+          <h1 className="mt-2 font-display text-2xl font-bold leading-snug tracking-[-0.02em] text-ink text-balance sm:text-3xl">
             {produk.namaProduk}
           </h1>
-          <p className="mt-4 font-display text-2xl font-extrabold text-brick sm:text-3xl">
+          <p className="mt-3 font-display text-2xl font-bold text-ink">
             {formatRupiah(produk.harga)}
           </p>
 
           {produk.deskripsi && (
-            <p className="mt-6 max-w-[62ch] font-body leading-relaxed text-ink/75 text-pretty">
+            <p className="mt-5 max-w-prose font-body leading-relaxed text-muted text-pretty">
               {produk.deskripsi}
             </p>
           )}
 
-          {/* Keterangan pembuat berdiri sendiri di blok oat: di katalog desa,
-              siapa yang mengerjakan sama pentingnya dengan barangnya. */}
-          <dl className="mt-8 rounded-[14px] bg-surface px-6 py-5">
-            <dt className="font-body text-[0.62rem] uppercase tracking-label text-ink/65">
-              Pembuat
-            </dt>
-            <dd className="mt-1.5 font-display text-lg font-extrabold text-ink">
-              {produk.namaUmkm}
-            </dd>
+          {/* Siapa yang mengerjakan berdiri sendiri: di katalog desa, itu bagian
+              dari alasan orang membeli, bukan keterangan tambahan. */}
+          <dl className="mt-7 rounded-kartu border border-line px-5 py-4">
+            <dt className="font-body text-sm text-muted">Dibuat oleh</dt>
+            <dd className="mt-1 font-display font-semibold text-ink">{produk.namaUmkm}</dd>
             {produk.alamat && (
-              <dd className="mt-1 font-body text-sm text-ink/70">{produk.alamat}</dd>
+              <dd className="mt-0.5 font-body text-sm text-muted">{produk.alamat}</dd>
             )}
           </dl>
 
           {habis ? (
-            <p className="mt-8 font-body text-[0.66rem] uppercase tracking-label text-ink/65">
-              Stok habis untuk saat ini
+            <p className="mt-7 rounded-full bg-surface px-5 py-3 text-center font-body text-sm text-muted">
+              Stok sedang habis. Tanyakan ke perajin kapan bisa dibuatkan lagi.
             </p>
           ) : (
             produk.kontakWa && (
@@ -150,9 +144,9 @@ function Isi({ produk }: { produk: Produk }) {
                 href={tautanWhatsapp(produk.kontakWa, produk.namaProduk)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-block self-start rounded-full bg-brick px-8 py-4 font-body text-[0.7rem] font-semibold uppercase tracking-label text-brick-ink transition-colors hover:bg-brick-strong active:translate-y-px"
+                className="tekan mt-7 inline-block self-start rounded-full bg-olive px-7 py-3 font-body text-sm font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
               >
-                Pesan melalui WhatsApp
+                Pesan lewat WhatsApp
               </a>
             )
           )}

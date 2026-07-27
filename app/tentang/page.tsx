@@ -39,51 +39,39 @@ export default function HalamanTentang() {
     const nama = p.namaToko || 'Rajut Langensari';
     const bio =
       p.bio ||
-      'Rajut Langensari menampilkan karya perajin rumahan dari Kampung Cibayawak dan Kampung Cipaku. Harga dan nomor WhatsApp pembuat tersedia pada setiap produk.';
+      'Katalog bersama perajin rumahan Kampung Cibayawak dan Kampung Cipaku. Setiap produk mencantumkan harga dan nomor WhatsApp pembuatnya.';
 
     return (
-      <>
-        {/* Kepala halaman diletakkan di blok olive lalu ditutup gelombang, jadi
-            bentuknya berbeda dari halaman katalog dan detail produk. */}
-        <section className="bg-olive px-5 pb-16 pt-14 text-center sm:px-8 sm:pb-20 sm:pt-20">
-          <div className="mx-auto h-32 w-32 overflow-hidden rounded-full bg-olive-ink/15 ring-4 ring-olive-ink/25">
-            {foto ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img src={foto} alt={nama} className="h-full w-full object-cover" />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center font-display text-4xl font-extrabold text-olive-ink/70">
-                {nama.charAt(0)}
-              </div>
-            )}
-          </div>
-
-          <h1 className="mt-7 font-display text-3xl font-extrabold leading-tight tracking-[-0.02em] text-olive-ink sm:text-4xl">
-            {nama}
-          </h1>
-          {p.alamat && (
-            <p className="mt-2 font-body text-[0.68rem] uppercase tracking-label text-olive-ink/80">
-              {p.alamat}
-            </p>
+      <section className="mx-auto max-w-2xl px-5 py-12 text-center sm:px-8 sm:py-16">
+        <div className="mx-auto h-28 w-28 overflow-hidden rounded-full bg-surface">
+          {foto ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={foto} alt={nama} className="h-full w-full object-cover" />
+          ) : (
+            <div className="flex h-full w-full items-center justify-center font-display text-3xl font-bold text-muted/50">
+              {nama.charAt(0)}
+            </div>
           )}
-        </section>
+        </div>
 
-        <div className="gelombang" aria-hidden="true" />
+        <h1 className="mt-6 font-display text-2xl font-bold leading-tight tracking-[-0.02em] text-ink sm:text-3xl">
+          {nama}
+        </h1>
+        {p.alamat && <p className="mt-1.5 font-body text-sm text-muted">{p.alamat}</p>}
 
-        <section className="mx-auto max-w-2xl px-5 py-14 text-center sm:px-8 sm:py-20">
-          <p className="font-body text-lg leading-relaxed text-ink/80 text-pretty">{bio}</p>
+        <p className="mt-6 font-body leading-relaxed text-muted text-pretty">{bio}</p>
 
-          {p.kontakWa && (
-            <a
-              href={tautanWhatsapp(p.kontakWa, 'produk rajut')}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="mt-9 inline-block rounded-full bg-brick px-8 py-4 font-body text-[0.7rem] font-semibold uppercase tracking-label text-brick-ink transition-colors hover:bg-brick-strong active:translate-y-px"
-            >
-              Hubungi melalui WhatsApp
-            </a>
-          )}
-        </section>
-      </>
+        {p.kontakWa && (
+          <a
+            href={tautanWhatsapp(p.kontakWa, 'produk rajut')}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="tekan mt-8 inline-block rounded-full bg-olive px-7 py-3 font-body text-sm font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
+          >
+            Hubungi melalui WhatsApp
+          </a>
+        )}
+      </section>
     );
   }
 }

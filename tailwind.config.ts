@@ -11,30 +11,38 @@ const config: Config = {
       colors: {
         paper: rgb('--paper'),
         surface: rgb('--surface'),
-        olive: rgb('--olive'),
-        'olive-ink': rgb('--olive-ink'),
+        line: rgb('--line'),
         ink: rgb('--ink'),
-        brick: rgb('--brick'),
-        'brick-strong': rgb('--brick-strong'),
-        'brick-ink': rgb('--brick-ink'),
+        muted: rgb('--muted'),
+        olive: rgb('--olive'),
+        'olive-strong': rgb('--olive-strong'),
+        'olive-ink': rgb('--olive-ink'),
 
-        // Nama token generasi sebelumnya tetap dipetakan ke token baru supaya
-        // panel admin dan form ikut berubah warna tanpa harus disentuh satu-satu.
+        // Nama token dari dua generasi sebelumnya tetap dipetakan, supaya panel
+        // admin dan form ikut berganti warna tanpa disentuh satu per satu.
+        // brick sengaja diarahkan ke olive: desain ini hanya punya satu warna
+        // aksi, dan aksen kedua yang bersaing adalah bagian dari kebingungan
+        // versi sebelumnya.
         bg: rgb('--paper'),
         deep: rgb('--olive'),
         'deep-ink': rgb('--olive-ink'),
-        accent: rgb('--brick'),
-        'accent-strong': rgb('--brick-strong'),
-        'accent-ink': rgb('--brick-ink'),
+        accent: rgb('--olive'),
+        'accent-strong': rgb('--olive-strong'),
+        'accent-ink': rgb('--olive-ink'),
+        brick: rgb('--olive'),
+        'brick-strong': rgb('--olive-strong'),
+        'brick-ink': rgb('--olive-ink'),
       },
       fontFamily: {
-        display: ['var(--font-display)', 'Arial Black', 'system-ui', 'sans-serif'],
+        // Keduanya menunjuk keluarga yang sama; hierarki dibawa ketebalan.
+        display: ['var(--font-body)', 'system-ui', 'sans-serif'],
         body: ['var(--font-body)', 'system-ui', 'sans-serif'],
       },
       letterSpacing: {
-        // Label huruf besar bertracking lebar: bahasa Brooklyn Tweed untuk nav,
-        // tombol, dan kategori.
-        label: '0.16em',
+        label: '0.12em',
+      },
+      borderRadius: {
+        kartu: '14px',
       },
     },
   },

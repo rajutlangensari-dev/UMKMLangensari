@@ -2,71 +2,71 @@ import Link from 'next/link';
 import type { Produk } from '@/lib/types';
 import { formatRupiah, normalisasiFotoUrl, tautanWhatsapp } from '@/lib/api';
 
-export default function KartuProduk({ produk }: { produk: Produk }) {
-  // Kartu tampil paling lebar ~420 px (satu kolom di HP), dikali dua untuk retina.
+// Kartu polos: kotak bergaris tipis, foto, nama, pembuat, harga, satu tombol.
+// Bingkai "label tenun" versi sebelumnya (stroke tebal plus garis rambut yang
+// meleset) dibuang. Bingkai itu menambah tiga garis di sekeliling tiap foto dan
+// di layar HP dua kolom hasilnya penuh sesak.
+export default function KartuProduk({ produk, indeks = 0 }: { produk: Produk; indeks?: number }) {
   const foto = normalisasiFotoUrl(produk.foto, 840);
   const habis = produk.stok?.toLowerCase() === 'habis';
 
   return (
-    <article className="group flex flex-col">
-      {/* Bingkai label tenun dipasang di pembungkus luar; klip pembesaran foto
-          dilakukan lapisan dalam supaya garis rambut brick tidak ikut terpotong. */}
-      <Link href={`/produk/${produk.id}`} className="label-tenun block">
-        <div className="overflow-hidden rounded-[14px]">
-          {foto ? (
-            // Foto dari Cloudinary atau link tempel manual; pakai <img> biasa agar
-            // tidak bergantung pada daftar host pengoptimal gambar Next.js.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src={foto}
-              alt={produk.namaProduk}
-              loading="lazy"
-              className="aspect-[4/5] w-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-            />
-          ) : (
-            <div className="flex aspect-[4/5] items-center justify-center">
-              <span className="font-display text-4xl font-extrabold text-ink/25">
-                {produk.namaProduk.charAt(0)}
-              </span>
-            </div>
-          )}
-        </div>
+    <article
+      className="naik angkat group flex flex-col overflow-hidden rounded-kartu border border-line bg-paper"
+      // Kartu masuk bergiliran, bukan serentak. Jeda ditahan 45 ms dan
+      // dibatasi 10 kartu: lebih lama dari itu, katalog terasa lambat
+      // dibuka, bukan hidup.
+      style={{ animationDelay: `${Math.min(indeks, 10) * 45}ms` }}
+    >
+      <Link href={`/produk/${produk.id}`} className="block overflow-hidden bg-surface">
+        {foto ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={foto}
+            alt={produk.namaProduk}
+            loading="lazy"
+            className="zoom-produk aspect-square w-full object-cover"
+          />
+        ) : (
+          <div className="flex aspect-square items-center justify-center">
+            <span className="font-display text-3xl font-bold text-muted/50">
+              {produk.namaProduk.charAt(0)}
+            </span>
+          </div>
+        )}
       </Link>
 
-      <div className="flex flex-1 flex-col pt-6">
-        <span className="font-body text-[0.62rem] uppercase tracking-label text-ink/65">
-          {produk.kategori}
-        </span>
-        <Link href={`/produk/${produk.id}`} className="mt-2">
-          <h3 className="font-display text-lg font-extrabold leading-tight tracking-[-0.01em] text-ink transition-colors group-hover:text-brick sm:text-xl">
+      <div className="flex flex-1 flex-col p-4">
+        <Link href={`/produk/${produk.id}`}>
+          <h3 className="warna-interaktif font-display text-sm font-semibold leading-snug text-ink sm:text-base">
             {produk.namaProduk}
           </h3>
         </Link>
-        <p className="mt-1.5 font-body text-sm text-ink/70">
-          {produk.namaUmkm}, {produk.alamat}
-        </p>
+        <p className="mt-1 font-body text-xs text-muted">{produk.namaUmkm}</p>
 
-        <p className="mt-3 font-display text-xl font-extrabold text-brick sm:text-2xl">
+        <p className="mt-3 font-display text-base font-bold text-ink sm:text-lg">
           {formatRupiah(produk.harga)}
         </p>
 
-        {habis ? (
-          <p className="mt-4 font-body text-[0.66rem] uppercase tracking-label text-ink/65">
-            Stok habis
-          </p>
-        ) : (
-          produk.kontakWa && (
-            <a
-              href={tautanWhatsapp(produk.kontakWa, produk.namaProduk)}
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label={`Pesan ${produk.namaProduk} melalui WhatsApp`}
-              className="mt-4 whitespace-nowrap rounded-full border border-ink/25 px-5 py-2.5 text-center font-body text-[0.66rem] font-semibold uppercase tracking-label text-ink transition-colors hover:border-brick hover:bg-brick hover:text-brick-ink active:translate-y-px"
-            >
-              Pesan
-            </a>
-          )
-        )}
+        <div className="mt-auto pt-4">
+          {habis ? (
+            <p className="rounded-full bg-surface py-2.5 text-center font-body text-xs text-muted">
+              Stok habis
+            </p>
+          ) : (
+            produk.kontakWa && (
+              <a
+                href={tautanWhatsapp(produk.kontakWa, produk.namaProduk)}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Pesan ${produk.namaProduk} melalui WhatsApp`}
+                className="tekan block rounded-full bg-olive py-2.5 text-center font-body text-xs font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
+              >
+                Pesan
+              </a>
+            )
+          )}
+        </div>
       </div>
     </article>
   );

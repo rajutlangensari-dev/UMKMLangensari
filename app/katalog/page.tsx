@@ -39,17 +39,17 @@ export default function HalamanKatalog() {
         {status === 'memuat' && <RangkaMuat />}
 
         {status === 'gagal' && (
-          <div className="mx-auto max-w-md px-5 py-24 text-center">
-            <h1 className="font-display text-3xl font-extrabold leading-tight text-ink">
-              Katalog tidak dapat dimuat
+          <div className="mx-auto max-w-sm px-5 py-24 text-center">
+            <h1 className="font-display text-xl font-bold leading-snug text-ink">
+              Produk gagal dimuat
             </h1>
-            <p className="mt-3 font-body text-sm leading-relaxed text-ink/70">
-              Periksa koneksi internet, lalu coba lagi.
+            <p className="mt-2 font-body text-sm leading-relaxed text-muted">
+              Periksa sambungan internet, lalu coba lagi.
             </p>
             <button
               type="button"
               onClick={() => window.location.reload()}
-              className="mt-6 rounded-full bg-brick px-7 py-3 font-body text-[0.66rem] font-semibold uppercase tracking-label text-brick-ink transition-colors hover:bg-brick-strong"
+              className="tekan mt-6 rounded-full bg-olive px-6 py-2.5 font-body text-sm font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
             >
               Coba lagi
             </button>
@@ -71,14 +71,16 @@ function RangkaMuat() {
   return (
     <section className="mx-auto max-w-7xl px-5 pb-24 sm:px-8" aria-busy="true" aria-live="polite">
       <span className="sr-only">Memuat katalog</span>
-      <div className="h-12 w-48 rounded-full bg-surface" />
+      <div className="kilau h-12 w-48 rounded-full" />
       <div className="mt-14 grid grid-cols-2 gap-x-8 gap-y-14 lg:grid-cols-3 lg:gap-x-12">
         {Array.from({ length: 6 }).map((_, i) => (
           <div key={i}>
-            <div className="aspect-[4/5] w-full rounded-[14px] bg-surface" />
-            <div className="mt-6 h-3 w-1/3 rounded-full bg-surface" />
-            <div className="mt-3 h-4 w-3/4 rounded-full bg-surface" />
-            <div className="mt-3 h-4 w-1/2 rounded-full bg-surface" />
+            {/* Kilau bergeser: menandakan sedang memuat, bukan kotak abu-abu
+                mati yang terbaca seperti halaman rusak. */}
+            <div className="kilau aspect-[4/5] w-full rounded-[14px]" />
+            <div className="kilau mt-6 h-3 w-1/3 rounded-full" />
+            <div className="kilau mt-3 h-4 w-3/4 rounded-full" />
+            <div className="kilau mt-3 h-4 w-1/2 rounded-full" />
           </div>
         ))}
       </div>

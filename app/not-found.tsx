@@ -9,18 +9,17 @@ export default function TidakDitemukan() {
     <>
       <Header />
       <main className="mx-auto flex min-h-[55vh] max-w-md flex-col items-center justify-center px-5 py-24 text-center">
-        <h1 className="font-display text-4xl font-extrabold leading-tight tracking-[-0.02em] text-ink">
-          Halaman tidak ditemukan
+        <h1 className="font-display text-2xl font-bold leading-snug tracking-[-0.02em] text-ink">
+          Halaman ini tidak ada
         </h1>
-        <p className="mt-4 font-body leading-relaxed text-ink/70 text-pretty">
-          Alamat yang dibuka tidak ada di situs ini. Kemungkinan salah ketik atau
-          halamannya sudah dipindahkan.
+        <p className="mt-3 font-body leading-relaxed text-muted text-pretty">
+          Alamatnya mungkin salah ketik. Coba mulai dari katalog.
         </p>
         <Link
           href="/katalog"
-          className="mt-8 rounded-full bg-brick px-8 py-3.5 font-body text-[0.7rem] font-semibold uppercase tracking-label text-brick-ink transition-colors hover:bg-brick-strong"
+          className="tekan mt-7 rounded-full bg-olive px-7 py-3 font-body text-sm font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
         >
-          Lihat katalog
+          Lihat produk
         </Link>
       </main>
       <Footer />
