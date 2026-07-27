@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Favicon: dua simpul rantai di atas blok olive. Mark wordmark punya tiga
+       simpul, tapi di 16 px tiga simpul menyatu jadi bercak, jadi di sini
+       dipotong dua. -->
+  <rect width="32" height="32" rx="7" fill="#656B37"/>
+  <g fill="none" stroke="#F2F0E2" stroke-width="3.2">
+    <ellipse cx="12.5" cy="16" rx="6.6" ry="5.4"/>
+    <ellipse cx="19.5" cy="16" rx="6.6" ry="5.4"/>
+  </g>
+</svg>

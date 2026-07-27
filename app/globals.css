@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Rajut Langensari - token warna
+   ------------------------------------------------------------
+   Strategi warna: "committed". Olive membawa 35-40% permukaan
+   halaman sebagai blok penuh, bukan sekadar aksen. Kertas oat
+   sengaja dicondongkan ke hijau (hue benang), bukan ke oranye
+   hangat, supaya tidak jatuh ke krem generik.
+   Brick adalah satu-satunya aksen jenuh; dipakai untuk aksi.
+   Token disimpan sebagai triplet RGB agar utility opacity
+   Tailwind (text-ink/60) tetap jalan dan mode gelap cukup
+   menukar nilai variabel.
+   ============================================================ */
+:root {
+  --paper: 239 237 225;
+  --surface: 226 223 206;
+  --olive: 101 107 55;
+  --olive-ink: 242 240 226;
+  --ink: 38 36 24;
+  --brick: 180 71 44;
+  --brick-strong: 151 56 31;
+  --brick-ink: 253 250 245;
+}
+
+:root[data-theme='gelap'] {
+  --paper: 26 28 20;
+  --surface: 38 42 27;
+  --olive: 138 145 80;
+  --olive-ink: 22 24 15;
+  --ink: 233 231 216;
+  --brick: 212 103 74;
+  --brick-strong: 224 123 94;
+  --brick-ink: 26 28 20;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='terang']) {
+    --paper: 26 28 20;
+    --surface: 38 42 27;
+    --olive: 138 145 80;
+    --olive-ink: 22 24 15;
+    --ink: 233 231 216;
+    --brick: 212 103 74;
+    --brick-strong: 224 123 94;
+    --brick-ink: 26 28 20;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--paper));
+  color: rgb(var(--ink));
+}
+
+:where(a, button, input, select, textarea, label, summary):focus-visible {
+  outline: 2px solid rgb(var(--brick));
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ------------------------------------------------------------
+   Tanda tangan visual: "label tenun".
+   Foto produk duduk di sumur oat, dikelilingi stroke kertas
+   tebal lalu garis rambut brick yang meleset sedikit, meniru
+   label kain yang dijahit ke karton. Hanya dipakai di foto
+   produk supaya tetap jadi satu hal yang diingat.
+   ------------------------------------------------------------ */
+.label-tenun {
+  position: relative;
+  border-radius: 14px;
+  background-color: rgb(var(--surface));
+  box-shadow:
+    0 0 0 5px rgb(var(--paper)),
+    0 0 0 6px rgb(var(--ink) / 0.14);
+}
+
+.label-tenun::after {
+  content: '';
+  position: absolute;
+  inset: -11px -11px 5px 5px;
+  border: 1px solid rgb(var(--brick) / 0.55);
+  border-radius: 16px;
+  pointer-events: none;
+}
+
+/* Pembatas bergelombang antara pita olive dan kertas. Satu bentuk
+   geometris, digambar dengan mask supaya ikut warna blok di atasnya
+   dan tidak perlu elemen SVG terpisah di tiap pemakaian. */
+.gelombang {
+  height: 26px;
+  background-color: rgb(var(--olive));
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 26' preserveAspectRatio='none'%3E%3Cpath d='M0 0h120v9c-12 0-18 8-30 8S72 9 60 9 42 17 30 17 12 9 0 9Z' fill='%23000'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 26' preserveAspectRatio='none'%3E%3Cpath d='M0 0h120v9c-12 0-18 8-30 8S72 9 60 9 42 17 30 17 12 9 0 9Z' fill='%23000'/%3E%3C/svg%3E");
+  -webkit-mask-size: 120px 26px;
+  mask-size: 120px 26px;
+  -webkit-mask-repeat: repeat-x;
+  mask-repeat: repeat-x;
+}
+
+/* Muncul naik saat masuk viewport. Konten tetap terlihat kalau
+   animasi tidak jalan (opacity awal 1 di reduced-motion). */
+@keyframes naik {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: none; }
+}
+.naik {
+  animation: naik 0.55s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+}
+
+/* Pita produk berjalan. Isi diduplikat di markup, geser -50% agar mulus. */
+@keyframes geser {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.pita-jalan {
+  display: inline-flex;
+  white-space: nowrap;
+  animation: geser 44s linear infinite;
+}
+.pita:hover .pita-jalan,
+.pita:focus-within .pita-jalan {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .naik { animation: none; }
+  .pita-jalan { animation: none; }
+}

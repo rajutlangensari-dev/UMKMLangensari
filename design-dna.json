@@ -1,0 +1,409 @@
+{
+  "meta": {
+    "name": "Rajut Langensari Retro Textile Catalog",
+    "description": "Katalog UMKM dengan disiplin grid Brooklyn Tweed dan kehangatan katalog Retro Bloom.",
+    "source_references": [
+      "Screenshot Brooklyn Tweed desktop catalog supplied by the user",
+      "Screenshot Retro Bloom mobile catalog supplied by the user"
+    ],
+    "created_at": "2026-07-27"
+  },
+  "design_system": {
+    "color": {
+      "palette_type": "analogous with a single complementary accent",
+      "primary": {
+        "hex": "#656B37",
+        "role": "Olive brand field for hero, announcement strip, value band, and footer"
+      },
+      "secondary": {
+        "hex": "#EFEDE1",
+        "role": "Oat paper background for catalog and editorial content"
+      },
+      "accent": {
+        "hex": "#B4472C",
+        "role": "Brick action color for primary CTA, price, focus, and active states"
+      },
+      "neutral": {
+        "scale": {
+          "50": "#F2F0E2",
+          "100": "#EFEDE1",
+          "200": "#E2DFCE",
+          "500": "#7B7868",
+          "700": "#4C493A",
+          "900": "#262418",
+          "950": "#1A1C14"
+        },
+        "usage": "Oat surfaces, olive-tinted dividers, readable ink, and charcoal dark-mode surfaces"
+      },
+      "semantic": {
+        "success": "#4E6B3A",
+        "warning": "#9C671F",
+        "error": "#A63D2B",
+        "info": "#526C73"
+      },
+      "surface": {
+        "background": "#EFEDE1",
+        "card": "#E2DFCE",
+        "elevated": "#F2F0E2"
+      },
+      "contrast_strategy": "Dark-on-light catalog content, light-on-olive brand fields, and WCAG AA text contrast"
+    },
+    "typography": {
+      "type_scale": {
+        "display": {
+          "size": "clamp(2.5rem, 5vw, 3.75rem)",
+          "weight": "800",
+          "line_height": "1.04",
+          "tracking": "-0.02em"
+        },
+        "heading_1": {
+          "size": "clamp(2.25rem, 4vw, 3.75rem)",
+          "weight": "800",
+          "line_height": "1.06",
+          "tracking": "-0.025em"
+        },
+        "heading_2": {
+          "size": "clamp(1.875rem, 3vw, 3rem)",
+          "weight": "800",
+          "line_height": "1.08",
+          "tracking": "-0.02em"
+        },
+        "heading_3": {
+          "size": "clamp(1.125rem, 2vw, 1.5rem)",
+          "weight": "800",
+          "line_height": "1.2",
+          "tracking": "-0.01em"
+        },
+        "body": {
+          "size": "1rem",
+          "weight": "400",
+          "line_height": "1.625",
+          "tracking": "0"
+        },
+        "body_small": {
+          "size": "0.875rem",
+          "weight": "400",
+          "line_height": "1.5",
+          "tracking": "0"
+        },
+        "caption": {
+          "size": "0.75rem",
+          "weight": "500",
+          "line_height": "1.4",
+          "tracking": "0.04em"
+        },
+        "overline": {
+          "size": "0.68rem",
+          "weight": "600",
+          "line_height": "1.4",
+          "tracking": "0.16em"
+        }
+      },
+      "font_families": {
+        "heading": "Bricolage Grotesque, Arial Black, system-ui, sans-serif",
+        "body": "Instrument Sans, system-ui, sans-serif",
+        "mono": "ui-monospace, SFMono-Regular, Consolas, monospace"
+      },
+      "font_style_notes": "Heavy irregular grotesque headings resemble a market sign; the humanist body face keeps product and maker information calm."
+    },
+    "spacing": {
+      "base_unit": "4px",
+      "scale": [
+        "4px",
+        "8px",
+        "12px",
+        "16px",
+        "20px",
+        "24px",
+        "32px",
+        "40px",
+        "56px",
+        "64px",
+        "80px",
+        "96px"
+      ],
+      "content_density": "comfortable",
+      "section_rhythm": "Compact utility bands alternate with spacious image-led sections"
+    },
+    "layout": {
+      "grid_system": "Fluid twelve-column editorial grid with flex rails for categories",
+      "max_content_width": "1280px",
+      "columns": "12 desktop, 2 product columns mobile, 3 product columns large desktop",
+      "gutter": "20px mobile, 32px tablet, 48px large desktop",
+      "breakpoints": {
+        "sm": "640px",
+        "md": "768px",
+        "lg": "1024px",
+        "xl": "1280px",
+        "2xl": "1536px"
+      },
+      "alignment_tendency": "Asymmetric editorial alignment with strict product-card rows"
+    },
+    "shape": {
+      "border_radius": {
+        "small": "4px",
+        "medium": "14px",
+        "large": "16px",
+        "pill": "9999px"
+      },
+      "border_usage": "Fine ink dividers and offset brick thread lines around product imagery",
+      "divider_style": "One-pixel hairlines and a single olive wave transition"
+    },
+    "elevation": {
+      "shadow_style": "Near-flat with outlined depth",
+      "levels": {
+        "low": "0 0 0 1px rgb(38 36 24 / 0.14)",
+        "medium": "0 0 0 5px rgb(239 237 225), 0 0 0 6px rgb(38 36 24 / 0.14)",
+        "high": "none"
+      },
+      "depth_cues": "Offset borders, surface color, image overlap, and sticky navigation"
+    },
+    "iconography": {
+      "style": "Simple geometric outline",
+      "stroke_weight": "1.5px to 2px",
+      "size_scale": [
+        "16px",
+        "20px",
+        "24px"
+      ],
+      "preferred_set": "Phosphor for future controls; preserve the existing geometric chain logo"
+    },
+    "motion": {
+      "easing": "cubic-bezier(0.16, 1, 0.3, 1)",
+      "duration_scale": {
+        "micro": "160ms",
+        "normal": "300ms",
+        "macro": "550ms"
+      },
+      "entrance_pattern": "Single hero rise on initial load",
+      "exit_pattern": "Instant state replacement",
+      "philosophy": "Functional feedback with one content-driven product ribbon"
+    },
+    "components": {
+      "button_style": "Pill-shaped brick primary actions and thin outlined secondary actions",
+      "input_style": "Pill input on an oat surface with a visible label and brick focus ring",
+      "card_style": "Borderless product information paired with a woven-label image frame",
+      "navigation_pattern": "Sticky two-tier header, inline desktop links, compact mobile disclosure",
+      "modal_style": "Native dialog treatment if a modal is added",
+      "list_style": "Horizontal category rail, editorial mosaic, and responsive product grid",
+      "component_notes": "One panel carries one message; product imagery owns the strongest framing treatment."
+    }
+  },
+  "design_style": {
+    "aesthetic": {
+      "mood": [
+        "warm",
+        "practical",
+        "handmade",
+        "confident"
+      ],
+      "visual_metaphor": "A textile mail-order catalog assembled from woven labels and market signage",
+      "era_influence": "1970s craft catalog filtered through a contemporary editorial grid",
+      "genre": "Retro editorial local-commerce catalog",
+      "personality_traits": [
+        "direct",
+        "neighborly",
+        "resourceful",
+        "careful"
+      ],
+      "adjectives": [
+        "olive-drenched",
+        "tactile",
+        "structured",
+        "plainspoken"
+      ]
+    },
+    "visual_language": {
+      "complexity": "moderate",
+      "ornamentation": "Restrained textile cues",
+      "whitespace_usage": "Generous around stories, compact around shopping controls",
+      "visual_weight_distribution": "Large olive fields balanced by product photography and dark display type",
+      "focal_strategy": "Hero product first, then category choice, maker story, and catalog conversion",
+      "contrast_level": "high",
+      "texture_usage": "Real product photography and fine offset label borders"
+    },
+    "composition": {
+      "hierarchy_method": "Scale contrast, color fields, and spatial isolation",
+      "balance_type": "Asymmetric mosaic",
+      "flow_direction": "Top-to-bottom shopping path with one horizontal product ribbon",
+      "grouping_strategy": "Color blocks, image frames, and whitespace instead of nested cards",
+      "negative_space_role": "Separates browsing, story, and conversion moments"
+    },
+    "imagery": {
+      "photo_treatment": "Natural product photos cropped consistently and framed like sewn labels",
+      "illustration_style": "No decorative illustration; geometric brand mark only",
+      "graphic_elements": "Olive wave divider, offset brick line, and product ribbon",
+      "pattern_usage": "Textile cues appear only at section transitions and product frames",
+      "image_shape": "Four-by-five product portraits, square category crops, and circular category thumbnails"
+    },
+    "interaction_feel": {
+      "feedback_style": "Clear focus rings, color shifts, and one-pixel press movement",
+      "hover_behavior": "Small image lift or scale and brick color transition",
+      "transition_personality": "Quick, smooth, and non-bouncy",
+      "loading_style": "Layout-matched skeleton blocks",
+      "microinteraction_density": "low"
+    },
+    "brand_voice_in_ui": {
+      "tone": "Direct Indonesian community catalog language",
+      "formality": "friendly and practical",
+      "cta_style": "Short imperative",
+      "empty_state_approach": "State the problem and provide one recovery action",
+      "error_tone": "Calm, specific, and actionable"
+    }
+  },
+  "visual_effects": {
+    "overview": {
+      "effect_intensity": "subtle-accent",
+      "performance_tier": "lightweight",
+      "fallback_strategy": "Disable animation and smooth scrolling under reduced motion",
+      "primary_technology": "CSS only"
+    },
+    "background_effects": {
+      "type": "none",
+      "description": "Solid semantic color fields carry the composition",
+      "technology": "CSS",
+      "params": {
+        "color_palette": [
+          "#656B37",
+          "#EFEDE1",
+          "#E2DFCE"
+        ],
+        "speed": "static",
+        "density": "none",
+        "opacity": "1",
+        "blend_mode": "normal"
+      }
+    },
+    "particle_systems": {
+      "enabled": false,
+      "type": "none",
+      "description": "No particles are used",
+      "technology": "none",
+      "params": {
+        "count": "0",
+        "shape": "none",
+        "size_range": "none",
+        "movement_pattern": "none",
+        "color_behavior": "none",
+        "interaction": "none",
+        "spawn_area": "none"
+      }
+    },
+    "3d_elements": {
+      "enabled": false,
+      "type": "none",
+      "description": "No 3D elements are used",
+      "technology": "none",
+      "params": {
+        "renderer": "none",
+        "lighting": "none",
+        "camera": "none",
+        "materials": "none",
+        "geometry": "none",
+        "post_processing": "none",
+        "interaction_model": "none"
+      }
+    },
+    "shader_effects": {
+      "enabled": false,
+      "type": "none",
+      "description": "No shader effects are used",
+      "technology": "none",
+      "params": {
+        "uniforms": "none",
+        "vertex_manipulation": "none",
+        "fragment_output": "none",
+        "noise_type": "none",
+        "distortion": "none"
+      }
+    },
+    "scroll_effects": {
+      "parallax": {
+        "enabled": false,
+        "layers": "0",
+        "depth_range": "none",
+        "speed_curve": "none"
+      },
+      "scroll_triggered_animations": {
+        "enabled": false,
+        "trigger_points": "none",
+        "animation_type": "none",
+        "scrub_behavior": "none"
+      },
+      "scroll_morphing": {
+        "enabled": false,
+        "description": "No scroll morphing is used"
+      }
+    },
+    "text_effects": {
+      "type": "none",
+      "description": "Typography stays static and readable",
+      "technology": "CSS",
+      "params": {
+        "split_strategy": "none",
+        "animation_per_unit": "none",
+        "stagger": "none",
+        "effect_style": "none"
+      }
+    },
+    "cursor_effects": {
+      "enabled": false,
+      "type": "none",
+      "description": "The native cursor is preserved",
+      "params": {
+        "shape": "native",
+        "size": "native",
+        "blend_mode": "normal",
+        "trail": "none",
+        "interaction_zone": "none"
+      }
+    },
+    "image_effects": {
+      "type": "subtle-scale",
+      "description": "Product images scale slightly on hover while their layout remains fixed",
+      "technology": "CSS",
+      "params": {
+        "filter_pipeline": "none",
+        "hover_transform": "scale(1.05)",
+        "reveal_animation": "none",
+        "distortion_type": "none"
+      }
+    },
+    "glassmorphism_neumorphism": {
+      "enabled": false,
+      "style": "none",
+      "params": {
+        "blur_radius": "0",
+        "transparency": "none",
+        "border_treatment": "none",
+        "shadow_type": "none",
+        "light_source_angle": "none"
+      }
+    },
+    "canvas_drawings": {
+      "enabled": false,
+      "type": "none",
+      "description": "No canvas drawings are used",
+      "technology": "none",
+      "params": {
+        "draw_method": "none",
+        "animation_loop": "none",
+        "color_scheme": "none",
+        "responsiveness": "none",
+        "interaction": "none"
+      }
+    },
+    "svg_animations": {
+      "enabled": false,
+      "type": "none",
+      "description": "The geometric logo is static",
+      "params": {
+        "animation_method": "none",
+        "path_morphing": "none",
+        "stroke_animation": "none",
+        "filter_effects": "none"
+      }
+    },
+    "composite_notes": "The visual identity relies on color blocks, real photography, an offset textile-label frame, and one CSS marquee. Heavy visual effects would compete with product clarity and low-cost Android performance."
+  }
+}

@@ -1,0 +1,7 @@
+node_modules
+.next
+.artifacts
+out
+.env.local
+.vercel
+*.log
