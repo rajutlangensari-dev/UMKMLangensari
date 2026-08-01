@@ -11,6 +11,9 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
+    // scripts/ dijalankan langsung oleh Node (`npm run uji`), bukan lewat
+    // bundler, dan Node ESM mewajibkan ekstensi berkas ditulis lengkap.
+    "allowImportingTsExtensions": true,
     "jsx": "preserve",
     "incremental": true,
     "plugins": [{ "name": "next" }],

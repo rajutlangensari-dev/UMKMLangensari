@@ -1,11 +1,96 @@
+# Folder ini adalah REPO GIT TERSENDIRI (remote: UMKMLangensari), terpisah dari
+# repo kerja KKN di folder induknya. Artinya berkas ini berdiri sendiri —
+# .gitignore di folder atas TIDAK berlaku di sini sama sekali.
+#
+# Jangan pernah mengandalkan aturan di atas sana. Apa pun yang tidak boleh
+# ter-push harus disebut di berkas ini.
+
+# ---------------------------------------------------------------
+# Rahasia. Ini yang paling penting di seluruh berkas ini.
+# ---------------------------------------------------------------
+# .env.local memuat APPS_SCRIPT_SECRET, SESSION_SECRET, dan kunci Cloudinary.
+# Repo ini punya remote GitHub; sekali ter-push, riwayat git bersifat permanen
+# dan rahasianya harus dianggap bocor selamanya — menghapusnya di commit
+# berikutnya tidak menariknya kembali.
+#
+# .env.example TETAP ikut dan memang harus: isinya cuma nama variabel dengan
+# nilai xxxxxxxx, dan tanpanya orang berikutnya tidak tahu apa saja yang perlu
+# diisi.
+.env
+.env.local
+.env.*.local
+*.pem
+
+# Catatan kata sandi akun yang ditulis tangan saat membuat akun baru. Wajar
+# dicatat sementara — `npm run akun` cuma menampilkannya sekali — tapi jangan
+# sampai ikut ter-commit.
+*catatan akun*
+*akun*.txt
+
+# ---------------------------------------------------------------
+# Hasil bangun dan dependensi
+# ---------------------------------------------------------------
 node_modules
 .next
-.artifacts
 out
-.env.local
 .vercel
+.artifacts
+tsconfig.tsbuildinfo
 *.log
+
+# Arsip. Pernah ada .rar 366 MB di folder induk; GitHub menolak berkas di atas
+# 100 MB, jadi push-nya akan gagal, bukan berhasil diam-diam.
+*.rar
+*.zip
+*.7z
+
+# ---------------------------------------------------------------
+# Berkas non-inti — keputusan lama yang dipertahankan
+# ---------------------------------------------------------------
+# Commit b217902 ("Remove non-core files and add to gitignore") sengaja
+# mengeluarkan keduanya dari repo publik ini. Tidak ada kode yang menyebutnya,
+# jadi keputusan itu tetap berlaku.
 DESIGN.md
 design-dna.json
-tsconfig.tsbuildinfo
-scripts/
+
+# ---------------------------------------------------------------
+# `scripts/` DULU DIABAIKAN SELURUHNYA. Itu efek samping, bukan maksudnya.
+# ---------------------------------------------------------------
+# Commit yang sama juga membuang `scripts/buat-og.py` — satu berkas — lalu
+# memagari seluruh foldernya. Saat itu benar: isinya memang cuma berkas itu.
+#
+# Tapi setelahnya folder itu diisi lima suite uji, dan semuanya ikut tertelan
+# tanpa satu pun tanda. Akibatnya nyata: `package.json` yang IKUT ter-push
+# menyebut `npm run uji`, `uji:blok`, `uji:alur`, `uji:render`, dan `uji:warna`
+# — kelimanya menunjuk berkas yang tidak ada di repo ini. Yang meng-clone
+# mendapat proyek yang perintahnya gagal sebelum dijalankan.
+#
+# Jadi foldernya ikut — tapi HANYA yang benar-benar dipakai. Patokannya bukan
+# selera: yang disebut `package.json` HARUS ada, karena package.json itu sendiri
+# ikut ter-push. Tujuh berkas lolos ujian itu:
+#
+#   uji-auth · uji-blok · uji-warna · uji-alur · uji-render   (npm run uji*)
+#   buat-akun                                                  (npm run akun)
+#   isi-dummy + data-dummy yang diimpornya                     (npm run dummy)
+#
+# `data-dummy.ts` sudah diperiksa: seluruh nama di dalamnya fiktif, dan nomor
+# WhatsApp-nya berawalan 0800 yang bukan awalan seluler mana pun — jadi tombol
+# "Pesan" pada data contoh tidak bisa sampai ke orang sungguhan. Tidak ada satu
+# pun data warga di sana.
+#
+# Pelajarannya: abaikan BERKAS yang bermasalah, jangan foldernya. Folder tumbuh;
+# aturan yang dipasang untuk satu berkas akan menelan berkas yang belum ada saat
+# aturannya ditulis.
+
+# Satu-satunya penghuni `scripts/` yang TIDAK disebut package.json, dan memang
+# yang sengaja dibuang commit b217902. Ia menggambar berkas gambar pratinjau
+# sekali seumur hidup lalu tidak dipakai lagi; hasilnya (`app/opengraph-image.png`)
+# yang ikut ter-push, bukan alat penggambarnya. Butuh Python dan Pillow pula,
+# dua hal yang tidak dibutuhkan proyek ini di tempat lain mana pun.
+scripts/buat-og.py
+
+# Daftar id UMKM contoh yang ditulis `isi-dummy.ts` supaya `npm run dummy --
+# hapus` tahu baris mana yang boleh dihapusnya. Berbeda di tiap komputer dan
+# tidak berarti apa-apa di komputer lain. Ini contoh cara yang benar:
+# berkasnya, bukan foldernya.
+scripts/.dummy.json

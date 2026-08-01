@@ -25,7 +25,7 @@ export default function ThemeToggle() {
       type="button"
       onClick={ganti}
       aria-label={tema === 'gelap' ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'}
-      className="tekan rounded-full border border-line px-4 py-1.5 font-body text-sm text-muted transition-[transform,color,border-color] duration-150 ease-out hover:border-olive hover:text-ink"
+      className="tekan rounded-full border border-line px-4 py-1.5 font-body text-sm text-muted transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen hover:text-ink"
     >
       {/* Simbol tetap stabil sebelum tema terbaca supaya tidak melompat saat hydrate. */}
       {tema === 'gelap' ? 'Terang' : 'Gelap'}

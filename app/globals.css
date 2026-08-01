@@ -3,46 +3,67 @@
 @tailwind utilities;
 
 /* ============================================================
-   Rajut Langensari - token warna
+   Portal UMKM Langensari - token warna
    ------------------------------------------------------------
-   Arah: modern minimalis. Halaman berlatar hampir putih, olive
-   dipakai HANYA untuk aksi dan penanda merek. Versi sebelumnya
-   membanjiri 35-40% halaman dengan olive dan itu membuat mata
-   sulit menemukan mana yang bisa diklik.
-   Satu warna aksi saja. Tidak ada warna kedua yang bersaing.
+   Warnanya berasal dari logo portal (berkas Figma "LOGO — PORTAL
+   UMKM LANGENSARI"): tas dagang merah muda dengan garis dan
+   wordmark ungu tua.
+
+   DUA ATURAN YANG MENENTUKAN SELURUH BLOK INI
+
+   1. LATAR NETRAL. Putih di mode terang, hitam di mode gelap.
+      Latar bersemu warna melakukan dua hal buruk sekaligus: ia
+      memperkecil jarak antara latar dan aksen sehingga tombol
+      justru kurang menonjol, dan ia membuat foto produk tampak
+      salah warna — foto dari HP warga punya keseimbangan putih
+      yang tidak bisa diatur, dan foto berlatar putih di atas
+      kertas kemerahan akan terbaca kehijauan.
+
+   2. SATU WARNA AKSI. `--aksen` untuk hiasan, `--aksen-kuat`
+      untuk apa pun yang membawa teks. Warna merek mentah
+      (#C76F9A) kontrasnya cuma 3,28:1 di atas kertas — di bawah
+      ambang 4,5:1 — jadi ia TIDAK PERNAH boleh jadi latar tombol
+      atau warna teks.
+
+   Angka kontras tiap pasangan diperiksa otomatis:
+   `npm run uji:warna`. Jangan mengubah nilai di bawah ini tanpa
+   menjalankannya.
+
+   Olive tidak dibuang, cuma turun pangkat: ia sekarang salah satu
+   tema toko (`zaitun`) dan penanda status, bukan lagi warna aksi.
    ============================================================ */
 :root {
-  --paper: 251 251 248;
-  --surface: 243 243 237;
-  --line: 226 226 216;
-  --ink: 26 28 22;
-  --muted: 106 110 96;
-  --olive: 106 116 62;
-  --olive-strong: 84 92 48;
-  --olive-ink: 250 250 245;
+  --paper: 255 255 255;
+  --surface: 244 244 244;
+  --line: 228 228 228;
+  --ink: 58 47 74;
+  --muted: 110 100 120;
+  --aksen: 199 111 154;
+  --aksen-kuat: 169 82 123;
+  --aksen-ink: 255 255 255;
 }
 
 :root[data-theme='gelap'] {
-  --paper: 20 21 15;
-  --surface: 31 33 25;
-  --line: 48 51 40;
-  --ink: 236 236 228;
-  --muted: 160 164 148;
-  --olive: 154 168 96;
-  --olive-strong: 174 187 118;
-  --olive-ink: 20 21 15;
+  --paper: 15 15 17;
+  --surface: 26 26 29;
+  --line: 44 44 49;
+  --ink: 236 236 238;
+  --muted: 160 154 168;
+  --aksen: 232 166 196;
+  --aksen-kuat: 232 166 196;
+  --aksen-ink: 15 15 17;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='terang']) {
-    --paper: 20 21 15;
-    --surface: 31 33 25;
-    --line: 48 51 40;
-    --ink: 236 236 228;
-    --muted: 160 164 148;
-    --olive: 154 168 96;
-    --olive-strong: 174 187 118;
-    --olive-ink: 20 21 15;
+    --paper: 15 15 17;
+    --surface: 26 26 29;
+    --line: 44 44 49;
+    --ink: 236 236 238;
+    --muted: 160 154 168;
+    --aksen: 232 166 196;
+    --aksen-kuat: 232 166 196;
+    --aksen-ink: 15 15 17;
   }
 }
 
@@ -56,7 +77,7 @@ body {
 }
 
 :where(a, button, input, select, textarea, label, summary):focus-visible {
-  outline: 2px solid rgb(var(--olive));
+  outline: 2px solid rgb(var(--aksen));
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -72,6 +93,9 @@ body {
 :root {
   --keluar: cubic-bezier(0.23, 1, 0.32, 1);
   --masuk-keluar: cubic-bezier(0.77, 0, 0.175, 1);
+  --gerak-cepat: 120ms;
+  --gerak-sedang: 220ms;
+  --gerak-lambat: 380ms;
 }
 
 /* Muncul naik. Dipakai saat elemen benar-benar baru datang:
@@ -96,7 +120,24 @@ body {
     .sembul {
       animation: naik linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 45%;
+      /* Selesai lebih awal (25%, bukan 45%). Bagian yang kebetulan berada
+         setengah di layar saat halaman dibuka akan berhenti di tengah
+         animasinya dan tetap pudar sampai ada yang menggulir — di layar
+         desktop tinggi, bagian tepat di bawah hero paling sering kena. Jendela
+         yang lebih sempit membuat keadaan "tersangkut pudar" itu hampir tidak
+         mungkin terjadi. */
+      animation-range: entry 0% entry 25%;
+    }
+
+    /* SATU SISTEM MASUK PER KELOMPOK KONTEN.
+       Bagian yang sudah muncul lewat scroll-reveal tidak boleh berisi kartu
+       yang JUGA memainkan animasi masuknya sendiri: yang terlihat adalah dua
+       gerak berbeda dengan waktu berbeda pada benda yang sama, dan hasilnya
+       terbaca seperti dua efek yang kebetulan bertumpuk, bukan satu halaman
+       yang dirancang. Kisi katalog tidak terpengaruh — ia tidak memakai
+       `sembul`, jadi stagger kartunya tetap jalan. */
+    .sembul .naik {
+      animation: none;
     }
   }
 }
@@ -127,6 +168,9 @@ body {
   .group:hover .zoom-produk {
     transform: scale(1.03);
   }
+  .group:focus-within .zoom-produk {
+    transform: scale(1.03);
+  }
   .group:hover .zoom-kategori {
     transform: scale(1.05);
   }
@@ -134,7 +178,298 @@ body {
     transition: color 0.18s ease;
   }
   .group:hover .warna-interaktif {
-    color: rgb(var(--olive));
+    color: rgb(var(--aksen));
+  }
+  .group:focus-within .warna-interaktif {
+    color: rgb(var(--aksen));
+  }
+}
+
+/* Kartu yang menebal saat disentuh kursor.
+   ------------------------------------------------------------
+   Dipakai kartu keterangan di bawah sorotan DAN til produk di dalam sorotan.
+   Satu aturan, dua tempat: dua kartu bersebelahan di halaman yang sama yang
+   menanggapi kursor dengan cara berbeda terbaca sebagai dua halaman yang
+   ditempel jadi satu.
+
+   Tebalnya bertambah TANPA mengubah `border-width`. Menaikkan garis dari 1px
+   jadi 2px menggeser seluruh isi kartu satu piksel ke dalam tepat saat kursor
+   tiba — teksnya bergoyang dan kartunya terasa rusak, bukan hidup.
+   `box-shadow: inset` menggambar garis kedua di dalam batas yang sudah ada,
+   jadi tebalnya bertambah sementara tata letaknya tidak bergerak sedikit pun. */
+.kartu-hover {
+  /* `position: relative` ada di sini, bukan di aturan hover-nya.
+     `z-index` tidak berlaku sama sekali pada elemen `position: static`, jadi
+     memasangnya baru saat hover berarti kartu tetap tertimpa tetangganya —
+     cacat yang tidak menghasilkan galat apa pun dan cuma terlihat kalau
+     diperhatikan. Dipasang di keadaan dasar, ia sudah siap sebelum dibutuhkan. */
+  position: relative;
+  transition:
+    border-color 0.2s var(--keluar),
+    box-shadow 0.2s var(--keluar),
+    transform 0.2s var(--keluar);
+}
+@media (hover: hover) and (pointer: fine) {
+  /* Membesar sedikit, bukan cuma terangkat. Kartu keterangan tidak punya foto
+     yang bisa di-zoom di dalamnya, jadi kartunya sendiri yang jadi sasaran
+     kursor — dan itu yang membuat ia terasa bisa ditekan.
+
+     1.03, bukan 1.12 seperti referensinya. Di kisi empat kolom, 1.12 membuat
+     kartu benar-benar menabrak tetangganya; dan teks yang diperbesar dengan
+     `transform` mulai terlihat kabur karena ia diskalakan sebagai gambar, bukan
+     digambar ulang. Angkatnya 2px karena skala sudah membawa geraknya sendiri.
+
+     `z-index` yang membuat pembesarannya berarti: tanpa itu, kartu yang
+     terangkat justru masuk KE BAWAH kartu berikutnya di kisi, karena elemen
+     yang datang belakangan digambar di atas. */
+  .kartu-hover:hover {
+    z-index: 2;
+    border-color: rgb(var(--aksen-kuat));
+    box-shadow:
+      inset 0 0 0 1px rgb(var(--aksen-kuat)),
+      0 14px 30px rgb(var(--ink) / 0.12);
+    transform: translateY(-2px) scale(1.03);
+  }
+  .kartu-hover:hover .kartu-hover-judul {
+    color: rgb(var(--aksen));
+  }
+  /* Til produk sudah membesarkan fotonya sendiri di dalam bingkai. Dua zoom
+     bertumpuk (kartu 1.03 x foto 1.03) membuat fotonya melonjak; yang di dalam
+     dikembalikan supaya yang bergerak cuma kartunya. */
+  .kartu-hover:hover .zoom-produk {
+    transform: none;
+  }
+}
+/* Papan ketik mendapat perlakuan yang sama. Kartu keterangan bukan tautan, jadi
+   fokusnya datang dari isinya — `:focus-within` menangani keduanya sekaligus,
+   termasuk til produk yang seluruh kartunya memang satu tautan. */
+.kartu-hover:focus-within {
+  z-index: 2;
+  border-color: rgb(var(--aksen-kuat));
+  box-shadow: inset 0 0 0 1px rgb(var(--aksen-kuat));
+}
+.kartu-hover-judul {
+  transition: color 0.2s ease;
+}
+
+/* ============================================================
+   Hero carousel & rel produk
+   ------------------------------------------------------------
+   Keduanya memakai scroll native + snap. Jari dan trackpad sudah tahu cara
+   menggeser permukaan seperti ini; drag JavaScript justru mudah bertabrakan
+   dengan gulir halaman di HP. Tombol hanya menjadi jalan kedua untuk desktop
+   dan keyboard.
+   ============================================================ */
+/* Sorotan beranda memenuhi lebar layar, tidak lagi berupa kartu membulat yang
+   mengambang di tengah. Latar yang menyentuh kedua tepi membuat bagian ini
+   terbaca sebagai satu RUANG tersendiri — pintu masuk ke satu usaha — bukan
+   satu blok di antara blok lain. Isinya tetap dibatasi `max-w-7xl` di dalam,
+   karena baris teks selebar 1920 px tidak bisa dibaca siapa pun.
+
+   `overflow: hidden` wajib: di dalamnya ada rel yang digulir mendatar, dan
+   tanpa ini slide di sebelah kanan ikut melebarkan halaman sehingga muncul
+   bilah gulir mendatar di seluruh situs. */
+.hero-penuh {
+  overflow: hidden;
+  background-color: rgb(var(--surface));
+  border-bottom: 1px solid rgb(var(--line));
+
+  /* Tekstur anyaman. Dua garis miring bersilangan — bentuk yang sama dengan
+     benang tenun dan anyaman bambu, dua kerajinan yang memang dikerjakan di
+     desa ini. Digambar CSS, bukan berkas gambar: nol permintaan jaringan, nol
+     kilobyte, dan ia ikut berganti warna sendiri di mode gelap karena memakai
+     `--ink` yang memang sudah dibalik di sana.
+
+     Alfa-nya 0.02. Terlihat sebagai permukaan yang tidak rata, bukan sebagai
+     garis — begitu polanya bisa DIHITUNG mata, ia berhenti jadi tekstur dan
+     mulai bersaing dengan teks di atasnya. Jaraknya 10px, bukan 4px, supaya
+     tidak menimbulkan moiré saat halaman digulir di layar HP berkerapatan
+     tinggi. */
+  background-image:
+    radial-gradient(110% 70% at 50% 0%, rgb(var(--aksen) / 0.08), transparent 62%),
+    repeating-linear-gradient(45deg, rgb(var(--ink) / 0.02) 0 1px, transparent 1px 10px),
+    repeating-linear-gradient(-45deg, rgb(var(--ink) / 0.02) 0 1px, transparent 1px 10px);
+}
+/* Tekstur adalah hiasan. Yang menyetel kontras tinggi meminta latar yang
+   tenang, dan pola sehalus apa pun tetap mengurangi jarak antara teks dan
+   latarnya. */
+@media (prefers-contrast: more) {
+  .hero-penuh {
+    background-image: none;
+  }
+}
+/* Potret pemilik usaha. Cincinnya memakai warna kertas, bukan garis, supaya
+   foto yang latarnya kebetulan segelap latar bagian ini tetap punya batas. */
+.hero-potret img,
+.hero-potret span {
+  box-shadow: 0 0 0 4px rgb(var(--paper)), 0 14px 30px rgb(var(--ink) / 0.1);
+}
+.hero-rel,
+.rel-produk {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+}
+.hero-rel::-webkit-scrollbar,
+.rel-produk::-webkit-scrollbar {
+  display: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hero-rel,
+  .rel-produk {
+    scroll-behavior: smooth;
+  }
+}
+.hero-slide {
+  min-width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+/* Sasaran sentuhnya 44x44 penuh, garisnya yang terlihat kecil. Versi
+   sebelumnya 32px lebar — di bawah batas yang bisa ditekan dengan andal oleh
+   ibu jari, dan indikator carousel justru salah satu yang paling sering
+   ditekan sambil berjalan. */
+.hero-indikator {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 999px;
+  background: transparent;
+  position: relative;
+}
+.hero-indikator::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0.5rem;
+  left: 0.5rem;
+  height: 2px;
+  border-radius: 999px;
+  background: rgb(var(--line));
+  transform: translateY(-50%);
+  transition: background-color var(--gerak-cepat) ease, transform var(--gerak-sedang) var(--keluar);
+}
+.hero-indikator.is-aktif::after {
+  background: rgb(var(--aksen));
+  transform: translateY(-50%) scaleX(1.12);
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-indikator:hover::after {
+    background: rgb(var(--aksen));
+  }
+}
+.hero-kontrol,
+.tombol-rel {
+  display: inline-flex;
+  width: 2.75rem;
+  height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgb(var(--line));
+  border-radius: 999px;
+  color: rgb(var(--ink));
+  background: rgb(var(--paper));
+  transition: border-color var(--gerak-cepat) ease, color var(--gerak-cepat) ease, background-color var(--gerak-cepat) ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .hero-kontrol:hover,
+  .tombol-rel:not(:disabled):hover {
+    border-color: rgb(var(--aksen));
+    color: rgb(var(--aksen-ink));
+    background: rgb(var(--aksen));
+  }
+}
+/* Tombol rel yang sudah mentok dimatikan, bukan dilepas dari DOM — lihat
+   komentar di RelProduk.tsx. Ia tetap memakan tempat yang sama supaya tombol
+   sebelahnya tidak bergeser tepat saat kursor sudah bergerak ke sana. */
+.tombol-rel:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+.rel-produk-bingkai {
+  position: relative;
+}
+.rel-produk {
+  gap: 1rem;
+  padding: 0.125rem 0.125rem 0.75rem;
+}
+.rel-produk-kartu {
+  width: min(76vw, 18rem);
+  flex: 0 0 min(76vw, 18rem);
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+.rel-produk-kartu > article {
+  height: 100%;
+}
+/* Isyarat "masih ada di kanan". Diredupkan lewat opacity, bukan dilepas dari
+   DOM, supaya munculnya tidak menyentak saat rel baru digeser sedikit. */
+.isyarat-rel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0.75rem;
+  width: 3.5rem;
+  pointer-events: none;
+  opacity: 0;
+  background: linear-gradient(90deg, rgb(var(--paper) / 0), rgb(var(--paper) / 0.94));
+  transition: opacity var(--gerak-sedang) ease;
+}
+.isyarat-rel[data-tampil='true'] {
+  opacity: 1;
+}
+/* Tombol geser: satu di tepi kiri kartu, satu di tepi kanan, di ketinggian
+   tengah kartu.
+   ------------------------------------------------------------
+   Ini bentuk yang sudah dikenali orang dari carousel mana pun, jadi maksudnya
+   terbaca tanpa perlu dipelajari. Sebelumnya ia sempat berkumpul di kanan atas
+   bersama judul — tidak menutupi apa pun, tapi jauh dari benda yang digerakkan,
+   sehingga hubungan antara tombol dan barisan kartunya harus ditebak.
+
+   Keduanya ADA DI SEMUA UKURAN LAYAR. Versi paling awal menyembunyikannya di
+   bawah 768px, artinya di HP — tempat sebagian besar orang membuka situs ini —
+   tidak ada satu pun isyarat bahwa barisan ini bisa digeser; yang tahu hanya
+   yang kebetulan mencoba menyeretnya.
+
+   Harganya jujur: di ketinggian tengah, tombol menutupi sekitar 44px kartu di
+   tepi. Itu diterima karena latarnya solid (bukan transparan), jadi ia terbaca
+   sebagai kontrol yang mengambang di atas barisan, bukan sebagai bagian kartu
+   yang rusak. Ditaruh 0.25rem dari tepi, bukan menggantung setengah di luar,
+   supaya di layar 390px ia tidak melewati padding halaman dan menimbulkan bilah
+   gulir mendatar di seluruh situs. */
+.kontrol-rel {
+  position: absolute;
+  /* Bingkainya lebih tinggi dari kartunya: rel menyisakan 0.75rem di bawah
+     untuk bayangan kartu. Setengah dari sisa itu dikurangkan supaya tombolnya
+     berada di tengah KARTU, bukan di tengah bingkai — selisih 6px yang terlihat
+     jelas begitu ditaruh berdampingan. */
+  top: calc(50% - 0.375rem);
+  z-index: 2;
+  transform: translateY(-50%);
+}
+.kontrol-rel[data-arah='kiri'] {
+  left: 0.25rem;
+}
+.kontrol-rel[data-arah='kanan'] {
+  right: 0.25rem;
+}
+/* Bayangan tipis memisahkannya dari foto di belakangnya. Tanpa ini, tombol
+   berlatar kertas di atas foto berlatar terang nyaris hilang. */
+.kontrol-rel .tombol-rel {
+  box-shadow: 0 4px 14px rgb(var(--ink) / 0.16);
+}
+@media (min-width: 768px) {
+  .rel-produk {
+    gap: 1.25rem;
+  }
+  .rel-produk-kartu {
+    width: min(29vw, 17rem);
+    flex-basis: min(29vw, 17rem);
+  }
+  .isyarat-rel {
+    width: 7rem;
   }
 }
 
@@ -215,7 +550,7 @@ body {
   bottom: -0.35rem;
   left: 0;
   height: 1px;
-  background: rgb(var(--olive));
+  background: rgb(var(--aksen));
   transform: scaleX(0);
   transform-origin: right;
   transition: transform 0.2s var(--keluar);
@@ -243,9 +578,9 @@ body {
     transform 0.22s var(--keluar);
 }
 .kolom-cari:focus-within {
-  border-color: rgb(var(--olive));
+  border-color: rgb(var(--aksen));
   box-shadow:
-    0 0 0 4px rgb(var(--olive) / 0.12),
+    0 0 0 4px rgb(var(--aksen) / 0.12),
     0 8px 24px rgb(var(--ink) / 0.06);
   transform: translateY(-1px);
 }
@@ -255,7 +590,7 @@ body {
     transform 0.22s var(--keluar);
 }
 .kolom-cari:focus-within .ikon-cari {
-  color: rgb(var(--olive));
+  color: rgb(var(--aksen));
   transform: translateY(-50%) scale(1.08);
 }
 .input-cari::-webkit-search-cancel-button {
@@ -319,6 +654,16 @@ body {
   .group:hover .zoom-kategori {
     transform: none;
   }
+  .kartu-hover:hover {
+    transform: none;
+  }
+  .hero-rel,
+  .rel-produk {
+    scroll-behavior: auto;
+  }
+  .hero-indikator::after {
+    transition-duration: 0.01ms;
+  }
   .kilau { animation: none; }
   .garis-menu,
   .menu-mobile,
@@ -347,4 +692,286 @@ body {
 @keyframes naik-redup {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* ============================================================
+   Tema halaman UMKM
+   ------------------------------------------------------------
+   Tiap usaha memilih satu dari empat tema. Yang ditukar HANYA
+   warna aksi (--aksen*). Latar, teks, dan garis sengaja tidak
+   ikut berubah.
+
+   Itu keputusan, bukan kemalasan: begitu tema boleh mengganti
+   warna teks dan latar, tiap tema baru harus diuji kontrasnya
+   terhadap tiap warna teks, dan yang pertama lolos uji adalah
+   yang paling jarang dipakai. Dengan hanya menukar aksen, satu-
+   satunya pasangan yang perlu dijaga adalah --aksen-ink di atas
+   --aksen, dan itu ditetapkan berpasangan di bawah ini.
+
+   Kontras --aksen-ink di atas --aksen (mode terang, WCAG AA
+   butuh 4.5:1 untuk teks normal):
+     zaitun  #6A743E  4.9:1
+     tanah   #8A4A2E  6.6:1
+     nila    #4A4E8C  7.4:1
+     sawah   #3F7549  5.4:1
+   Mode gelap memakai aksen terang dengan teks gelap; keempatnya
+   di atas 8:1.
+
+   Dipasang lewat atribut data-tema pada pembungkus halaman,
+   bukan gaya sebaris, supaya nilainya tidak ikut ke tiap elemen.
+   ============================================================ */
+/* `zaitun` sekarang punya bloknya sendiri.
+   Dulu ia tidak perlu ditulis: olive memang warna bawaan portal, jadi tema
+   "zaitun" cukup berarti "jangan timpa apa pun". Sejak aksen portal jadi mauve,
+   diam berarti toko bertema zaitun ikut jadi mauve — jadi nilainya harus dieja.
+   Nilainya sama persis dengan aksen portal versi lama. */
+[data-tema='zaitun'] {
+  --aksen: 106 116 62;
+  --aksen-kuat: 84 92 48;
+  --aksen-ink: 250 250 245;
+}
+[data-tema='tanah'] {
+  --aksen: 138 74 46;
+  --aksen-kuat: 110 58 34;
+  --aksen-ink: 252 248 245;
+}
+[data-tema='nila'] {
+  --aksen: 74 78 140;
+  --aksen-kuat: 58 61 112;
+  --aksen-ink: 248 248 252;
+}
+[data-tema='sawah'] {
+  --aksen: 63 117 73;
+  --aksen-kuat: 50 94 58;
+  --aksen-ink: 246 251 247;
+}
+
+:root[data-theme='gelap'] [data-tema='zaitun'],
+:root[data-theme='gelap'] [data-tema='tanah'],
+:root[data-theme='gelap'] [data-tema='nila'],
+:root[data-theme='gelap'] [data-tema='sawah'] {
+  --aksen-ink: 15 15 17;
+}
+:root[data-theme='gelap'] [data-tema='zaitun'] {
+  --aksen: 154 168 96;
+  --aksen-kuat: 174 187 118;
+}
+:root[data-theme='gelap'] [data-tema='tanah'] {
+  --aksen: 208 138 99;
+  --aksen-kuat: 224 163 129;
+}
+:root[data-theme='gelap'] [data-tema='nila'] {
+  --aksen: 154 160 224;
+  --aksen-kuat: 180 185 236;
+}
+:root[data-theme='gelap'] [data-tema='sawah'] {
+  --aksen: 125 191 136;
+  --aksen-kuat: 152 209 162;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='terang']) [data-tema='zaitun'],
+  :root:not([data-theme='terang']) [data-tema='tanah'],
+  :root:not([data-theme='terang']) [data-tema='nila'],
+  :root:not([data-theme='terang']) [data-tema='sawah'] {
+    --aksen-ink: 15 15 17;
+  }
+  :root:not([data-theme='terang']) [data-tema='zaitun'] {
+    --aksen: 154 168 96;
+    --aksen-kuat: 174 187 118;
+  }
+  :root:not([data-theme='terang']) [data-tema='tanah'] {
+    --aksen: 208 138 99;
+    --aksen-kuat: 224 163 129;
+  }
+  :root:not([data-theme='terang']) [data-tema='nila'] {
+    --aksen: 154 160 224;
+    --aksen-kuat: 180 185 236;
+  }
+  :root:not([data-theme='terang']) [data-tema='sawah'] {
+    --aksen: 125 191 136;
+    --aksen-kuat: 152 209 162;
+  }
+}
+
+/* ============================================================
+   Dialog konfirmasi
+   ------------------------------------------------------------
+   <dialog> bawaan, bukan pustaka. Ia sudah membawa perangkap
+   fokus, tutup lewat Escape, dan lapisan ::backdrop — tiga hal
+   yang paling sering salah kalau ditulis sendiri.
+
+   Modal muncul dari tengah, jadi transform-origin dibiarkan di
+   tengah. Yang berjangkar ke pemicunya cuma popover; modal tidak
+   berjangkar ke apa pun.
+   ============================================================ */
+dialog.kotak::backdrop {
+  background: rgb(0 0 0 / 0.45);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+}
+dialog.kotak[open]::backdrop {
+  opacity: 1;
+}
+dialog.kotak {
+  opacity: 0;
+  /* Bukan dari scale(0). Tidak ada benda yang muncul dari ketiadaan. */
+  transform: scale(0.96);
+  transition:
+    opacity 0.16s ease,
+    transform 0.2s var(--keluar),
+    overlay 0.2s allow-discrete,
+    display 0.2s allow-discrete;
+}
+dialog.kotak[open] {
+  opacity: 1;
+  transform: none;
+}
+@starting-style {
+  dialog.kotak[open] {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  dialog.kotak[open]::backdrop {
+    opacity: 0;
+  }
+}
+
+/* ============================================================
+   Pemberitahuan setelah aksi berhasil
+   ============================================================ */
+.pemberitahuan {
+  animation: naik 0.24s var(--keluar) backwards;
+}
+
+/* ============================================================
+   Laci navigasi panel
+   ------------------------------------------------------------
+   Masuk dari kiri, keluar ke kiri. Sesuatu yang datang dari satu
+   arah lalu pergi ke arah lain membuat orang kehilangan jejak di
+   mana benda itu sekarang berada.
+   ============================================================ */
+.laci {
+  transform: translateX(-100%);
+  transition: transform 0.24s var(--keluar), visibility 0s linear 0.24s;
+  visibility: hidden;
+}
+.laci[data-open='true'] {
+  transform: none;
+  visibility: visible;
+  transition: transform 0.26s var(--keluar), visibility 0s;
+}
+.tirai {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.tirai[data-open='true'] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ============================================================
+   Dropdown portal di header UMKM
+   ------------------------------------------------------------
+   Tumbuh dari tombolnya, bukan dari tengah dirinya sendiri.
+   Popover yang membesar dari titik yang salah terbaca seperti
+   muncul dari tempat lain.
+   ============================================================ */
+/* Avatar akun di header, seperti di media sosial. Huruf awal nama pengguna
+   dalam lingkaran aksen — bentuk yang sudah dikenali orang sebagai "ini saya",
+   dan yang tidak butuh foto untuk bekerja. Ukurannya 2.25rem supaya sebaris
+   dengan pil tema di sebelahnya; sasaran tekannya diperbesar lewat padding
+   bingkai header, bukan lewat lingkarannya sendiri yang harus tetap kecil. */
+.avatar-akun {
+  display: inline-flex;
+  width: 2.25rem;
+  height: 2.25rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: rgb(var(--aksen));
+  color: rgb(var(--aksen-ink));
+  font-family: var(--font-body), system-ui, sans-serif;
+  font-size: 0.875rem;
+  font-weight: 700;
+  line-height: 1;
+  transition:
+    transform 0.12s var(--keluar),
+    box-shadow 0.18s var(--keluar);
+}
+@media (hover: hover) and (pointer: fine) {
+  .avatar-akun:hover {
+    box-shadow: 0 0 0 3px rgb(var(--aksen) / 0.22);
+  }
+}
+/* Di menu HP avatarnya cuma keterangan, bukan tombol. */
+.avatar-akun-mati {
+  pointer-events: none;
+}
+
+.dropdown {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-6px) scale(0.97);
+  transform-origin: top right;
+  box-shadow: 0 18px 40px rgb(var(--ink) / 0.1);
+  transition:
+    opacity 0.14s ease,
+    transform 0.18s var(--keluar),
+    visibility 0s linear 0.18s;
+}
+.dropdown[data-open='true'] {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 0.16s ease,
+    transform 0.2s var(--keluar),
+    visibility 0s;
+}
+
+/* ============================================================
+   Galeri: gulir mendatar yang berhenti di tempat
+   ============================================================ */
+.rel-galeri {
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.rel-galeri::-webkit-scrollbar {
+  display: none;
+}
+.rel-galeri > * {
+  scroll-snap-align: start;
+}
+
+/* Angka yang berubah tidak boleh menggeser tetangganya. */
+.angka-rata {
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  dialog.kotak,
+  dialog.kotak::backdrop,
+  .laci,
+  .tirai,
+  .dropdown {
+    transition-duration: 0.01ms;
+  }
+  dialog.kotak,
+  dialog.kotak[open],
+  .dropdown {
+    transform: none;
+  }
+  .laci {
+    transform: translateX(-100%);
+  }
+  .laci[data-open='true'] {
+    transform: none;
+  }
+  .pemberitahuan {
+    animation: naik-redup 0.2s ease both;
+  }
 }

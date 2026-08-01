@@ -16,7 +16,7 @@ export default function KartuProduk({ produk, indeks = 0 }: { produk: Produk; in
       // Kartu masuk bergiliran, bukan serentak. Jeda ditahan 45 ms dan
       // dibatasi 10 kartu: lebih lama dari itu, katalog terasa lambat
       // dibuka, bukan hidup.
-      style={{ animationDelay: `${Math.min(indeks, 10) * 45}ms` }}
+      style={{ animationDelay: `${Math.min(indeks, 8) * 45}ms` }}
     >
       <Link href={`/produk/${produk.id}`} className="block overflow-hidden bg-surface">
         {foto ? (
@@ -60,7 +60,7 @@ export default function KartuProduk({ produk, indeks = 0 }: { produk: Produk; in
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Pesan ${produk.namaProduk} melalui WhatsApp`}
-                className="tekan block rounded-full bg-olive py-2.5 text-center font-body text-xs font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
+                className="tekan block rounded-full bg-aksen py-2.5 text-center font-body text-xs font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
               >
                 Pesan
               </a>

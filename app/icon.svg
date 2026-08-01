@@ -1,10 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <!-- Favicon: dua simpul rantai di atas blok olive. Mark wordmark punya tiga
-       simpul, tapi di 16 px tiga simpul menyatu jadi bercak, jadi di sini
-       dipotong dua. -->
-  <rect width="32" height="32" rx="7" fill="#656B37"/>
-  <g fill="none" stroke="#F2F0E2" stroke-width="3.2">
-    <ellipse cx="12.5" cy="16" rx="6.6" ry="5.4"/>
-    <ellipse cx="19.5" cy="16" rx="6.6" ry="5.4"/>
-  </g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 220">
+  <!-- Favicon: ikon tas portal, VARIAN SEDERHANA TANPA GARIS JAHIT.
+       Dua garis jahit di badan tas hilang total di bawah 32 px dan yang tersisa
+       cuma bercak terang yang membuat ikonnya terlihat kotor — catatan itu ada
+       di berkas logonya sendiri.
+
+       Warnanya dipatok, tidak memakai custom property: favicon dirender di luar
+       halaman, jadi tidak ada :root yang bisa dibacanya. Garisnya ungu tua dan
+       tasnya merah muda, jadi ia tetap terbaca di bilah tab terang maupun
+       gelap. -->
+  <path
+    d="M77.3438 107.422V64.4531C77.3438 48.9844 88.2292 41.25 110 41.25C131.771 41.25 142.656 48.9844 142.656 64.4531V107.422"
+    fill="none" stroke="#3A2F4A" stroke-width="16" stroke-linecap="round"/>
+  <path
+    d="M39.5312 103.125L110 81.6406L180.469 103.125V182.188C180.469 194.219 174.453 200.234 162.422 200.234H57.5781C45.5469 200.234 39.5312 194.219 39.5312 182.188V103.125Z"
+    fill="#C76F9A"/>
+  <path
+    d="M39.5312 103.125L110 81.6406L180.469 103.125V122.891L110 101.406L39.5312 122.891V103.125Z"
+    fill="#E8A6C4"/>
+  <path
+    d="M39.5312 103.125L110 81.6406L180.469 103.125V182.188C180.469 194.219 174.453 200.234 162.422 200.234H57.5781C45.5469 200.234 39.5312 194.219 39.5312 182.188V103.125Z"
+    fill="none" stroke="#3A2F4A" stroke-width="14" stroke-linejoin="round"/>
 </svg>

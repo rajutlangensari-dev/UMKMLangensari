@@ -158,12 +158,12 @@ export default function HalamanPanduan() {
       <Header />
 
       <main>
-        <section className="bg-olive px-5 pb-14 pt-14 sm:px-8 sm:pb-16 sm:pt-20">
+        <section className="bg-aksen px-5 pb-14 pt-14 sm:px-8 sm:pb-16 sm:pt-20">
           <div className="mx-auto max-w-3xl">
-            <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-[-0.02em] text-olive-ink text-balance sm:text-5xl">
+            <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-[-0.02em] text-aksen-ink text-balance sm:text-5xl">
               Panduan usaha untuk UMKM Langensari
             </h1>
-            <p className="mt-5 max-w-xl font-body text-lg leading-relaxed text-olive-ink/85 text-pretty">
+            <p className="mt-5 max-w-xl font-body text-lg leading-relaxed text-aksen-ink/85 text-pretty">
               Semua materi workshop ada di halaman ini. Bisa dibuka kapan saja dari HP. Tidak
               perlu dihafal, tinggal dibaca lagi saat mengerjakan.
             </p>

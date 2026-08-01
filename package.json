@@ -6,7 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "uji": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/uji-auth.ts",
+    "uji:blok": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/uji-blok.ts",
+    "uji:warna": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/uji-warna.ts",
+    "uji:alur": "node scripts/uji-alur.mjs",
+    "uji:render": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/uji-render.ts",
+    "akun": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/buat-akun.ts",
+    "dummy": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/isi-dummy.ts"
   },
   "dependencies": {
     "next": "^14.2.5",

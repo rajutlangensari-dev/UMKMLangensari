@@ -1,8 +1,9 @@
-# Katalog Rajut Langensari
+# Portal UMKM Langensari
 
 Next.js App Router, TypeScript, dan Tailwind. Route utama:
 
-- `/` - beranda dan cerita perajut
+- `/` - beranda portal
+- `/umkm` dan `/umkm/[slug]` - daftar dan halaman tiap pelaku usaha
 - `/katalog` - katalog publik, filter kategori, dan pencarian
 - `/produk/[id]` - detail produk yang bisa dibagikan
 - `/tentang` - profil usaha

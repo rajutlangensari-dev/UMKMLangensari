@@ -1,77 +1,69 @@
-'use client';
-
-import { useEffect, useState } from 'react';
+import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
-import { ambilProfil, normalisasiFotoUrl, tautanWhatsapp } from '@/lib/api';
-import type { Profil } from '@/lib/types';
 
+export const metadata = {
+  title: 'Tentang',
+  description: 'UMKM Langensari dan tim yang menjalankannya.',
+};
+
+// Halaman ini sengaja TIDAK lagi membaca sheet `Profil`.
+//
+// Dulu isinya profil satu toko rajut, karena situs ini memang toko rajut. Setelah
+// naik jadi portal desa, profil toko itu pindah ke halaman UMKM-nya sendiri di
+// /umkm/rajut-langensari. Yang tersisa di sini keterangan tentang portalnya, dan
+// itu tidak diedit siapa pun lewat panel — jadi tidak ada gunanya mengambilnya
+// dari sheet. Seluruh state pemuatan dan penanganan galatnya ikut hilang.
+//
+// TEKS DI BAWAH BELUM DIPERIKSA PIC. Isinya hanya hal yang sudah pasti: tidak ada
+// klaim jumlah UMKM, dampak, atau capaian, karena angka-angka itu belum
+// terverifikasi. Silakan diganti PIC atau GPT.
 export default function HalamanTentang() {
-  const [profil, setProfil] = useState<Profil | null | undefined>(undefined);
-
-  useEffect(() => {
-    ambilProfil()
-      .then(setProfil)
-      .catch(() => setProfil(null));
-  }, []);
-
   return (
     <>
       <Header />
-      <main className="min-h-[60vh]">{isi()}</main>
+      <main className="mx-auto min-h-[60vh] max-w-2xl px-5 py-12 sm:px-8 sm:py-16">
+        <h1 className="font-display text-2xl font-bold leading-tight tracking-[-0.02em] text-ink sm:text-3xl">
+          Tentang portal ini
+        </h1>
+
+        <div className="mt-6 space-y-5 font-body leading-relaxed text-muted text-pretty">
+          <p>
+            UMKM Langensari adalah katalog bersama untuk usaha yang dijalankan
+            warga Desa Langensari, Kecamatan Sukaraja. Setiap usaha punya halamannya
+            sendiri berisi profil dan produk yang dijual.
+          </p>
+          <p>
+            Portal ini tidak menjual apa pun dan tidak memungut biaya. Tidak ada
+            keranjang belanja dan tidak ada pembayaran di situs. Setiap produk
+            mencantumkan harga dan nomor WhatsApp pembuatnya, dan pemesanan terjadi
+            langsung antara pembeli dan pemilik usaha.
+          </p>
+          <p>
+            Portal disusun tim KKN Universitas Padjadjaran 2026 bersama pemerintah
+            Desa Langensari, dan dirancang supaya bisa diteruskan perangkat desa
+            setelah masa KKN berakhir.
+          </p>
+        </div>
+
+        <section className="sembul mt-10 rounded-kartu border border-line p-6">
+          <h2 className="font-display text-lg font-semibold text-ink">
+            Ingin usaha Anda masuk di sini?
+          </h2>
+          <p className="mt-2 font-body text-sm leading-relaxed text-muted text-pretty">
+            Pendaftaran dibantu tim KKN dan perangkat desa, tidak lewat formulir di
+            situs ini. Panduan menyiapkan usaha, mulai dari NIB sampai toko online
+            dan QRIS, ada di halaman panduan.
+          </p>
+          <Link
+            href="/panduan"
+            className="tekan mt-5 inline-block rounded-full bg-aksen px-6 py-2.5 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+          >
+            Buka panduan usaha
+          </Link>
+        </section>
+      </main>
       <Footer />
     </>
   );
-
-  function isi() {
-    if (profil === undefined) {
-      return (
-        <div className="bg-olive px-5 py-20 sm:px-8" aria-busy="true" aria-live="polite">
-          <span className="sr-only">Memuat profil</span>
-          <div className="mx-auto h-32 w-32 rounded-full bg-olive-ink/15" />
-          <div className="mx-auto mt-6 h-8 w-56 rounded-full bg-olive-ink/15" />
-        </div>
-      );
-    }
-
-    const p = profil ?? { namaToko: '', bio: '', foto: '', kontakWa: '', alamat: '' };
-    const foto = normalisasiFotoUrl(p.foto, 260);
-    const nama = p.namaToko || 'Rajut Langensari';
-    const bio =
-      p.bio ||
-      'Katalog bersama perajin rumahan Kampung Cibayawak dan Kampung Cipaku. Setiap produk mencantumkan harga dan nomor WhatsApp pembuatnya.';
-
-    return (
-      <section className="mx-auto max-w-2xl px-5 py-12 text-center sm:px-8 sm:py-16">
-        <div className="mx-auto h-28 w-28 overflow-hidden rounded-full bg-surface">
-          {foto ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={foto} alt={nama} className="h-full w-full object-cover" />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center font-display text-3xl font-bold text-muted/50">
-              {nama.charAt(0)}
-            </div>
-          )}
-        </div>
-
-        <h1 className="mt-6 font-display text-2xl font-bold leading-tight tracking-[-0.02em] text-ink sm:text-3xl">
-          {nama}
-        </h1>
-        {p.alamat && <p className="mt-1.5 font-body text-sm text-muted">{p.alamat}</p>}
-
-        <p className="mt-6 font-body leading-relaxed text-muted text-pretty">{bio}</p>
-
-        {p.kontakWa && (
-          <a
-            href={tautanWhatsapp(p.kontakWa, 'produk rajut')}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="tekan mt-8 inline-block rounded-full bg-olive px-7 py-3 font-body text-sm font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
-          >
-            Hubungi melalui WhatsApp
-          </a>
-        )}
-      </section>
-    );
-  }
 }

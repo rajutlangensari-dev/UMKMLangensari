@@ -16,7 +16,7 @@ export default function RailKategori({ produk }: { produk: Produk[] }) {
         </h2>
         <Link
           href="/katalog"
-          className="shrink-0 font-body text-sm text-olive transition-colors hover:text-olive-strong"
+          className="shrink-0 font-body text-sm text-aksen transition-colors hover:text-aksen-kuat"
         >
           Lihat katalog
         </Link>

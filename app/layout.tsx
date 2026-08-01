@@ -16,9 +16,9 @@ const fontUtama = Instrument_Sans({
   display: 'swap',
 });
 
-const JUDUL = 'Rajut Langensari | Katalog produk rajut Desa Langensari';
+const JUDUL = 'UMKM Langensari | Katalog usaha warga Desa Langensari';
 const DESKRIPSI =
-  'Temukan produk rajut dari Kampung Cibayawak dan Cipaku, Desa Langensari. Lihat harga dan hubungi perajinnya langsung lewat WhatsApp.';
+  'Katalog bersama pelaku usaha Desa Langensari. Lihat produk dan harganya, lalu pesan langsung ke pembuatnya lewat WhatsApp.';
 
 // Sebagian besar tautan katalog ini disebarkan lewat WhatsApp: perajin
 // membagikan produknya ke pembeli, panitia membagikan katalog ke grup desa.
@@ -29,12 +29,12 @@ export const metadata: Metadata = {
   metadataBase: new URL(
     process.env.NEXT_PUBLIC_SITE_URL || 'https://umkmlangensari.vercel.app'
   ),
-  title: { default: JUDUL, template: '%s | Rajut Langensari' },
+  title: { default: JUDUL, template: '%s | UMKM Langensari' },
   description: DESKRIPSI,
   openGraph: {
     title: JUDUL,
     description: DESKRIPSI,
-    siteName: 'Rajut Langensari',
+    siteName: 'UMKM Langensari',
     locale: 'id_ID',
     type: 'website',
   },

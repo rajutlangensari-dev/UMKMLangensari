@@ -3,6 +3,7 @@ import Logo from './Logo';
 const NAV = [
   { href: '/', label: 'Beranda' },
   { href: '/katalog', label: 'Katalog' },
+  { href: '/umkm', label: 'Pelaku usaha' },
   { href: '/panduan', label: 'Panduan usaha' },
   { href: '/tentang', label: 'Tentang' },
 ];
@@ -13,7 +14,7 @@ const INFO = [
   'Pesan langsung lewat WhatsApp',
 ];
 
-// Footer terang di atas panel lembut, bukan blok olive pekat. Halaman ini
+// Footer terang di atas panel lembut, bukan blok aksen pekat. Halaman ini
 // selesai dengan tenang, tidak dengan pita warna penuh.
 export default function Footer() {
   return (
@@ -22,8 +23,8 @@ export default function Footer() {
         <div>
           <Logo />
           <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-muted">
-            Produk dalam katalog ini berasal dari perajin Kampung Cibayawak dan Cipaku,
-            Desa Langensari. Anda dapat memesan langsung lewat WhatsApp.
+            Katalog bersama pelaku usaha Desa Langensari. Setiap produk mencantumkan
+            harga dan nomor WhatsApp pembuatnya.
           </p>
         </div>
 
@@ -57,7 +58,7 @@ export default function Footer() {
 
       <div className="border-t border-line">
         <p className="mx-auto max-w-6xl px-5 py-5 text-center font-body text-xs text-muted sm:px-8">
-          2026 Rajut Langensari. Tim KKN Universitas Padjadjaran.
+          2026 UMKM Langensari. Tim KKN Universitas Padjadjaran.
         </p>
       </div>
     </footer>

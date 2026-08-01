@@ -1,6 +1,18 @@
-import type { Produk, ProdukBaru, Profil } from './types';
+import type { Produk } from './types';
 
-const PROFIL_KOSONG: Profil = { namaToko: '', bio: '', foto: '', kontakWa: '', alamat: '' };
+/**
+ * Pembacaan publik dan pembantu tampilan. Dipakai komponen klien maupun server.
+ *
+ * TIDAK ADA FUNGSI TULIS DI SINI, dan itu disengaja. Semua penulisan lewat
+ * Route Handler `/api/...` yang membuktikan identitas dengan cookie sesi.
+ * Versi lama berkas ini punya `ambilProdukSemua(token)`, `buatProduk(token, ...)`
+ * dan seterusnya — kata sandi admin ikut dari browser sampai ke Apps Script,
+ * dan pada jalur GET ia mendarat di query string yang tercatat di riwayat
+ * peramban, log Apps Script, serta proxy di jalan. Seluruhnya dihapus.
+ *
+ * Kalau nanti butuh menulis sesuatu, tambahkan Route Handler baru — jangan
+ * mengembalikan parameter token ke berkas ini.
+ */
 
 const BASE_URL = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL;
 
@@ -26,6 +38,7 @@ function normalisasiProduk(raw: Record<string, unknown>): Produk {
     foto: String(raw.foto ?? ''),
     kontakWa: String(raw.kontakWa ?? ''),
     namaUmkm: String(raw.namaUmkm ?? ''),
+    umkmId: String(raw.umkmId ?? ''),
     alamat: String(raw.alamat ?? ''),
     status: String(raw.status ?? ''),
   };
@@ -38,72 +51,6 @@ export async function ambilProdukAktif(): Promise<Produk[]> {
   if (!Array.isArray(json)) throw new Error(json.error || 'Format data produk tidak valid.');
   return json.map(normalisasiProduk);
 }
-
-/**
- * Daftar produk untuk panel admin, termasuk yang belum aktif.
- *
- * Memakai GET dengan token di query string, mengikuti Apps Script yang sedang
- * ter-deploy sekarang.
- *
- * CATATAN: query string ikut tercatat di log eksekusi Apps Script, riwayat
- * browser, dan proxy di jalur, jadi kata sandi admin tersimpan di beberapa
- * tempat. Versi POST yang tidak punya masalah itu sudah ada di
- * `Katalog/backend/Code.gs` (aksi `list` di doPost). Setelah Apps Script
- * di-deploy ulang, ganti isi fungsi ini jadi:
- *
- *     const rows = await kirimPerintah(token, 'list');
- *     if (!Array.isArray(rows)) throw new Error('Format data produk tidak valid.');
- *     return rows.map(normalisasiProduk);
- */
-export async function ambilProdukSemua(token: string): Promise<Produk[]> {
-  const res = await fetch(`${urlBackend()}?action=list&all=1&token=${encodeURIComponent(token)}`, {
-    cache: 'no-store',
-  });
-  if (!res.ok) throw new Error('Data produk tidak dapat dimuat.');
-  const json = await res.json();
-  if (!Array.isArray(json)) throw new Error(json.error || 'Kata sandi salah atau server sedang bermasalah.');
-  return json.map(normalisasiProduk);
-}
-
-// Apps Script tidak menangani preflight OPTIONS, jadi body request dikirim sebagai
-// text/plain. Header itu membuat browser menganggap ini "simple request" dan tidak
-// mengirim preflight CORS sebelum request sebenarnya.
-async function kirimPerintah(token: string, action: string, data?: Record<string, unknown>) {
-  const res = await fetch(urlBackend(), {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ token, action, data }),
-  });
-  const json = await res.json();
-  if (!json.ok) throw new Error(json.error || 'Permintaan tidak dapat diproses.');
-  return json.data;
-}
-
-export const buatProduk = (token: string, data: ProdukBaru) => kirimPerintah(token, 'create', data);
-
-export const perbaruiProduk = (token: string, id: string, data: Partial<Produk>) =>
-  kirimPerintah(token, 'update', { ...data, id });
-
-export const hapusProduk = (token: string, id: string) => kirimPerintah(token, 'delete', { id });
-
-export async function ambilProfil(): Promise<Profil> {
-  const res = await fetch(`${urlBackend()}?action=profil`, { cache: 'no-store' });
-  if (!res.ok) throw new Error('Profil tidak dapat dimuat.');
-  const json = await res.json();
-  if (json && json.error) throw new Error(json.error);
-  // Semua field dipaksa string; field yang belum diisi jatuh ke default kosong.
-  return {
-    namaToko: String(json.namaToko ?? ''),
-    bio: String(json.bio ?? ''),
-    foto: String(json.foto ?? ''),
-    kontakWa: String(json.kontakWa ?? ''),
-    alamat: String(json.alamat ?? ''),
-  };
-}
-
-export const simpanProfil = (token: string, data: Profil) => kirimPerintah(token, 'simpanProfil', { ...data });
-
-export { PROFIL_KOSONG };
 
 /**
  * Rapikan URL foto sebelum dipakai di <img>.
@@ -144,7 +91,18 @@ const CLOUDINARY_UPLOAD_PRESET = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESE
 
 const MAKS_FOTO_MB = 5;
 
-/** Upload file gambar langsung dari browser ke Cloudinary, balikin URL siap pakai. */
+/**
+ * Upload file gambar langsung dari browser ke Cloudinary, balikin URL siap pakai.
+ *
+ * PEMBERSIHANNYA ADA DI BACKEND, BUKAN DI SINI. Setiap kali baris produk atau
+ * UMKM disimpan, Apps Script membandingkan foto lama dengan yang baru dan
+ * menghapus yang sudah tidak dipakai siapa pun (`portalSapuFoto_`). Sengaja di
+ * sana: browser tidak boleh memegang kunci penghapusan Cloudinary, dan hanya
+ * sheet yang tahu apakah sebuah URL masih dipakai di tempat lain.
+ *
+ * Foto yang diunggah lalu tidak jadi dipakai — diganti, dibuang, atau
+ * formulirnya dibatalkan — dibereskan `lupakanFoto()` di bawah.
+ */
 export async function uploadFoto(file: File): Promise<string> {
   if (!CLOUDINARY_CLOUD_NAME || !CLOUDINARY_UPLOAD_PRESET) {
     throw new Error(
@@ -172,8 +130,58 @@ export async function uploadFoto(file: File): Promise<string> {
   return json.secure_url as string;
 }
 
+/**
+ * Beri tahu backend bahwa foto ini tidak jadi dipakai.
+ *
+ * Dipanggil saat foto diganti, dibuang, atau formulirnya dibatalkan — kejadian
+ * yang tidak meninggalkan jejak apa pun di sheet, sehingga tidak akan pernah
+ * ditemukan pembandingan lama-vs-baru saat menyimpan.
+ *
+ * MENEMBAK DAN LUPA, DAN ITU DISENGAJA. Yang sedang dikerjakan orangnya adalah
+ * membatalkan atau mengganti foto; gagal menyapu berkas di Cloudinary tidak
+ * boleh menghentikan itu, dan tidak ada yang perlu dia lakukan kalau gagal.
+ * Akibat terburuknya satu berkas tertinggal — persis keadaan sebelum fungsi ini
+ * ada.
+ *
+ * Aman dipanggil dengan URL apa pun: backend menolak menghapus yang masih
+ * dipakai baris mana pun.
+ */
+export function lupakanFoto(url: string | string[]): void {
+  const daftar = (Array.isArray(url) ? url : [url]).filter(
+    (u) => u && u.includes('res.cloudinary.com')
+  );
+  if (daftar.length === 0) return;
+
+  fetch('/api/foto', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ url: daftar }),
+    keepalive: true,
+  }).catch(() => {});
+}
+
+/**
+ * Versi untuk halaman yang sedang ditinggalkan.
+ *
+ * `fetch` biasa dibatalkan peramban saat halaman dibongkar, jadi permintaannya
+ * sering tidak pernah sampai. `sendBeacon` memang dibuat untuk keadaan ini:
+ * permintaannya diserahkan ke peramban dan tetap dikirim setelah halamannya
+ * hilang. Cookie sesi ikut terbawa karena tujuannya satu asal.
+ */
+export function lupakanFotoSaatPergi(url: string[]): void {
+  const daftar = url.filter((u) => u && u.includes('res.cloudinary.com'));
+  if (daftar.length === 0) return;
+
+  const isi = JSON.stringify({ url: daftar });
+  if (typeof navigator !== 'undefined' && navigator.sendBeacon) {
+    navigator.sendBeacon('/api/foto', new Blob([isi], { type: 'application/json' }));
+    return;
+  }
+  lupakanFoto(daftar);
+}
+
 export function tautanWhatsapp(nomor: string, namaProduk: string): string {
-  const pesan = `Halo, saya ingin menanyakan ${namaProduk} yang saya lihat di Katalog Rajut Langensari. Apakah masih tersedia?`;
+  const pesan = `Halo, saya ingin menanyakan ${namaProduk} yang saya lihat di UMKM Langensari. Apakah masih tersedia?`;
   const nomorBersih = nomor.replace(/[^0-9]/g, '').replace(/^0/, '62');
   return `https://wa.me/${nomorBersih}?text=${encodeURIComponent(pesan)}`;
 }

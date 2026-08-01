@@ -3,15 +3,17 @@
 import { useEffect, useRef, useState } from 'react';
 import Logo from './Logo';
 import ThemeToggle from './ThemeToggle';
+import AkunHeader, { AkunMenuMobile } from './AkunHeader';
 
 const LINKS = [
   { href: '/', label: 'Beranda' },
   { href: '/katalog', label: 'Katalog' },
+  { href: '/umkm', label: 'Pelaku usaha' },
   { href: '/panduan', label: 'Panduan' },
   { href: '/tentang', label: 'Tentang' },
 ];
 
-// Pita pengumuman olive di atas header dibuang. Warna pekat di baris paling atas
+// Pita pengumuman aksen di atas header dibuang. Warna pekat di baris paling atas
 // menarik mata ke keterangan yang tidak bisa diklik, padahal yang perlu ditemukan
 // lebih dulu adalah menu Katalog.
 export default function Header() {
@@ -35,18 +37,40 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-5 sm:px-8">
         <Logo />
 
-        <nav className="hidden items-center gap-8 md:flex">
-          {LINKS.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              className="tautan-nav font-body text-sm text-muted transition-colors hover:text-ink"
-            >
-              {l.label}
-            </a>
-          ))}
+        <div className="hidden items-center gap-7 md:flex">
+          <nav aria-label="Navigasi utama" className="flex items-center gap-8">
+            {LINKS.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                className="tautan-nav font-body text-sm text-muted transition-colors hover:text-ink"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Garis pemisah. Yang di kanannya bukan navigasi isi situs melainkan
+              perkakas — pintu masuk pengelola dan setelan tampilan. Tanpa
+              pemisah, "Masuk" terbaca sebagai halaman keenam yang setara dengan
+              Katalog, padahal pengunjung biasa tidak pernah membutuhkannya. */}
+          <span aria-hidden="true" className="h-5 w-px bg-line" />
+
+          {/* Pintu akun. Belum masuk jadi tombol "Masuk"; sudah masuk jadi avatar
+              yang membuka menu akun.
+
+              SENGAJA TERLIHAT, bukan disembunyikan: `/masuk` memang rute publik,
+              dan yang menjaganya kata sandi plus penguncian setelah beberapa
+              kali gagal — bukan sulitnya menemukan tautan. Menyembunyikannya
+              hanya menyulitkan pemilik UMKM yang berhak.
+
+              Bukan tombol aksen pekat: yang membukanya belasan orang, sementara
+              yang melihatnya semua pengunjung. Ajakan utama halaman ini adalah
+              melihat barang, bukan masuk panel. */}
+          <AkunHeader />
+
           <ThemeToggle />
-        </nav>
+        </div>
 
         <div className="md:hidden">
           <button
@@ -85,6 +109,10 @@ export default function Header() {
             {l.label}
           </a>
         ))}
+        {/* Di HP urutannya sama dengan di layar lebar: akun dulu, lalu setelan
+            tampilan paling bawah. Dua-duanya di bawah garis, terpisah dari
+            daftar halaman. */}
+        <AkunMenuMobile onTutup={() => setBuka(false)} />
         <div data-menu-item className="flex items-center justify-between border-t border-line py-3.5">
           <span className="font-body text-muted">Tampilan</span>
           <ThemeToggle />

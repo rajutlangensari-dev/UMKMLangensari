@@ -17,7 +17,7 @@ export default function TidakDitemukan() {
         </p>
         <Link
           href="/katalog"
-          className="tekan mt-7 rounded-full bg-olive px-7 py-3 font-body text-sm font-semibold text-olive-ink transition-[transform,background-color] duration-150 ease-out hover:bg-olive-strong"
+          className="tekan mt-7 rounded-full bg-aksen px-7 py-3 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
         >
           Lihat produk
         </Link>
