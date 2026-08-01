@@ -18,7 +18,7 @@ const fontUtama = Instrument_Sans({
 
 const JUDUL = 'UMKM Langensari | Temukan produk buatan warga Desa Langensari';
 const DESKRIPSI =
-  'Temukan produk dari usaha warga Desa Langensari. Lihat harga dan pembuatnya, lalu tanyakan stok atau pesan lewat WhatsApp.';
+  'Temukan produk dari usaha warga Desa Langensari. Lihat harga dan informasi pembuatnya, kemudian tanyakan ketersediaan atau lakukan pemesanan melalui WhatsApp.';
 
 // Sebagian besar tautan katalog ini disebarkan lewat WhatsApp: perajin
 // membagikan produknya ke pembeli, panitia membagikan katalog ke grup desa.

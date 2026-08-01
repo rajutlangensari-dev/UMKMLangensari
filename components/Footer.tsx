@@ -11,7 +11,7 @@ const NAV = [
 const INFO = [
   'Kampung Cibayawak dan Kampung Cipaku',
   'Desa Langensari, Kecamatan Sukaraja',
-  'Tanya stok dan pesan lewat WhatsApp',
+  'Konfirmasi ketersediaan dan pemesanan melalui WhatsApp',
 ];
 
 /**
@@ -63,8 +63,8 @@ export default function Footer() {
         <div>
           <Logo />
           <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-muted">
-            Temukan produk buatan warga Langensari, lihat harganya, lalu hubungi
-            pembuatnya langsung lewat WhatsApp.
+            Temukan produk buatan warga Langensari, lihat harganya, kemudian hubungi
+            pembuatnya secara langsung melalui WhatsApp.
           </p>
         </div>
 

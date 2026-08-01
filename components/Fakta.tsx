@@ -21,8 +21,8 @@ import type { Produk, SorotanUsaha } from '@/lib/types';
 
 const KALIMAT = [
   {
-    judul: 'Tanya langsung',
-    teks: 'Hubungi pembuatnya lewat WhatsApp untuk menanyakan stok atau cara memesan.',
+    judul: 'Hubungi secara langsung',
+    teks: 'Hubungi pembuat melalui WhatsApp untuk menanyakan ketersediaan dan cara pemesanan.',
   },
   {
     judul: 'Kenali pembuatnya',
@@ -47,7 +47,7 @@ export default function Fakta({
       ? [
           {
             judul: `${sorotan.length} usaha warga`,
-            teks: 'Setiap usaha di sini dikelola warga Desa Langensari.',
+          teks: 'Setiap usaha dalam portal ini dikelola oleh warga Desa Langensari.',
             angka: true,
           },
           {

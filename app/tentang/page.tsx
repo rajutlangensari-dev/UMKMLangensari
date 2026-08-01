@@ -30,28 +30,28 @@ export default function HalamanTentang() {
         <div className="mt-6 space-y-5 font-body leading-relaxed text-muted text-pretty">
           <p>
             UMKM Langensari memuat usaha dan produk buatan warga Desa Langensari,
-            Kecamatan Sukaraja. Setiap usaha punya halaman sendiri untuk bercerita
-            tentang usahanya dan menampilkan produk.
+            Kecamatan Sukaraja. Setiap usaha memiliki halaman tersendiri untuk
+            memperkenalkan profil dan menampilkan produk.
           </p>
           <p>
-            Pembeli dan pemilik usaha mengatur pesanan langsung lewat WhatsApp,
-            termasuk stok, pembayaran, dan pengiriman. Situs ini tidak menerima
-            pembayaran.
+            Pembeli dan pemilik usaha membahas ketersediaan produk, pembayaran,
+            serta pengiriman secara langsung melalui WhatsApp. Portal ini tidak
+            memproses pembayaran.
           </p>
           <p>
             <strong className="font-semibold text-ink">KKN 45 Universitas Padjadjaran</strong>{' '}
-            membuat portal ini bersama pemerintah Desa Langensari. Setelah program KKN
-            selesai, perangkat desa dapat melanjutkan pengelolaannya.
+            mengembangkan portal ini bersama Pemerintah Desa Langensari. Setelah program
+            KKN selesai, perangkat desa dapat melanjutkan pengelolaannya.
           </p>
         </div>
 
         <section className="sembul mt-10 rounded-kartu border border-line p-6">
           <h2 className="font-display text-lg font-semibold text-ink">
-            Punya usaha di Langensari?
+            Ingin mendaftarkan usaha di Langensari?
           </h2>
           <p className="mt-2 font-body text-sm leading-relaxed text-muted text-pretty">
-            Tim KKN dan perangkat desa membantu proses pendaftarannya. Panduan usaha
-            membahas persiapan NIB, toko online, dan QRIS.
+            Tim KKN dan perangkat desa membantu proses pendaftaran. Panduan usaha
+            memuat informasi mengenai persiapan NIB, toko daring, dan QRIS.
           </p>
           <Link
             href="/panduan"

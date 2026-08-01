@@ -515,7 +515,7 @@ export function halamanBawaan(sumber: SumberBawaan, tataLetak: TataLetak): Blok[
             id: idBlok(),
             aktif: true,
             jenis: 'cerita',
-            judul: 'Cerita usaha kami',
+            judul: 'Tentang usaha kami',
             teks: sumber.bio,
             foto: '',
             posisiFoto: 'kiri',

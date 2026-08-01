@@ -130,7 +130,7 @@ function TidakAda() {
         Produk tidak ditemukan
       </h1>
       <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-        Produk mungkin sudah tidak tersedia atau tautannya kurang tepat.
+        Produk tersebut mungkin sudah tidak tersedia atau alamat tautannya kurang tepat.
       </p>
       <Link
         href="/katalog"
@@ -199,7 +199,7 @@ function Isi({
           {/* Siapa yang mengerjakan berdiri sendiri: di katalog desa, itu bagian
               dari alasan orang membeli, bukan keterangan tambahan. */}
           <dl className="mt-7 rounded-kartu border border-line px-5 py-4">
-            <dt className="font-body text-sm text-muted">Dari usaha</dt>
+            <dt className="font-body text-sm text-muted">Produk dari</dt>
             <dd className="mt-1 font-display font-semibold text-ink">{produk.namaUmkm}</dd>
             {produk.alamat && (
               <dd className="mt-0.5 font-body text-sm text-muted">{produk.alamat}</dd>
@@ -210,7 +210,7 @@ function Isi({
                   href={`/umkm/${slugUmkm}`}
                   className="warna-interaktif font-body text-sm text-muted underline underline-offset-4"
                 >
-                  Kunjungi halaman usahanya
+                  Lihat profil usaha
                 </Link>
               </dd>
             )}
@@ -218,7 +218,7 @@ function Isi({
 
           {habis ? (
             <p className="mt-7 rounded-full bg-surface px-5 py-3 text-center font-body text-sm text-muted">
-              Stok sedang habis. Hubungi usahanya untuk menanyakan kapan produk tersedia lagi.
+              Stok sedang habis. Hubungi pemilik usaha untuk menanyakan kapan produk tersedia kembali.
             </p>
           ) : (
             produk.kontakWa && (
@@ -228,7 +228,7 @@ function Isi({
                 rel="noopener noreferrer"
                 className="tekan mt-7 inline-block self-start rounded-full bg-aksen px-7 py-3 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
               >
-                Tanya stok lewat WhatsApp
+                Tanyakan stok melalui WhatsApp
               </a>
             )
           )}
@@ -241,9 +241,9 @@ function Isi({
               ditulis di sini — `judul` milik RelProduk cuma menerima satu teks.
               Tombol geser dan tautan katalognya diserahkan ke RelProduk supaya
               keduanya sebaris dan tombolnya tahu kapan harus dimatikan. */}
-          <p className="font-body text-sm font-semibold text-aksen">Pilihan lain</p>
+          <p className="font-body text-sm font-semibold text-aksen">Rekomendasi</p>
           <h2 className="mb-6 mt-1 font-display text-xl font-bold tracking-[-0.02em] text-ink sm:text-2xl">
-            Lihat produk lainnya
+            Produk lainnya
           </h2>
           <RelProduk
             produk={rekomendasi}
@@ -253,7 +253,7 @@ function Isi({
                 href="/katalog"
                 className="warna-interaktif shrink-0 font-body text-sm text-muted underline underline-offset-4"
               >
-                Lihat semua produk
+                Lihat seluruh produk
               </Link>
             }
           />

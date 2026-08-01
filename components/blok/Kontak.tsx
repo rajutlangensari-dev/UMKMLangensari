@@ -49,7 +49,7 @@ export default function Kontak({ blok, konteks }: { blok: BlokKontak; konteks: K
               rel="noopener noreferrer"
               className="tekan mt-8 inline-block rounded-full bg-aksen px-8 py-3 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
             >
-              Tanya lewat WhatsApp
+              Hubungi melalui WhatsApp
             </a>
           )}
         </div>

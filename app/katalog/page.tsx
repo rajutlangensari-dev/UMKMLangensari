@@ -25,7 +25,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata = {
   title: 'Katalog produk',
-  description: 'Cari produk dari usaha warga Desa Langensari dan hubungi pembuatnya lewat WhatsApp.',
+  description: 'Temukan produk dari usaha warga Desa Langensari dan hubungi pembuatnya melalui WhatsApp.',
 };
 
 /**
@@ -68,10 +68,10 @@ export default async function HalamanKatalog({
         {gagal ? (
           <div className="mx-auto max-w-sm px-5 py-24 text-center">
             <h1 className="font-display text-xl font-bold leading-snug text-ink">
-              Katalog belum bisa dimuat
+              Katalog belum dapat dimuat
             </h1>
             <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-              Periksa koneksi, lalu muat ulang halaman ini.
+              Periksa koneksi internet, kemudian muat ulang halaman ini.
             </p>
           </div>
         ) : (

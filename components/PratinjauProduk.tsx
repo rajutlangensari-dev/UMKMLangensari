@@ -26,7 +26,7 @@ export default function PratinjauProduk({ produk }: { produk: Produk[] }) {
             href="/katalog"
             className="shrink-0 font-body text-sm text-aksen transition-colors hover:text-aksen-kuat"
           >
-            Lihat semua produk
+            Lihat seluruh produk
           </Link>
         }
       />

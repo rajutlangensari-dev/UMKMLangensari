@@ -16,7 +16,7 @@ export default function GridProduk({
   produk,
   kategoriAwal = 'Semua',
   pencarianAwal = '',
-  judul = 'Cari produk dari warga Langensari',
+  judul = 'Temukan produk dari warga Langensari',
   petunjukCari = 'Cari produk atau nama usaha',
 }: {
   produk: Produk[];
@@ -157,7 +157,7 @@ export default function GridProduk({
         <div className="mx-auto max-w-sm py-20 text-center">
           <p className="font-display text-lg font-semibold text-ink">Produk belum ditemukan</p>
           <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-            Coba kata kunci lain atau pilih Semua untuk melihat seluruh produk.
+            Gunakan kata kunci lain atau pilih Semua untuk menampilkan seluruh produk.
           </p>
           <button
             type="button"
@@ -167,7 +167,7 @@ export default function GridProduk({
             }}
             className="tekan mt-6 rounded-full bg-aksen px-6 py-2.5 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
           >
-            Lihat semua produk
+            Tampilkan seluruh produk
           </button>
         </div>
       ) : (

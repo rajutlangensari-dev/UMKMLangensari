@@ -13,13 +13,13 @@ export default function TidakDitemukan() {
           Halaman tidak ditemukan
         </h1>
         <p className="mt-3 font-body leading-relaxed text-muted text-pretty">
-          Tautannya mungkin sudah berubah atau alamatnya kurang tepat. Cari produknya lewat katalog.
+          Alamat halaman mungkin telah berubah atau kurang tepat. Silakan cari produk melalui katalog.
         </p>
         <Link
           href="/katalog"
           className="tekan mt-7 rounded-full bg-aksen px-7 py-3 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
         >
-          Buka katalog
+          Lihat katalog
         </Link>
       </main>
       <Footer />

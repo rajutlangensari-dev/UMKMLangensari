@@ -26,7 +26,7 @@ export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
   title: 'Usaha warga',
-  description: 'Kenali usaha warga Desa Langensari dan lihat produk yang mereka jual.',
+  description: 'Kenali usaha warga Desa Langensari dan lihat produk yang tersedia.',
 };
 
 export default async function HalamanDaftarUmkm() {
@@ -55,7 +55,7 @@ export default async function HalamanDaftarUmkm() {
 
         {gagal ? (
           <p className="mt-8 font-body text-sm text-muted">
-            Daftar usaha belum bisa dimuat. Periksa koneksi, lalu muat ulang halaman.
+            Daftar usaha belum dapat dimuat. Periksa koneksi internet, kemudian muat ulang halaman.
           </p>
         ) : daftar.length === 0 ? (
           <p className="mt-8 font-body text-sm text-muted">Belum ada usaha yang tampil di portal ini.</p>

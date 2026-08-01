@@ -59,10 +59,10 @@ export default function KartuProduk({ produk, indeks = 0 }: { produk: Produk; in
                 href={tautanWhatsapp(produk.kontakWa, produk.namaProduk)}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`Tanyakan stok ${produk.namaProduk} lewat WhatsApp`}
+                aria-label={`Tanyakan ketersediaan ${produk.namaProduk} melalui WhatsApp`}
                 className="tekan block rounded-full bg-aksen py-2.5 text-center font-body text-xs font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
               >
-                Tanya stok
+                Tanyakan stok
               </a>
             )
           )}
