@@ -41,12 +41,12 @@ export default function Katalog({ blok, konteks }: { blok: BlokKatalog; konteks:
 
           {produkGagal ? (
             <p className="mt-8 rounded-kartu border border-line bg-surface p-6 font-body text-sm text-ink">
-              Produk gagal dimuat. Periksa sambungan internet, lalu muat ulang halaman.
+              Produk belum bisa dimuat. Periksa koneksi, lalu muat ulang halaman.
             </p>
           ) : terpakai.length === 0 ? (
             <div className="mt-8 rounded-kartu border border-line bg-surface p-8 text-center">
               <p className="font-body leading-relaxed text-muted text-pretty">
-                Belum ada produk yang ditampilkan di sini.
+                Usaha ini belum menampilkan produk. Hubungi pemiliknya lewat WhatsApp untuk menanyakan pilihan yang tersedia.
               </p>
               {umkm.kontakWa && (
                 <a
@@ -55,7 +55,7 @@ export default function Katalog({ blok, konteks }: { blok: BlokKatalog; konteks:
                   rel="noopener noreferrer"
                   className="tekan mt-5 inline-block rounded-full bg-aksen px-6 py-2.5 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
                 >
-                  Tanya lewat WhatsApp
+                  Tanya produk lewat WhatsApp
                 </a>
               )}
             </div>
@@ -77,7 +77,7 @@ export default function Katalog({ blok, konteks }: { blok: BlokKatalog; konteks:
                   href={`/umkm/${umkm.slug}/katalog`}
                   className="tekan inline-flex min-h-11 items-center rounded-full border border-line px-6 font-body text-sm font-semibold text-ink transition-[transform,border-color,background-color] duration-150 ease-out hover:border-aksen hover:bg-surface"
                 >
-                  Lihat katalog lengkap
+                  Jelajahi semua produk
                   <span className="angka-rata ml-2 font-normal text-muted">
                     {produk.length} produk
                   </span>

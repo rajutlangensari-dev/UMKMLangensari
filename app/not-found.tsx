@@ -10,16 +10,16 @@ export default function TidakDitemukan() {
       <Header />
       <main className="mx-auto flex min-h-[55vh] max-w-md flex-col items-center justify-center px-5 py-24 text-center">
         <h1 className="font-display text-2xl font-bold leading-snug tracking-[-0.02em] text-ink">
-          Halaman ini tidak ada
+          Halaman tidak ditemukan
         </h1>
         <p className="mt-3 font-body leading-relaxed text-muted text-pretty">
-          Alamatnya mungkin salah ketik. Coba mulai dari katalog.
+          Tautannya mungkin sudah berubah atau alamatnya kurang tepat. Cari produknya lewat katalog.
         </p>
         <Link
           href="/katalog"
           className="tekan mt-7 rounded-full bg-aksen px-7 py-3 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
         >
-          Lihat produk
+          Buka katalog
         </Link>
       </main>
       <Footer />

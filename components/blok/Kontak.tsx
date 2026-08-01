@@ -23,7 +23,7 @@ export default function Kontak({ blok, konteks }: { blok: BlokKontak; konteks: K
       lebar="max-w-3xl"
       anak={
         <div className="rounded-kartu border border-line bg-surface p-7 text-center sm:p-10">
-          <JudulBagian>{blok.judul || 'Hubungi kami'}</JudulBagian>
+          <JudulBagian>{blok.judul || `Hubungi ${umkm.nama}`}</JudulBagian>
 
           <dl className="mt-6 space-y-4">
             {umkm.alamat && (
@@ -49,7 +49,7 @@ export default function Kontak({ blok, konteks }: { blok: BlokKontak; konteks: K
               rel="noopener noreferrer"
               className="tekan mt-8 inline-block rounded-full bg-aksen px-8 py-3 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
             >
-              Hubungi melalui WhatsApp
+              Tanya lewat WhatsApp
             </a>
           )}
         </div>

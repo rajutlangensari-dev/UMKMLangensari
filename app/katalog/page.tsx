@@ -23,7 +23,10 @@ import type { Produk } from '@/lib/types';
  */
 export const dynamic = 'force-dynamic';
 
-export const metadata = { title: 'Katalog' };
+export const metadata = {
+  title: 'Katalog produk',
+  description: 'Cari produk dari usaha warga Desa Langensari dan hubungi pembuatnya lewat WhatsApp.',
+};
 
 /**
  * Katalog. SERVER COMPONENT, sama alasannya dengan beranda.
@@ -65,10 +68,10 @@ export default async function HalamanKatalog({
         {gagal ? (
           <div className="mx-auto max-w-sm px-5 py-24 text-center">
             <h1 className="font-display text-xl font-bold leading-snug text-ink">
-              Produk gagal dimuat
+              Katalog belum bisa dimuat
             </h1>
             <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-              Periksa sambungan internet, lalu muat ulang halaman ini.
+              Periksa koneksi, lalu muat ulang halaman ini.
             </p>
           </div>
         ) : (

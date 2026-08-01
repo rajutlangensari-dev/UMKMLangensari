@@ -19,14 +19,14 @@ export default function PratinjauProduk({ produk }: { produk: Produk[] }) {
           produk yang statusnya sedang aktif. */}
       <RelProduk
         produk={tampil}
-        label="Produk yang tersedia"
-        judul="Produk yang tersedia"
+        label="Produk dari warga Langensari"
+        judul="Produk dari warga Langensari"
         aksi={
           <Link
             href="/katalog"
             className="shrink-0 font-body text-sm text-aksen transition-colors hover:text-aksen-kuat"
           >
-            Lihat semua
+            Lihat semua produk
           </Link>
         }
       />

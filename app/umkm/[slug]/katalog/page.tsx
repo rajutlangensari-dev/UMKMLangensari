@@ -61,7 +61,7 @@ export async function generateMetadata({
   if (!umkm || umkm.status === 'nonaktif') return { title: 'UMKM tidak ditemukan' };
 
   const judul = `Katalog ${umkm.nama}`;
-  const deskripsi = `Semua produk ${umkm.nama} di Desa Langensari, lengkap dengan harga dan nomor WhatsApp.`;
+  const deskripsi = `Lihat produk dari ${umkm.nama}, cek harganya, lalu hubungi usahanya lewat WhatsApp.`;
   const foto = normalisasiFotoUrl(umkm.foto, 1200);
 
   return {
@@ -97,17 +97,17 @@ export default async function KatalogUmkm({ params, searchParams }: {
             href={`/umkm/${umkm.slug}`}
             className="font-body text-sm text-muted transition-colors hover:text-ink"
           >
-            &larr; Profil {umkm.nama}
+            &larr; Kembali ke {umkm.nama}
           </Link>
         </div>
 
         {gagal ? (
           <div className="mx-auto max-w-sm px-5 py-24 text-center">
             <h1 className="font-display text-xl font-bold leading-snug text-ink">
-              Produk gagal dimuat
+              Katalog belum bisa dimuat
             </h1>
             <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-              Periksa sambungan internet, lalu muat ulang halaman ini.
+              Periksa koneksi, lalu muat ulang halaman ini.
             </p>
           </div>
         ) : produk.length === 0 ? (
@@ -120,7 +120,7 @@ export default async function KatalogUmkm({ params, searchParams }: {
               Katalog {umkm.nama}
             </h1>
             <p className="mt-2 font-body text-sm leading-relaxed text-muted text-pretty">
-              Belum ada produk yang dipasang di sini. Barangnya bisa ditanyakan langsung.
+              Produk belum ditampilkan di katalog ini. Hubungi usahanya untuk menanyakan pilihan yang tersedia.
             </p>
             {umkm.kontakWa && (
               <a
@@ -129,7 +129,7 @@ export default async function KatalogUmkm({ params, searchParams }: {
                 rel="noopener noreferrer"
                 className="tekan mt-6 inline-block rounded-full bg-aksen px-6 py-2.5 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
               >
-                Tanya lewat WhatsApp
+                Tanya produk lewat WhatsApp
               </a>
             )}
           </div>
@@ -143,7 +143,7 @@ export default async function KatalogUmkm({ params, searchParams }: {
               // "atau perajin" dibuang: di sini perajinnya cuma satu, jadi
               // menawarkan pencarian nama perajin menyuruh orang mengetik
               // sesuatu yang tidak menyaring apa pun.
-              petunjukCari="Cari nama produk"
+              petunjukCari={`Cari produk di ${umkm.nama}`}
             />
           </div>
         )}

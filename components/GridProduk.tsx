@@ -16,8 +16,8 @@ export default function GridProduk({
   produk,
   kategoriAwal = 'Semua',
   pencarianAwal = '',
-  judul = 'Katalog',
-  petunjukCari = 'Cari nama produk atau perajin',
+  judul = 'Cari produk dari warga Langensari',
+  petunjukCari = 'Cari produk atau nama usaha',
 }: {
   produk: Produk[];
   kategoriAwal?: string;
@@ -82,9 +82,9 @@ export default function GridProduk({
       </h1>
       {/* Angka yang terlihat berubah seketika; yang DIUMUMKAN menunggu
           pengetikan berhenti. Dua kebutuhan berbeda, jadi dua elemen. */}
-      <p className="mt-1.5 font-body text-sm text-muted">{hasilFilter.length} produk tersedia</p>
+      <p className="mt-1.5 font-body text-sm text-muted">{hasilFilter.length} produk ditemukan</p>
       <p role="status" aria-live="polite" className="sr-only">
-        {jumlahDiumumkan} produk tersedia
+        {jumlahDiumumkan} produk ditemukan
       </p>
 
       <div className="mt-7 space-y-4">
@@ -155,9 +155,9 @@ export default function GridProduk({
 
       {hasilFilter.length === 0 ? (
         <div className="mx-auto max-w-sm py-20 text-center">
-          <p className="font-display text-lg font-semibold text-ink">Tidak ada yang cocok</p>
+          <p className="font-display text-lg font-semibold text-ink">Produk belum ditemukan</p>
           <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-            Coba kata lain, atau kembalikan pilihan ke semua kategori.
+            Coba kata kunci lain atau pilih Semua untuk melihat seluruh produk.
           </p>
           <button
             type="button"
@@ -167,7 +167,7 @@ export default function GridProduk({
             }}
             className="tekan mt-6 rounded-full bg-aksen px-6 py-2.5 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
           >
-            Tampilkan semua
+            Lihat semua produk
           </button>
         </div>
       ) : (

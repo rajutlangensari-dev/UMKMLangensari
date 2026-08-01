@@ -515,14 +515,14 @@ export function halamanBawaan(sumber: SumberBawaan, tataLetak: TataLetak): Blok[
             id: idBlok(),
             aktif: true,
             jenis: 'cerita',
-            judul: 'Tentang kami',
+            judul: 'Cerita usaha kami',
             teks: sumber.bio,
             foto: '',
             posisiFoto: 'kiri',
           }
         : null,
     katalog: () => ({ id: idBlok(), aktif: true, jenis: 'katalog', judul: 'Produk', batas: 0, kategoriAwal: '' }),
-    kontak: () => ({ id: idBlok(), aktif: true, jenis: 'kontak', judul: 'Hubungi kami', jamBuka: '' }),
+    kontak: () => ({ id: idBlok(), aktif: true, jenis: 'kontak', judul: `Hubungi ${sumber.nama}`, jamBuka: '' }),
     // Galeri dan fakta sengaja tidak dibuat otomatis: keduanya butuh bahan yang
     // belum ada saat pendaftaran, dan blok kosong lebih buruk daripada tidak ada.
     galeri: () => null,

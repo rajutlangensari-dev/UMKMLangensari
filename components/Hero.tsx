@@ -263,7 +263,7 @@ function IsiSorotan({ usaha, utama }: { usaha: SorotanUsaha; utama: boolean }) {
 
         <div className="min-w-0">
           <p className="font-body text-xs font-semibold uppercase tracking-label text-aksen">
-            Usaha warga Langensari
+            Sorotan usaha warga
           </p>
           <h2 className="mt-1.5 font-display text-2xl font-bold leading-[1.15] tracking-[-0.02em] text-ink text-balance sm:text-3xl">
             {usaha.nama}
@@ -301,7 +301,7 @@ function IsiSorotan({ usaha, utama }: { usaha: SorotanUsaha; utama: boolean }) {
               href={`/umkm/${usaha.slug}`}
               className="tekan inline-flex min-h-11 items-center rounded-full bg-aksen px-7 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
             >
-              Kunjungi halamannya
+              Lihat profil usahanya
             </Link>
           </div>
         </div>
@@ -389,11 +389,11 @@ function HeroKosong() {
     <section className="hero-penuh">
       <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8 sm:py-20">
         <h1 className="max-w-2xl font-display text-2xl font-bold leading-[1.15] tracking-[-0.02em] text-ink text-balance sm:text-4xl">
-          Usaha warga Desa Langensari
+          Cari produk buatan warga Langensari
         </h1>
         <p className="mt-3 max-w-xl font-body leading-relaxed text-muted text-pretty">
-          Katalog bersama pelaku usaha Desa Langensari. Lihat produk dan harganya, lalu pesan
-          langsung ke pembuatnya lewat WhatsApp.
+          Lihat produknya, cek harga, dan kenali siapa yang membuatnya. Kalau ada yang cocok,
+          hubungi usahanya langsung lewat WhatsApp.
         </p>
         {/* Satu ajakan juga di sini, sama seperti sorotannya. Kalau sampai
             keadaan ini yang muncul, berarti tidak ada usaha berproduk yang bisa
@@ -405,7 +405,7 @@ function HeroKosong() {
             href="/katalog"
             className="tekan inline-flex min-h-11 items-center rounded-full bg-aksen px-7 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
           >
-            Lihat semua produk
+            Jelajahi katalog
           </Link>
         </div>
       </div>

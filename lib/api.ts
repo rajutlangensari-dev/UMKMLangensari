@@ -213,7 +213,7 @@ export function nomorWa(nomor: string): string {
 }
 
 export function tautanWhatsapp(nomor: string, namaProduk: string): string {
-  const pesan = `Halo, saya ingin menanyakan ${namaProduk} yang saya lihat di UMKM Langensari. Apakah masih tersedia?`;
+  const pesan = `Halo, saya melihat ${namaProduk} di UMKM Langensari. Apakah masih tersedia? Kalau ada, bagaimana cara memesannya?`;
   return `https://wa.me/${nomorWa(nomor)}?text=${encodeURIComponent(pesan)}`;
 }
 

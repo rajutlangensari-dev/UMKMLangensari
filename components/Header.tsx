@@ -8,7 +8,7 @@ import AkunHeader, { AkunMenuMobile } from './AkunHeader';
 const LINKS = [
   { href: '/', label: 'Beranda' },
   { href: '/katalog', label: 'Katalog' },
-  { href: '/umkm', label: 'Pelaku usaha' },
+  { href: '/umkm', label: 'Usaha warga' },
   { href: '/panduan', label: 'Panduan' },
   { href: '/tentang', label: 'Tentang' },
 ];

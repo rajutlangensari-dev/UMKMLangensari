@@ -21,12 +21,12 @@ import type { Produk, SorotanUsaha } from '@/lib/types';
 
 const KALIMAT = [
   {
-    judul: 'Pesan langsung',
-    teks: 'Hubungi pembuat produk pilihan Anda lewat WhatsApp, tanpa perantara.',
+    judul: 'Tanya langsung',
+    teks: 'Hubungi pembuatnya lewat WhatsApp untuk menanyakan stok atau cara memesan.',
   },
   {
     judul: 'Kenali pembuatnya',
-    teks: 'Setiap produk mencantumkan nama usaha dan kampung asalnya.',
+    teks: 'Setiap produk mencantumkan nama pembuat dan lokasi usaha jika tersedia.',
   },
 ];
 
@@ -47,12 +47,12 @@ export default function Fakta({
       ? [
           {
             judul: `${sorotan.length} usaha warga`,
-            teks: 'Semuanya dijalankan warga Desa Langensari dari rumahnya sendiri.',
+            teks: 'Setiap usaha di sini dikelola warga Desa Langensari.',
             angka: true,
           },
           {
             judul: `${produk.length} produk`,
-            teks: 'Lengkap dengan harga dan nomor yang bisa langsung dihubungi.',
+            teks: 'Setiap halaman produk mencantumkan harga dan nama pembuat.',
             angka: true,
           },
         ]

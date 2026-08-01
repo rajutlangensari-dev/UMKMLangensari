@@ -7,9 +7,9 @@ import { useAkunTampilan } from './AkunHeader';
 import { normalisasiFotoUrl } from '@/lib/api';
 
 const PORTAL = [
-  { href: '/', label: 'Beranda portal' },
-  { href: '/katalog', label: 'Katalog semua UMKM' },
-  { href: '/umkm', label: 'Daftar pelaku usaha' },
+  { href: '/', label: 'Beranda UMKM Langensari' },
+  { href: '/katalog', label: 'Semua produk' },
+  { href: '/umkm', label: 'Usaha warga' },
   { href: '/panduan', label: 'Panduan usaha' },
   { href: '/tentang', label: 'Tentang portal' },
 ];
@@ -122,7 +122,7 @@ export default function HeaderUmkm({
             className="dropdown absolute right-0 top-full mt-2 w-64 rounded-kartu border border-line bg-paper/95 p-1.5 backdrop-blur-md"
           >
             <p className="px-3.5 pb-1 pt-2 font-body text-xs uppercase tracking-label text-muted">
-              Portal desa
+              Jelajahi portal
             </p>
             {PORTAL.map((l) => (
               <Link

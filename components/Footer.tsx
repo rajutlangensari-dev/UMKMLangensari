@@ -3,7 +3,7 @@ import Logo, { IkonTas } from './Logo';
 const NAV = [
   { href: '/', label: 'Beranda' },
   { href: '/katalog', label: 'Katalog' },
-  { href: '/umkm', label: 'Pelaku usaha' },
+  { href: '/umkm', label: 'Usaha warga' },
   { href: '/panduan', label: 'Panduan usaha' },
   { href: '/tentang', label: 'Tentang' },
 ];
@@ -11,7 +11,7 @@ const NAV = [
 const INFO = [
   'Kampung Cibayawak dan Kampung Cipaku',
   'Desa Langensari, Kecamatan Sukaraja',
-  'Pesan langsung lewat WhatsApp',
+  'Tanya stok dan pesan lewat WhatsApp',
 ];
 
 /**
@@ -63,8 +63,8 @@ export default function Footer() {
         <div>
           <Logo />
           <p className="mt-4 max-w-xs font-body text-sm leading-relaxed text-muted">
-            Katalog bersama pelaku usaha Desa Langensari. Setiap produk mencantumkan
-            harga dan nomor WhatsApp pembuatnya.
+            Temukan produk buatan warga Langensari, lihat harganya, lalu hubungi
+            pembuatnya langsung lewat WhatsApp.
           </p>
         </div>
 
@@ -100,8 +100,8 @@ export default function Footer() {
         <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-5 py-6 sm:px-8 md:flex-row md:justify-between">
           <Lambang />
           <p className="text-center font-body text-xs leading-relaxed text-muted md:text-right">
-            2026 UMKM Langensari. Dikembangkan oleh KKN 45 Universitas Padjadjaran
-            bersama pelaku usaha Desa Langensari.
+            2026 UMKM Langensari. Dibuat oleh KKN 45 Universitas Padjadjaran
+            bersama Pemerintah Desa Langensari dan pelaku usaha setempat.
           </p>
         </div>
       </div>

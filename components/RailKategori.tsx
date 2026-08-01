@@ -12,13 +12,13 @@ export default function RailKategori({ produk }: { produk: Produk[] }) {
     <section className="sembul mx-auto max-w-6xl px-5 py-4 sm:px-8 sm:py-8">
       <div className="flex items-baseline justify-between gap-4">
         <h2 className="font-display text-xl font-bold tracking-[-0.01em] text-ink sm:text-2xl">
-          Pilih jenis produk
+          Cari berdasarkan jenis
         </h2>
         <Link
           href="/katalog"
           className="shrink-0 font-body text-sm text-aksen transition-colors hover:text-aksen-kuat"
         >
-          Lihat katalog
+          Lihat semua
         </Link>
       </div>
 

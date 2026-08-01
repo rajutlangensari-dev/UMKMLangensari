@@ -25,8 +25,8 @@ import { normalisasiFotoUrl } from '@/lib/api';
 export const dynamic = 'force-dynamic';
 
 export const metadata: Metadata = {
-  title: 'Pelaku usaha',
-  description: 'Daftar pelaku usaha Desa Langensari yang produknya ada di portal ini.',
+  title: 'Usaha warga',
+  description: 'Kenali usaha warga Desa Langensari dan lihat produk yang mereka jual.',
 };
 
 export default async function HalamanDaftarUmkm() {
@@ -50,15 +50,15 @@ export default async function HalamanDaftarUmkm() {
       <Header />
       <main className="mx-auto min-h-[60vh] max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
         <h1 className="font-display text-2xl font-bold tracking-[-0.02em] text-ink sm:text-3xl">
-          Pelaku usaha
+          Usaha warga Langensari
         </h1>
 
         {gagal ? (
           <p className="mt-8 font-body text-sm text-muted">
-            Daftar gagal dimuat. Periksa sambungan internet, lalu muat ulang halaman.
+            Daftar usaha belum bisa dimuat. Periksa koneksi, lalu muat ulang halaman.
           </p>
         ) : daftar.length === 0 ? (
-          <p className="mt-8 font-body text-sm text-muted">Belum ada yang terdaftar.</p>
+          <p className="mt-8 font-body text-sm text-muted">Belum ada usaha yang tampil di portal ini.</p>
         ) : (
           <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {daftar.map((u, i) => {
@@ -86,7 +86,7 @@ export default async function HalamanDaftarUmkm() {
                       {u.nama}
                     </h2>
                     <p className="mt-0.5 font-body text-sm text-muted">
-                      {n === 0 ? 'Belum ada produk' : `${n} produk`}
+                      {n === 0 ? 'Produk belum tersedia' : `${n} produk tersedia`}
                     </p>
                   </div>
                 </Link>
