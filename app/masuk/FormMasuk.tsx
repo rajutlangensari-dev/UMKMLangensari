@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import { tampilanDariDokumen } from '@/lib/tampilan';
 
 export default function FormMasuk() {
   const [namaPengguna, setNamaPengguna] = useState('');
@@ -27,6 +28,20 @@ export default function FormMasuk() {
         setKirim(false);
         return;
       }
+      // Server bilang berhasil — tapi yang menentukan sesinya hidup adalah
+      // peramban MAU MENYIMPAN cookie-nya. Kalau tidak (mode penyamaran ketat,
+      // cookie diblokir, atau situs dibuka lewat http di alamat selain
+      // localhost sehingga cookie ber-Secure dibuang), tanpa pemeriksaan ini
+      // orangnya dilempar ke panel, ditolak diam-diam, lalu kembali ke
+      // formulir ini — dan menyimpulkan kata sandinya salah.
+      if (!tampilanDariDokumen()) {
+        setGalat(
+          'Masuknya berhasil, tapi peramban menolak menyimpan sesi. Coba tanpa mode penyamaran, atau izinkan cookie untuk situs ini.'
+        );
+        setKirim(false);
+        return;
+      }
+
       // Tujuan awal disimpan saat gerbang mengalihkan ke sini, jadi setelah masuk
       // pengguna kembali ke halaman yang tadi dituju, bukan selalu ke beranda panel.
       const tujuan = new URLSearchParams(window.location.search).get('tujuan');

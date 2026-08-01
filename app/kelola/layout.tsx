@@ -60,20 +60,26 @@ export default async function LayoutKelola({ children }: { children: React.React
   // Butir yang halamannya akan menolak penggunanya tidak ditampilkan sama
   // sekali. Menampilkan tautan yang berujung pengalihan adalah cara mengajari
   // orang bahwa sebagian menu memang tidak bisa dipercaya.
+  //
+  // Dikelompokkan supaya daftar lima butir tidak dibaca ulang dari atas tiap
+  // kunjungan: yang mengubah ISI portal di satu kumpulan, yang mengatur SIAPA
+  // dan setelan pribadi di kumpulan lain. Urutannya tetap sama persis dengan
+  // sebelumnya — orang menghafal tempat, dan menggeser butir yang sudah
+  // dihafal lebih mahal daripada manfaat pengelompokannya.
   const butir: Butir[] = superAdmin
     ? [
         { href: '/kelola', label: 'Beranda', ikon: <IkonBeranda /> },
-        { href: '/kelola/produk', label: 'Produk', ikon: <IkonProduk /> },
+        { href: '/kelola/produk', label: 'Produk', ikon: <IkonProduk />, grup: 'Isi portal' },
         { href: '/kelola/umkm', label: 'Pelaku usaha', ikon: <IkonUmkm /> },
-        { href: '/kelola/akun', label: 'Akun', ikon: <IkonAkun /> },
+        { href: '/kelola/akun', label: 'Akun', ikon: <IkonAkun />, grup: 'Akses' },
         { href: '/kelola/sandi', label: 'Kata sandi', ikon: <IkonSandi /> },
       ]
     : [
         { href: '/kelola', label: 'Beranda', ikon: <IkonBeranda /> },
-        { href: '/kelola/produk', label: 'Produk saya', ikon: <IkonProduk /> },
+        { href: '/kelola/produk', label: 'Produk saya', ikon: <IkonProduk />, grup: 'Usaha saya' },
         { href: '/kelola/halaman', label: 'Halaman saya', ikon: <IkonHalaman /> },
         { href: '/kelola/profil', label: 'Profil usaha', ikon: <IkonProfil /> },
-        { href: '/kelola/sandi', label: 'Kata sandi', ikon: <IkonSandi /> },
+        { href: '/kelola/sandi', label: 'Kata sandi', ikon: <IkonSandi />, grup: 'Akun saya' },
       ];
 
   return (

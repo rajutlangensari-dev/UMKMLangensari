@@ -1,4 +1,4 @@
-import Logo from './Logo';
+import Logo, { IkonTas } from './Logo';
 
 const NAV = [
   { href: '/', label: 'Beranda' },
@@ -13,6 +13,46 @@ const INFO = [
   'Desa Langensari, Kecamatan Sukaraja',
   'Pesan langsung lewat WhatsApp',
 ];
+
+/**
+ * Tiga lambang penyelenggara, urut dari yang paling luas cakupannya:
+ * universitas, lalu kelompok KKN-nya, lalu portal yang dibuat kelompok itu.
+ *
+ * Dipasang sebagai <img> biasa, bukan next/image, mengikuti seluruh gambar lain
+ * di proyek ini — dan karena ukurannya sudah pasti, tidak ada yang bisa
+ * dihemat lagi oleh pemroses gambar.
+ *
+ * `alt` ditulis lengkap: ini satu-satunya tempat di situs yang menyebut siapa
+ * yang membuat portal ini, jadi pembaca layar tidak boleh cuma mendengar "logo".
+ */
+function Lambang() {
+  return (
+    <div className="flex items-center gap-3">
+      <span className="plat-lambang">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo-unpad.svg"
+          alt="Lambang Universitas Padjadjaran"
+          width={36}
+          height={36}
+          className="h-9 w-9"
+        />
+      </span>
+      <span className="plat-lambang">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo-kkn.png"
+          alt="Logo KKN 45 Desa Langensari"
+          width={36}
+          height={36}
+          className="h-9 w-9"
+        />
+      </span>
+      <span aria-hidden="true" className="h-6 w-px bg-line" />
+      <IkonTas className="h-9 w-9 shrink-0 text-ink" />
+    </div>
+  );
+}
 
 // Footer terang di atas panel lembut, bukan blok aksen pekat. Halaman ini
 // selesai dengan tenang, tidak dengan pita warna penuh.
@@ -57,9 +97,13 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-line">
-        <p className="mx-auto max-w-6xl px-5 py-5 text-center font-body text-xs text-muted sm:px-8">
-          2026 UMKM Langensari. Tim KKN Universitas Padjadjaran.
-        </p>
+        <div className="mx-auto flex max-w-6xl flex-col items-center gap-4 px-5 py-6 sm:px-8 md:flex-row md:justify-between">
+          <Lambang />
+          <p className="text-center font-body text-xs leading-relaxed text-muted md:text-right">
+            2026 UMKM Langensari. Dikembangkan oleh KKN 45 Universitas Padjadjaran
+            bersama pelaku usaha Desa Langensari.
+          </p>
+        </div>
       </div>
     </footer>
   );

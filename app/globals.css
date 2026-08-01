@@ -952,6 +952,57 @@ dialog.kotak[open] {
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * Alas untuk lambang lembaga di footer.
+ *
+ * Lambang Unpad memakai warna tetapnya sendiri, dan bagian terbesarnya nyaris
+ * hitam (#101516). Di mode gelap ia lenyap ke dalam latar — bukan samar,
+ * benar-benar tidak terlihat. Lambang resmi juga TIDAK BOLEH diakali dengan
+ * `invert()` atau diberi warna lain; yang benar adalah memberinya alas terang
+ * seperti pemakaian di atas kertas.
+ *
+ * Paletnya tetap dipasang di kedua mode supaya ukuran dan posisinya persis
+ * sama, cuma alasnya yang muncul — kalau padding-nya ikut berubah, ketiga
+ * lambang bergeser saat tema diganti.
+ */
+.plat-lambang {
+  display: inline-flex;
+  padding: 0.25rem;
+  border-radius: 10px;
+  background: transparent;
+  transition: background-color 0.2s ease;
+}
+
+:root[data-theme='gelap'] .plat-lambang {
+  background: rgb(255 255 255 / 0.92);
+}
+
+/*
+ * Kartu sambutan dasbor. Semu aksen yang memudar ke warna kartu biasa, jadi ia
+ * jelas berbeda dari kotak angka di bawahnya tanpa jadi blok warna pekat —
+ * yang di halaman kerja harian akan terbaca seperti spanduk iklan.
+ *
+ * Semunya tipis DENGAN SENGAJA (14%): teks di atasnya `text-ink`, dan semakin
+ * pekat alasnya semakin tipis jarak kontrasnya. Di mode gelap `--aksen` jauh
+ * lebih terang, jadi porsinya diturunkan supaya tebalnya terlihat sama.
+ */
+.sapaan {
+  background: linear-gradient(135deg, rgb(var(--aksen) / 0.14), rgb(var(--surface)) 62%);
+}
+
+:root[data-theme='gelap'] .sapaan {
+  background: linear-gradient(135deg, rgb(var(--aksen) / 0.1), rgb(var(--surface)) 62%);
+}
+
+/* Latar bersemu selalu mengurangi kontras. Yang memintanya lebih tegas
+   mendapat kartu polos, bukan versi lebih tipis dari semu yang sama. */
+@media (prefers-contrast: more) {
+  .sapaan,
+  :root[data-theme='gelap'] .sapaan {
+    background: rgb(var(--surface));
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   dialog.kotak,
   dialog.kotak::backdrop,

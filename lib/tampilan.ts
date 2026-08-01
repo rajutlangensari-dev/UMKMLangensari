@@ -57,9 +57,25 @@ export interface Tampilan {
   peran: Peran;
 }
 
-/** Nilai cookie. Dipendekkan kuncinya karena ia ikut di tiap permintaan. */
+/**
+ * Nilai cookie. Dipendekkan kuncinya karena ia ikut di tiap permintaan.
+ *
+ * JANGAN di-encodeURIComponent di sini. `NextResponse.cookies.set()` sudah
+ * meng-encode nilainya sendiri sebelum dikirim, jadi meng-encode lebih dulu
+ * membuatnya ter-encode DUA KALI:
+ *
+ *   tulisTampilan   %7B%22n%22%3A...
+ *   yang terkirim   %257B%2522n%2522%253A...
+ *   dibaca balik    %7B%22n%22%3A...     <- masih teks persen, bukan JSON
+ *
+ * Akibatnya `bacaTampilan` selalu mengembalikan null dan header selamanya
+ * menampilkan tombol "Masuk" walaupun sesinya sah — persis bug yang pernah
+ * terjadi, dan yang bikin susah dikenali: cookie `sesi` TIDAK ikut rusak,
+ * karena base64url tidak berubah sedikit pun saat di-encode. Jadi panelnya
+ * benar-benar terbuka; cuma headernya yang berbohong.
+ */
 export function tulisTampilan(t: Tampilan): string {
-  return encodeURIComponent(JSON.stringify({ n: t.nama, p: t.peran }));
+  return JSON.stringify({ n: t.nama, p: t.peran });
 }
 
 /**

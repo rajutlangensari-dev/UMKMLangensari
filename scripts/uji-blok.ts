@@ -26,6 +26,7 @@ import {
   MAKS_GALERI,
   type Blok,
 } from '../lib/blok.ts';
+import { nomorWa, tautanWhatsapp } from '../lib/api.ts';
 
 let lulus = 0;
 function uji(nama: string, jalan: () => void) {
@@ -366,6 +367,45 @@ uji('paragraf dipecah dari baris kosong, bukan dari tag', () => {
   assert.deepEqual(keParagraf('satu\n\ndua'), ['satu', 'dua']);
   assert.deepEqual(keParagraf('satu\ndua'), ['satu\ndua']);
   assert.deepEqual(keParagraf('\n\n  \n\n'), []);
+});
+
+console.log('\nNomor WhatsApp');
+
+uji('nol depan yang dibuang Sheets dipulihkan', () => {
+  // Inilah kasus yang dulu diam-diam salah: Sheets menyimpan 081… sebagai
+  // ANGKA, nol depannya hilang, dan `.replace(/^0/, '62')` tidak kena apa-apa.
+  assert.equal(nomorWa('81234567890'), '6281234567890');
+  assert.equal(nomorWa(String(81234567890)), '6281234567890');
+});
+
+uji('semua bentuk tulisan orang bermuara ke satu nomor', () => {
+  for (const bentuk of [
+    '081234567890',
+    '0812-3456-7890',
+    '0812 3456 7890',
+    '+6281234567890',
+    '+62 812-3456-7890',
+    '6281234567890',
+    '81234567890',
+  ]) {
+    assert.equal(nomorWa(bentuk), '6281234567890', `bentuk ${bentuk}`);
+  }
+});
+
+uji('nomor yang sudah benar tidak diberi 62 dua kali', () => {
+  assert.equal(nomorWa(nomorWa('081234567890')), '6281234567890');
+});
+
+uji('kosong tetap kosong, bukan "62"', () => {
+  // Kalau ini mengembalikan '62', tautannya jadi wa.me/62 — halaman WhatsApp
+  // yang terbuka tapi tidak menuju siapa-siapa. Lebih buruk daripada tanpa tombol.
+  assert.equal(nomorWa(''), '');
+  assert.equal(nomorWa('   '), '');
+  assert.equal(nomorWa('-'), '');
+});
+
+uji('tautan wa.me memakai nomor yang sudah dibakukan', () => {
+  assert.ok(tautanWhatsapp('81234567890', 'Tas rajut').startsWith('https://wa.me/6281234567890?'));
 });
 
 console.log(`\n${lulus} pemeriksaan lulus.\n`);

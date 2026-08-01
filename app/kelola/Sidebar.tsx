@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 
 /**
  * Navigasi panel.
@@ -21,6 +21,11 @@ export interface Butir {
   href: string;
   label: string;
   ikon: React.ReactNode;
+  /**
+   * Judul kelompok yang muncul DI ATAS butir ini. Cukup ditulis di butir
+   * pertama tiap kelompok; sisanya mewarisi dengan tidak menyebutkannya.
+   */
+  grup?: string;
 }
 
 export default function Sidebar({ butir }: { butir: Butir[] }) {
@@ -65,15 +70,28 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
     return () => window.removeEventListener('keydown', tekan);
   }, [buka]);
 
+  // Judul kelompok memecah daftar tujuh butir jadi dua-tiga kumpulan pendek.
+  // Daftar rata tanpa jeda dibaca dari atas ke bawah setiap kali; daftar
+  // berkelompok cukup dibaca judulnya, lalu mata langsung turun ke bagian yang
+  // benar. Bedanya paling terasa bagi yang membuka panel ini seminggu sekali.
   const isi = (
     <nav aria-label="Navigasi panel" className="flex flex-col gap-1">
       {butir.map((b) => {
         // `/kelola` cocok persis saja; kalau memakai awalan, ia akan ikut aktif
         // di setiap halaman anaknya dan dua butir menyala bersamaan.
         const aktif = b.href === '/kelola' ? jalur === b.href : jalur.startsWith(b.href);
+        const judulGrup = b.grup && (
+          <p
+            key={`grup-${b.grup}`}
+            className="mb-1 mt-4 px-4 font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-muted first:mt-0"
+          >
+            {b.grup}
+          </p>
+        );
         return (
+          <Fragment key={b.href}>
+          {judulGrup}
           <Link
-            key={b.href}
             href={b.href}
             aria-current={aktif ? 'page' : undefined}
             className={`tekan flex min-h-11 items-center gap-3 rounded-full px-4 font-body text-sm transition-[transform,color,background-color] duration-150 ease-out ${
@@ -85,6 +103,7 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
             </span>
             {b.label}
           </Link>
+          </Fragment>
         );
       })}
     </nav>

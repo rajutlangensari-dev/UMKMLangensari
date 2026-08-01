@@ -90,8 +90,31 @@ async function jalan() {
   // header" — karena header itu muncul di setiap halaman publik, dan satu galat
   // yang dilempar di sana mematikan seluruh situs bagi pengunjung yang cookie-nya
   // kebetulan rusak.
-  const bolakBalik = bacaTampilan(tulisTampilan({ nama: 'rajut', peran: 'umkm' }));
-  assert.deepEqual(bolakBalik, { nama: 'rajut', peran: 'umkm' }, 'cookie tampilan pulang-pergi');
+  // Pulang-perginya diuji LEWAT KAWAT, bukan fungsi ke fungsi langsung.
+  //
+  // Versi lama menguji `bacaTampilan(tulisTampilan(x))` dan lolos hijau selama
+  // berminggu-minggu sementara loginnya rusak di peramban. Sebabnya ada satu
+  // langkah di tengah yang tidak ikut diuji: `NextResponse.cookies.set()`
+  // meng-encode nilainya sekali lagi sebelum dikirim, dan `document.cookie`
+  // memulangkan hasil encode itu apa adanya. Dua fungsi yang cocok satu sama
+  // lain tetap bisa gagal kalau yang mengantar di antaranya ikut mengubah isi.
+  const lewatKawat = (t: { nama: string; peran: 'admin' | 'umkm' }) =>
+    bacaTampilan(encodeURIComponent(tulisTampilan(t)));
+
+  assert.deepEqual(
+    lewatKawat({ nama: 'rajut', peran: 'umkm' }),
+    { nama: 'rajut', peran: 'umkm' },
+    'cookie tampilan pulang-pergi lewat encode Next'
+  );
+  assert.deepEqual(
+    lewatKawat({ nama: 'Bu Îmas & Ãnak', peran: 'admin' }),
+    { nama: 'Bu Îmas & Ãnak', peran: 'admin' },
+    'nama ber-tanda baca dan huruf beraksen harus utuh'
+  );
+  assert.ok(
+    !tulisTampilan({ nama: 'rajut', peran: 'umkm' }).includes('%'),
+    'tulisTampilan tidak boleh meng-encode sendiri — Next yang melakukannya'
+  );
 
   for (const sampah of [
     undefined,

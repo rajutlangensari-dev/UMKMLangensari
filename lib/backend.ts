@@ -13,6 +13,7 @@
 
 import type { Umkm, Akun, Peran, Produk } from './types';
 import { bacaHalaman, bacaTema, bacaTataLetak } from './blok';
+import { nomorWa } from './api';
 
 const URL_BACKEND = process.env.NEXT_PUBLIC_APPS_SCRIPT_URL;
 const RAHASIA = process.env.APPS_SCRIPT_SECRET;
@@ -28,10 +29,21 @@ async function panggil<T>(action: string, data?: Record<string, unknown>): Promi
   if (!URL_BACKEND) throw new Error('NEXT_PUBLIC_APPS_SCRIPT_URL belum diatur.');
   if (!RAHASIA) throw new Error('APPS_SCRIPT_SECRET belum diatur di .env.local.');
 
+  // Nomor WA dibakukan ke `62…` DI SATU PINTU ini, bukan di tiap Route Handler.
+  // Ada empat jalur tulis yang membawa nomor (buat/ubah UMKM, buat/ubah produk)
+  // dan jalur kelima akan ditulis orang berikutnya; aturan yang dipasang di
+  // pemanggil selalu ketinggalan satu. Ini satu-satunya pintu ke Apps Script,
+  // jadi di sinilah tempatnya. Disimpan sebagai angka tanpa `+`: tanda plus di
+  // awal sel membuat Google Sheets mengiranya rumus.
+  const isi =
+    data && typeof data.kontakWa === 'string'
+      ? { ...data, kontakWa: nomorWa(data.kontakWa) }
+      : data;
+
   const res = await fetch(URL_BACKEND, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    body: JSON.stringify({ action, rahasia: RAHASIA, data }),
+    body: JSON.stringify({ action, rahasia: RAHASIA, data: isi }),
     cache: 'no-store',
   });
   const json = await res.json();
@@ -54,7 +66,7 @@ function normalisasiUmkm(r: Record<string, unknown>): Umkm {
     nama: String(r.nama ?? ''),
     bio: String(r.bio ?? ''),
     foto: String(r.foto ?? ''),
-    kontakWa: String(r.kontakWa ?? ''),
+    kontakWa: nomorWa(String(r.kontakWa ?? '')),
     alamat: String(r.alamat ?? ''),
     status: String(r.status ?? 'aktif') === 'nonaktif' ? 'nonaktif' : 'aktif',
     dibuat: String(r.dibuat ?? ''),
@@ -100,7 +112,7 @@ export async function ambilProdukSemuaServer(): Promise<Produk[]> {
     stok: String(r.stok ?? ''),
     deskripsi: String(r.deskripsi ?? ''),
     foto: String(r.foto ?? ''),
-    kontakWa: String(r.kontakWa ?? ''),
+    kontakWa: nomorWa(String(r.kontakWa ?? '')),
     namaUmkm: String(r.namaUmkm ?? ''),
     umkmId: String(r.umkmId ?? ''),
     alamat: String(r.alamat ?? ''),

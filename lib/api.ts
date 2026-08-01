@@ -36,7 +36,10 @@ function normalisasiProduk(raw: Record<string, unknown>): Produk {
     stok: String(raw.stok ?? ''),
     deskripsi: String(raw.deskripsi ?? ''),
     foto: String(raw.foto ?? ''),
-    kontakWa: String(raw.kontakWa ?? ''),
+    // Dinormalkan di sini juga, bukan cuma saat tautannya dirakit: nomor yang
+    // sudah kehilangan nol depannya di Sheets akan tampil apa adanya di panel,
+    // dan yang membacanya menyangka datanya rusak.
+    kontakWa: nomorWa(String(raw.kontakWa ?? '')),
     namaUmkm: String(raw.namaUmkm ?? ''),
     umkmId: String(raw.umkmId ?? ''),
     alamat: String(raw.alamat ?? ''),
@@ -180,10 +183,38 @@ export function lupakanFotoSaatPergi(url: string[]): void {
   lupakanFoto(daftar);
 }
 
+/**
+ * Nomor Indonesia apa pun bentuknya jadi format yang diterima wa.me: `62…`.
+ *
+ * KENAPA INI PERLU. Nomor disimpan di Google Sheets, dan Sheets membaca
+ * `081234567890` sebagai ANGKA lalu membuang nol depannya. Yang tersimpan
+ * jadi `81234567890`. Versi lama cuma menulis `.replace(/^0/, '62')` — yang
+ * tidak melakukan apa-apa pada nomor yang nol-nya sudah hilang, sehingga
+ * tautannya menjadi `wa.me/81234567890` dan berujung ke nomor tak dikenal.
+ * Tombol "Pesan lewat WhatsApp" pada produk itu diam-diam mati.
+ *
+ * Karena itu awalannya dipulihkan dari BENTUKNYA, bukan diandalkan ada:
+ *
+ *   +62 812-3456-7890  ->  6281234567890
+ *   0812 3456 7890     ->  6281234567890
+ *   81234567890        ->  6281234567890   <- yang dirusak Sheets
+ *   6281234567890      ->  6281234567890
+ *
+ * Nomor rumah berawalan 0 selain 8 (misal 022) tetap diterjemahkan ke 62 juga:
+ * itu benar untuk telepon, dan WhatsApp yang akan menolaknya kalau memang
+ * bukan nomor WhatsApp. Yang tidak boleh terjadi adalah tautan bisu.
+ */
+export function nomorWa(nomor: string): string {
+  const angka = String(nomor || '').replace(/[^0-9]/g, '');
+  if (!angka) return '';
+  if (angka.startsWith('62')) return angka;
+  if (angka.startsWith('0')) return `62${angka.slice(1)}`;
+  return `62${angka}`;
+}
+
 export function tautanWhatsapp(nomor: string, namaProduk: string): string {
   const pesan = `Halo, saya ingin menanyakan ${namaProduk} yang saya lihat di UMKM Langensari. Apakah masih tersedia?`;
-  const nomorBersih = nomor.replace(/[^0-9]/g, '').replace(/^0/, '62');
-  return `https://wa.me/${nomorBersih}?text=${encodeURIComponent(pesan)}`;
+  return `https://wa.me/${nomorWa(nomor)}?text=${encodeURIComponent(pesan)}`;
 }
 
 export function formatRupiah(angka: number): string {

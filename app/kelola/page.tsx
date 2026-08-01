@@ -1,6 +1,6 @@
 import { wajibSesi } from '@/lib/sesi';
 import { ambilProdukSemuaServer, ambilUmkmSemua } from '@/lib/backend';
-import { Galat, Judul, Kartu, KartuAksi, Kosong, Urusan } from './Kotak';
+import { Galat, Judul, Kartu, KartuAksi, Kosong, Sapaan, Urusan } from './Kotak';
 
 export const metadata = { title: 'Beranda panel' };
 
@@ -32,9 +32,14 @@ export default async function HalamanBeranda() {
     <div className="space-y-8">
       {gagal && <Galat pesan={gagal} />}
       {superAdmin ? (
-        <BerandaAdmin produk={produk} umkm={umkm} />
+        <BerandaAdmin produk={produk} umkm={umkm} nama={sesi.namaPengguna} />
       ) : (
-        <BerandaUmkm produk={produk} umkm={umkm} umkmId={sesi.umkmId} />
+        <BerandaUmkm
+          produk={produk}
+          umkm={umkm}
+          umkmId={sesi.umkmId}
+          nama={sesi.namaPengguna}
+        />
       )}
     </div>
   );
@@ -45,7 +50,15 @@ type DaftarUmkm = Awaited<ReturnType<typeof ambilUmkmSemua>>;
 
 const aktif = (s: string) => s.toLowerCase() === 'aktif';
 
-function BerandaAdmin({ produk, umkm }: { produk: Produk; umkm: DaftarUmkm }) {
+function BerandaAdmin({
+  produk,
+  umkm,
+  nama,
+}: {
+  produk: Produk;
+  umkm: DaftarUmkm;
+  nama: string;
+}) {
   const umkmAktif = umkm.filter((u) => u.status === 'aktif');
   const tayang = produk.filter((p) => aktif(p.status));
 
@@ -75,13 +88,28 @@ function BerandaAdmin({ produk, umkm }: { produk: Produk; umkm: DaftarUmkm }) {
     },
   ].filter(Boolean) as { href: string; teks: string }[];
 
+  // Satu kalimat yang menyimpulkan keadaan, supaya angka-angka di bawahnya
+  // punya konteks sebelum dibaca. Kalimatnya berubah menurut ada tidaknya
+  // pekerjaan tertinggal — bukan basa-basi tetap yang lama-lama tidak dibaca.
+  const ringkas =
+    urusan.length === 0
+      ? `${umkmAktif.length} usaha dan ${tayang.length} produk sedang tayang. Tidak ada yang tertinggal hari ini.`
+      : `${umkmAktif.length} usaha dan ${tayang.length} produk sedang tayang. Ada ${urusan.length} hal yang menunggu diurus di bawah.`;
+
   return (
     <>
+      <Sapaan
+        nama={nama}
+        kalimat={ringkas}
+        aksi={{ href: '/kelola/umkm/baru', label: 'Daftarkan usaha baru' }}
+      />
+
       <section>
-        <Judul sub="Angka di bawah dihitung ulang tiap halaman ini dibuka.">Keadaan portal</Judul>
+        <Judul sub="Dihitung ulang tiap halaman ini dibuka.">Keadaan portal</Judul>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           <Kartu
             angka={umkmAktif.length}
+            dari={umkm.length}
             label="Usaha aktif"
             jelas="Halamannya tayang dan bisa dibuka pengunjung."
             href="/kelola/umkm"
@@ -94,6 +122,7 @@ function BerandaAdmin({ produk, umkm }: { produk: Produk; umkm: DaftarUmkm }) {
           />
           <Kartu
             angka={tayang.length}
+            dari={produk.length}
             label="Produk tayang"
             jelas="Terlihat di katalog dan bisa dipesan lewat WhatsApp."
             href="/kelola/produk"
@@ -108,7 +137,12 @@ function BerandaAdmin({ produk, umkm }: { produk: Produk; umkm: DaftarUmkm }) {
       </section>
 
       <section>
-        <Judul>Perlu diurus</Judul>
+        {/* Jumlahnya ikut di judul, bukan cuma di daftarnya. Yang membuka panel
+            sambil berdiri di teras orang lain butuh tahu berapa banyak sebelum
+            memutuskan mulai atau tidak. */}
+        <Judul sub={urusan.length > 0 ? `${urusan.length} hal menunggu` : undefined}>
+          Perlu diurus
+        </Judul>
         {urusan.length === 0 ? (
           <p className="mt-4 rounded-kartu border border-line bg-surface px-4 py-5 font-body text-sm text-muted">
             Tidak ada yang tertinggal. Semua usaha punya foto, produk, dan halamannya sendiri.
@@ -123,15 +157,14 @@ function BerandaAdmin({ produk, umkm }: { produk: Produk; umkm: DaftarUmkm }) {
       </section>
 
       <section>
+        {/* "Daftarkan usaha" sengaja TIDAK diulang di sini — tombolnya sudah ada
+            di kartu sambutan paling atas. Satu tautan yang muncul dua kali di
+            layar yang sama membuat orang mengira keduanya mengerjakan hal
+            berbeda, lalu ragu memilih yang mana. */}
         <Judul sub="Tiga hal yang paling sering dikerjakan dari sini.">Mulai dari sini</Judul>
         <div className="mt-4 grid gap-3 sm:grid-cols-3 sm:gap-4">
           <KartuAksi
             utama
-            judul="Daftarkan usaha"
-            jelas="Buat halaman baru beserta akun pemiliknya sekaligus."
-            href="/kelola/umkm/baru"
-          />
-          <KartuAksi
             judul="Tambah produk"
             jelas="Pasang barang jualan untuk usaha mana pun."
             href="/kelola/produk"
@@ -140,6 +173,11 @@ function BerandaAdmin({ produk, umkm }: { produk: Produk; umkm: DaftarUmkm }) {
             judul="Kelola akun"
             jelas="Atur siapa yang boleh masuk dan ganti kata sandinya."
             href="/kelola/akun"
+          />
+          <KartuAksi
+            judul="Lihat situs publik"
+            jelas="Periksa tampilannya seperti yang dilihat pembeli."
+            href="/"
           />
         </div>
       </section>
@@ -151,10 +189,12 @@ function BerandaUmkm({
   produk,
   umkm,
   umkmId,
+  nama,
 }: {
   produk: Produk;
   umkm: DaftarUmkm;
   umkmId: string;
+  nama: string;
 }) {
   // Penyaringan menurut peran dilakukan DI SINI, di server. Kalau dikerjakan di
   // browser, data usaha lain tetap terkirim ke sana dan tinggal dibuka lewat
@@ -185,13 +225,29 @@ function BerandaUmkm({
     },
   ].filter(Boolean) as { href: string; teks: string }[];
 
+  // Kalimatnya menyebut yang paling penting bagi pemilik usaha: berapa
+  // barangnya yang sedang bisa dilihat pembeli. Bukan sapaan kosong.
+  const ringkas =
+    milik.length === 0
+      ? 'Halaman usaha Anda sudah tayang, tapi belum ada produk di dalamnya. Satu produk berfoto sudah cukup untuk memulai.'
+      : kurang.length === 0
+        ? `${tayang.length} produk Anda sedang bisa dilihat dan dipesan pembeli. Halaman Anda sudah lengkap.`
+        : `${tayang.length} produk Anda sedang bisa dilihat pembeli. Ada ${kurang.length} hal yang masih bisa dilengkapi di bawah.`;
+
   return (
     <>
+      <Sapaan
+        nama={nama}
+        kalimat={ringkas}
+        aksi={{ href: `/umkm/${saya.slug}`, label: 'Lihat halaman saya' }}
+      />
+
       <section>
         <Judul sub={`Halaman Anda ada di /umkm/${saya.slug}`}>{saya.nama}</Judul>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
           <Kartu
             angka={tayang.length}
+            dari={milik.length}
             label="Produk tayang"
             jelas="Terlihat pembeli dan bisa dipesan lewat WhatsApp."
             href="/kelola/produk"

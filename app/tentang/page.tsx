@@ -40,9 +40,10 @@ export default function HalamanTentang() {
             langsung antara pembeli dan pemilik usaha.
           </p>
           <p>
-            Portal disusun tim KKN Universitas Padjadjaran 2026 bersama pemerintah
-            Desa Langensari, dan dirancang supaya bisa diteruskan perangkat desa
-            setelah masa KKN berakhir.
+            Portal ini dikembangkan oleh <strong className="font-semibold text-ink">
+            KKN 45 Universitas Padjadjaran</strong> bersama pemerintah Desa
+            Langensari, dan dirancang supaya bisa diteruskan perangkat desa setelah
+            masa KKN berakhir.
           </p>
         </div>
 
