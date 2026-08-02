@@ -5,6 +5,7 @@ import Link from 'next/link';
 import ThemeToggle from './ThemeToggle';
 import { useAkunTampilan } from './AkunHeader';
 import { normalisasiFotoUrl } from '@/lib/api';
+import { IkonTas } from './Logo';
 
 const PORTAL = [
   { href: '/', label: 'Beranda UMKM Langensari' },
@@ -99,10 +100,7 @@ export default function HeaderUmkm({
             aria-controls="menu-portal"
             className="tekan flex min-h-11 items-center gap-2 rounded-full border border-line px-4 font-body text-sm text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink"
           >
-            <svg viewBox="0 0 30 18" className="h-3 w-6 shrink-0" fill="none" aria-hidden="true">
-              <ellipse cx="10" cy="9" rx="8" ry="6.6" className="stroke-aksen" strokeWidth="2.6" />
-              <ellipse cx="20" cy="9" rx="8" ry="6.6" className="stroke-aksen" strokeWidth="2.6" />
-            </svg>
+            <IkonTas className="h-5 w-5 shrink-0 text-ink" />
             <span className="hidden sm:inline">UMKM Langensari</span>
             <span className="sm:hidden">Portal</span>
             <svg

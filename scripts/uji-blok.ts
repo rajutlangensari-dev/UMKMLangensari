@@ -12,6 +12,11 @@ import {
   bacaHalaman,
   tulisHalaman,
   bacaTema,
+  atributTema,
+  gayaTema,
+  namaTema,
+  rasioKontras,
+  warnaTemaKustom,
   bacaTataLetak,
   halamanBawaan,
   halamanAtauBawaan,
@@ -166,6 +171,32 @@ uji('tema dan tata letak tak dikenal jatuh ke bawaan', () => {
   assert.equal(bacaTema('TANAH'), 'tanah');
   assert.equal(bacaTataLetak('entah'), 'toko');
   assert.equal(bacaTataLetak('portofolio'), 'portofolio');
+});
+
+uji('warna bebas menerima tepat enam digit heksadesimal', () => {
+  assert.equal(bacaTema('#A1B2C3'), '#a1b2c3');
+  assert.equal(warnaTemaKustom(bacaTema('#A1B2C3')), '#a1b2c3');
+  assert.equal(atributTema(bacaTema('#A1B2C3')), 'kustom');
+  assert.equal(namaTema(bacaTema('#A1B2C3')), 'Warna khusus #A1B2C3');
+  assert.equal(bacaTema('#fff'), 'zaitun');
+  assert.equal(bacaTema('#12345678'), 'zaitun');
+  assert.equal(bacaTema('red'), 'zaitun');
+});
+
+uji('warna bebas selalu menghasilkan aksen dengan kontras AA', () => {
+  const bacaRgb = (nilai: string) => nilai.split(' ').map(Number) as [number, number, number];
+  for (const warna of ['#ffff00', '#050505', '#ffffff', '#004cff', '#f06aa6'] as const) {
+    const gaya = gayaTema(warna);
+    assert.ok(gaya, `token ${warna} tidak dibuat`);
+    const terang = bacaRgb(gaya['--tema-aksen-terang']);
+    const gelap = bacaRgb(gaya['--tema-aksen-gelap']);
+    const inkTerang = bacaRgb(gaya['--tema-ink-terang']);
+    const inkGelap = bacaRgb(gaya['--tema-ink-gelap']);
+    assert.ok(rasioKontras(terang, [255, 255, 255]) >= 4.5, `${warna} gagal di mode terang`);
+    assert.ok(rasioKontras(gelap, [15, 15, 17]) >= 4.5, `${warna} gagal di mode gelap`);
+    assert.ok(rasioKontras(terang, inkTerang) >= 4.5, `${warna} gagal sebagai tombol terang`);
+    assert.ok(rasioKontras(gelap, inkGelap) >= 4.5, `${warna} gagal sebagai tombol gelap`);
+  }
 });
 
 uji('halaman bawaan tidak membuat blok tanpa bahan', () => {

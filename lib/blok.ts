@@ -374,10 +374,16 @@ export function keParagraf(t: string): string[] {
 // ---------- Tema ----------
 
 export const TEMA = ['zaitun', 'tanah', 'nila', 'sawah'] as const;
-export type Tema = (typeof TEMA)[number];
-export const TEMA_BAWAAN: Tema = 'zaitun';
+export type TemaPreset = (typeof TEMA)[number];
+/**
+ * Tema dapat berupa salah satu preset atau satu warna heksadesimal pilihan
+ * pemilik. Nilai bebas tetap disaring ketat: hanya #RRGGBB yang boleh lewat,
+ * sehingga ia aman dipasang sebagai custom property CSS.
+ */
+export type Tema = TemaPreset | `#${string}`;
+export const TEMA_BAWAAN: TemaPreset = 'zaitun';
 
-export const LABEL_TEMA: Record<Tema, { nama: string; jelas: string }> = {
+export const LABEL_TEMA: Record<TemaPreset, { nama: string; jelas: string }> = {
   zaitun: { nama: 'Zaitun', jelas: 'Warna portal desa. Tenang, cocok untuk hampir semua usaha.' },
   tanah: { nama: 'Tanah', jelas: 'Cokelat kemerahan. Cocok untuk kerajinan, gerabah, dan meubel.' },
   nila: { nama: 'Nila', jelas: 'Biru keunguan. Cocok untuk konveksi, batik, dan kain.' },
@@ -385,8 +391,96 @@ export const LABEL_TEMA: Record<Tema, { nama: string; jelas: string }> = {
 };
 
 export function bacaTema(nilai: unknown): Tema {
-  const t = teks(nilai).toLowerCase() as Tema;
-  return TEMA.includes(t) ? t : TEMA_BAWAAN;
+  const t = teks(nilai).trim().toLowerCase();
+  if (/^#[0-9a-f]{6}$/.test(t)) return t as `#${string}`;
+  return TEMA.includes(t as TemaPreset) ? (t as TemaPreset) : TEMA_BAWAAN;
+}
+
+export function warnaTemaKustom(tema: Tema): `#${string}` | '' {
+  return /^#[0-9a-f]{6}$/i.test(tema) ? (tema.toLowerCase() as `#${string}`) : '';
+}
+
+export function namaTema(tema: Tema): string {
+  const kustom = warnaTemaKustom(tema);
+  if (kustom) return `Warna khusus ${kustom.toUpperCase()}`;
+  return LABEL_TEMA[tema as TemaPreset]?.nama ?? LABEL_TEMA[TEMA_BAWAAN].nama;
+}
+
+/** Nilai atribut CSS. Warna mentah tidak pernah dijadikan nama selector. */
+export function atributTema(tema: Tema | undefined): TemaPreset | 'kustom' | undefined {
+  if (!tema) return undefined;
+  return warnaTemaKustom(tema) ? 'kustom' : (bacaTema(tema) as TemaPreset);
+}
+
+type Rgb = [number, number, number];
+type PropertiTema = Record<`--tema-${string}`, string>;
+
+function rgbDariHex(hex: string): Rgb {
+  return [
+    Number.parseInt(hex.slice(1, 3), 16),
+    Number.parseInt(hex.slice(3, 5), 16),
+    Number.parseInt(hex.slice(5, 7), 16),
+  ];
+}
+
+function luminansi([r, g, b]: Rgb): number {
+  const kanal = (n: number) => {
+    const s = n / 255;
+    return s <= 0.04045 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4;
+  };
+  return 0.2126 * kanal(r) + 0.7152 * kanal(g) + 0.0722 * kanal(b);
+}
+
+/** Diekspor supaya uji kontras warna bebas memakai rumus yang sama. */
+export function rasioKontras(a: Rgb, b: Rgb): number {
+  const terang = Math.max(luminansi(a), luminansi(b));
+  const gelap = Math.min(luminansi(a), luminansi(b));
+  return (terang + 0.05) / (gelap + 0.05);
+}
+
+function campur(asal: Rgb, tujuan: Rgb, jumlah: number): Rgb {
+  return asal.map((n, i) => Math.round(n + (tujuan[i] - n) * jumlah)) as Rgb;
+}
+
+function amanDiLatar(asal: Rgb, latar: Rgb, tujuan: Rgb): Rgb {
+  let hasil = asal;
+  for (let i = 0; i < 16 && rasioKontras(hasil, latar) < 4.6; i++) {
+    hasil = campur(hasil, tujuan, 0.12);
+  }
+  return hasil;
+}
+
+function teksDiAtas(aksen: Rgb): Rgb {
+  const hitam: Rgb = [15, 15, 17];
+  const putih: Rgb = [250, 250, 245];
+  return rasioKontras(aksen, hitam) >= rasioKontras(aksen, putih) ? hitam : putih;
+}
+
+const triplet = (warna: Rgb) => warna.join(' ');
+
+/**
+ * Token untuk tema bebas. Warna pilihan berperan sebagai benih; versi terang
+ * dan gelapnya disesuaikan sampai teks/tautan mencapai rasio WCAG AA 4,5:1.
+ * Dengan begitu kuning sangat pucat dan biru sangat gelap tetap dapat dipilih
+ * tanpa menghasilkan tombol yang tidak terbaca.
+ */
+export function gayaTema(tema: Tema | undefined): PropertiTema | undefined {
+  const hex = tema ? warnaTemaKustom(tema) : '';
+  if (!hex) return undefined;
+
+  const benih = rgbDariHex(hex);
+  const aksenTerang = amanDiLatar(benih, [255, 255, 255], [0, 0, 0]);
+  const aksenGelap = amanDiLatar(benih, [15, 15, 17], [255, 255, 255]);
+
+  return {
+    '--tema-aksen-terang': triplet(aksenTerang),
+    '--tema-aksen-kuat-terang': triplet(campur(aksenTerang, [0, 0, 0], 0.14)),
+    '--tema-ink-terang': triplet(teksDiAtas(aksenTerang)),
+    '--tema-aksen-gelap': triplet(aksenGelap),
+    '--tema-aksen-kuat-gelap': triplet(campur(aksenGelap, [255, 255, 255], 0.14)),
+    '--tema-ink-gelap': triplet(teksDiAtas(aksenGelap)),
+    '--tema-benih': triplet(benih),
+  };
 }
 
 // ---------- Tata letak ----------

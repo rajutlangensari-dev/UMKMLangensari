@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import HeaderUmkm from '@/components/HeaderUmkm';
+import BingkaiTemaUmkm from '@/components/BingkaiTemaUmkm';
 import Footer from '@/components/Footer';
 import GridProduk from '@/components/GridProduk';
 import { normalisasiFotoUrl, tautanWhatsapp } from '@/lib/api';
@@ -89,7 +90,7 @@ export default async function KatalogUmkm({ params, searchParams }: {
   const { produk, gagal } = await produkUmkm(umkm.id);
 
   return (
-    <div data-tema={umkm.tema}>
+    <BingkaiTemaUmkm tema={umkm.tema} tataLetak={umkm.tataLetak}>
       <HeaderUmkm nama={umkm.nama} foto={umkm.foto} slug={umkm.slug} />
       <main className="min-h-[60vh] pt-10 sm:pt-14">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
@@ -149,6 +150,6 @@ export default async function KatalogUmkm({ params, searchParams }: {
         )}
       </main>
       <Footer />
-    </div>
+    </BingkaiTemaUmkm>
   );
 }

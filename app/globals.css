@@ -745,6 +745,11 @@ body {
   --aksen-kuat: 50 94 58;
   --aksen-ink: 246 251 247;
 }
+[data-tema='kustom'] {
+  --aksen: var(--tema-aksen-terang);
+  --aksen-kuat: var(--tema-aksen-kuat-terang);
+  --aksen-ink: var(--tema-ink-terang);
+}
 
 :root[data-theme='gelap'] [data-tema='zaitun'],
 :root[data-theme='gelap'] [data-tema='tanah'],
@@ -767,6 +772,11 @@ body {
 :root[data-theme='gelap'] [data-tema='sawah'] {
   --aksen: 125 191 136;
   --aksen-kuat: 152 209 162;
+}
+:root[data-theme='gelap'] [data-tema='kustom'] {
+  --aksen: var(--tema-aksen-gelap);
+  --aksen-kuat: var(--tema-aksen-kuat-gelap);
+  --aksen-ink: var(--tema-ink-gelap);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -792,6 +802,55 @@ body {
     --aksen: 125 191 136;
     --aksen-kuat: 152 209 162;
   }
+  :root:not([data-theme='terang']) [data-tema='kustom'] {
+    --aksen: var(--tema-aksen-gelap);
+    --aksen-kuat: var(--tema-aksen-kuat-gelap);
+    --aksen-ink: var(--tema-ink-gelap);
+  }
+}
+
+/* ============================================================
+   Tiga preset halaman UMKM
+   ------------------------------------------------------------
+   Warna tetap datang dari tema masing-masing usaha. Yang berbeda
+   di sini adalah hierarki: toko mengutamakan katalog, portofolio
+   mengutamakan foto, dan cerita memberi ruang lebih pada narasi.
+   ============================================================ */
+[data-tata-letak='toko'] .blok-katalog {
+  border-block: 1px solid rgb(var(--line));
+  background: color-mix(in srgb, rgb(var(--aksen)) 5%, rgb(var(--paper)));
+}
+
+[data-tata-letak='portofolio'] .blok-galeri {
+  border-bottom: 1px solid rgb(var(--line));
+  background: rgb(var(--surface));
+}
+
+[data-tata-letak='cerita'] .blok-cerita {
+  border-block: 1px solid rgb(var(--line));
+  background: color-mix(in srgb, rgb(var(--aksen)) 6%, rgb(var(--paper)));
+}
+
+[data-tata-letak='cerita'] .blok-cerita img {
+  aspect-ratio: 4 / 5;
+}
+
+@media (min-width: 1024px) {
+  [data-tata-letak='portofolio'] .blok-galeri .rel-galeri > li:first-child {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+}
+
+/* Input warna native sengaja dipertahankan: di HP ia membuka pemilih warna
+   bawaan perangkat, sementara di desktop tampil sebagai color wheel lengkap. */
+.pemilih-warna::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+.pemilih-warna::-webkit-color-swatch,
+.pemilih-warna::-moz-color-swatch {
+  border: 0;
+  border-radius: 7px;
 }
 
 /* ============================================================

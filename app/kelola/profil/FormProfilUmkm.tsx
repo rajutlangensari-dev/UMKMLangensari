@@ -9,6 +9,7 @@ import {
   LABEL_TEMA,
   TATA_LETAK,
   TEMA,
+  warnaTemaKustom,
   type TataLetak,
   type Tema,
 } from '@/lib/blok';
@@ -234,6 +235,9 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
  * memberi tahu apa pun sampai warnanya terlihat.
  */
 export function PilihTema({ nilai, onPilih }: { nilai: Tema; onPilih: (t: Tema) => void }) {
+  const warnaKustom = warnaTemaKustom(nilai);
+  const warnaPemilih = warnaKustom || '#6a743e';
+
   return (
     <fieldset>
       <legend className="font-body text-sm text-muted">Warna halaman</legend>
@@ -267,6 +271,28 @@ export function PilihTema({ nilai, onPilih }: { nilai: Tema; onPilih: (t: Tema) 
           </label>
         ))}
       </div>
+      <label
+        className={`mt-2 flex cursor-pointer items-center gap-4 rounded-kartu border p-3 transition-colors ${
+          warnaKustom ? 'border-aksen bg-surface' : 'border-line hover:border-aksen'
+        }`}
+      >
+        <input
+          type="color"
+          value={warnaPemilih}
+          onChange={(e) => onPilih(e.target.value.toLowerCase() as Tema)}
+          className="pemilih-warna h-11 w-14 shrink-0 cursor-pointer rounded-[10px] border border-line bg-paper p-1"
+          aria-label="Pilih warna khusus"
+        />
+        <span className="min-w-0 flex-1">
+          <span className="block font-body text-sm text-ink">Pilih warna sendiri</span>
+          <span className="block font-body text-xs leading-snug text-muted">
+            Gunakan roda warna. Sistem akan menyesuaikan tingkat gelap dan terang agar teks tetap terbaca.
+          </span>
+        </span>
+        <span className="angka-rata shrink-0 font-body text-xs uppercase text-muted">
+          {warnaKustom || 'Bebas'}
+        </span>
+      </label>
     </fieldset>
   );
 }
@@ -286,7 +312,7 @@ export function PilihTataLetak({
         {TATA_LETAK.map((t) => (
           <label
             key={t}
-            className={`tekan flex cursor-pointer items-start gap-3 rounded-kartu border p-3 transition-colors ${
+            className={`tekan flex cursor-pointer items-center gap-4 rounded-kartu border p-3 transition-colors ${
               nilai === t ? 'border-aksen bg-surface' : 'border-line hover:border-aksen'
             }`}
           >
@@ -298,14 +324,17 @@ export function PilihTataLetak({
               onChange={() => onPilih(t)}
               className="sr-only"
             />
-            <span
-              aria-hidden="true"
-              className={`mt-1 h-3.5 w-3.5 shrink-0 rounded-full border-[3px] ${
-                nilai === t ? 'border-aksen bg-aksen' : 'border-line'
-              }`}
-            />
+            <SketsaTataLetak jenis={t} />
             <span className="min-w-0">
-              <span className="block font-body text-sm text-ink">{LABEL_TATA_LETAK[t].nama}</span>
+              <span className="flex items-center gap-2 font-body text-sm text-ink">
+                <span
+                  aria-hidden="true"
+                  className={`h-3.5 w-3.5 shrink-0 rounded-full border-[3px] ${
+                    nilai === t ? 'border-aksen bg-aksen' : 'border-line'
+                  }`}
+                />
+                {LABEL_TATA_LETAK[t].nama}
+              </span>
               <span className="block font-body text-xs leading-snug text-muted">
                 {LABEL_TATA_LETAK[t].jelas}
               </span>
@@ -323,5 +352,42 @@ export function PilihTataLetak({
         hanya kerangkanya.
       </p>
     </fieldset>
+  );
+}
+
+function SketsaTataLetak({ jenis }: { jenis: TataLetak }) {
+  return (
+    <span aria-hidden="true" className="relative block h-16 w-24 shrink-0 overflow-hidden rounded-[10px] border border-line bg-paper p-2">
+      {jenis === 'toko' && (
+        <>
+          <span className="block h-3 rounded-[3px] bg-aksen/25" />
+          <span className="relative -mt-1 ml-2 block h-4 w-4 rounded-full border-2 border-paper bg-aksen" />
+          <span className="mt-1 grid grid-cols-4 gap-1">
+            <i className="aspect-square rounded-[2px] bg-surface" />
+            <i className="aspect-square rounded-[2px] bg-surface" />
+            <i className="aspect-square rounded-[2px] bg-surface" />
+            <i className="aspect-square rounded-[2px] bg-surface" />
+          </span>
+        </>
+      )}
+      {jenis === 'portofolio' && (
+        <span className="grid h-full grid-cols-2 grid-rows-2 gap-1">
+          <i className="row-span-2 rounded-[3px] bg-aksen/35" />
+          <i className="rounded-[3px] bg-surface" />
+          <i className="rounded-[3px] bg-aksen/15" />
+        </span>
+      )}
+      {jenis === 'cerita' && (
+        <span className="grid h-full grid-cols-[1.15fr_.85fr] gap-2">
+          <span className="space-y-1.5 pt-1">
+            <i className="block h-1.5 w-8 rounded-full bg-aksen" />
+            <i className="block h-1 w-full rounded-full bg-line" />
+            <i className="block h-1 w-4/5 rounded-full bg-line" />
+            <i className="block h-1 w-3/5 rounded-full bg-line" />
+          </span>
+          <i className="rounded-[3px] bg-aksen/20" />
+        </span>
+      )}
+    </span>
   );
 }

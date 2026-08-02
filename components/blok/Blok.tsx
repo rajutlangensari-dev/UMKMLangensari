@@ -61,7 +61,7 @@ export default function RenderBlok({
     }
   })();
 
-  if (!isi || !jangkar) return isi;
+  if (!isi) return null;
 
   // Jangkar dipasang di pembungkus, bukan di dalam tiap komponen blok. Kalau
   // tiap blok memasangnya sendiri, tujuh berkas harus tahu soal jangkar — dan
@@ -71,7 +71,10 @@ export default function RenderBlok({
   // dilompati. Tanpa itu, tombol sampul "Lihat produk" mendarat di posisi yang
   // judulnya sudah hilang di balik header.
   return (
-    <div id={jangkar} className="scroll-mt-16">
+    <div
+      id={jangkar}
+      className={`blok blok-${blok.jenis}${jangkar ? ' scroll-mt-16' : ''}`}
+    >
       {isi}
     </div>
   );

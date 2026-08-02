@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import HeaderUmkm from '@/components/HeaderUmkm';
+import BingkaiTemaUmkm from '@/components/BingkaiTemaUmkm';
 import RelProduk from '@/components/RelProduk';
 import Footer from '@/components/Footer';
 import { formatRupiah, normalisasiFotoUrl, tautanWhatsapp } from '@/lib/api';
@@ -101,7 +102,7 @@ export default async function HalamanDetailProduk({ params }: { params: { id: st
   // seluruh isi tokonya adalah nama usaha di header, yang menuju halaman
   // profilnya.
   return (
-    <div data-tema={pemilik?.tema}>
+    <BingkaiTemaUmkm tema={pemilik?.tema} tataLetak={pemilik?.tataLetak}>
       {pemilik ? (
         <HeaderUmkm nama={pemilik.nama} foto={pemilik.foto} slug={pemilik.slug} />
       ) : (
@@ -119,7 +120,7 @@ export default async function HalamanDetailProduk({ params }: { params: { id: st
         )}
       </main>
       <Footer />
-    </div>
+    </BingkaiTemaUmkm>
   );
 }
 

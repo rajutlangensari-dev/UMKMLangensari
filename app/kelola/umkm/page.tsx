@@ -2,7 +2,7 @@ import { redirect } from 'next/navigation';
 import Link from 'next/link';
 import { wajibSesi } from '@/lib/sesi';
 import { ambilAkunSemua, ambilProdukSemuaServer, ambilUmkmSemua } from '@/lib/backend';
-import { LABEL_TATA_LETAK, LABEL_TEMA } from '@/lib/blok';
+import { LABEL_TATA_LETAK, namaTema } from '@/lib/blok';
 import { Galat, Judul, Kosong } from '../Kotak';
 import Cari from '../Cari';
 import { cocok } from '../cocok';
@@ -85,7 +85,7 @@ export default async function HalamanDaftarUmkm({
               umkm={u}
               jumlahProduk={produk.filter((p) => p.umkmId === u.id).length}
               jumlahAkun={akun.filter((a) => a.umkmId === u.id).length}
-              tema={LABEL_TEMA[u.tema].nama}
+              tema={namaTema(u.tema)}
               tataLetak={LABEL_TATA_LETAK[u.tataLetak].nama}
             />
           ))}

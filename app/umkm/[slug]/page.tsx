@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import HeaderUmkm from '@/components/HeaderUmkm';
+import BingkaiTemaUmkm from '@/components/BingkaiTemaUmkm';
 import Footer from '@/components/Footer';
 import RenderBlok from '@/components/blok/Blok';
 import { normalisasiFotoUrl } from '@/lib/api';
@@ -91,7 +92,7 @@ export default async function HalamanUmkm({ params }: { params: { slug: string }
     // Tema dipasang di sini sebagai atribut, bukan gaya sebaris. Custom property
     // menurun ke seluruh isinya, jadi setiap `bg-aksen` di dalamnya ikut berganti
     // tanpa satu komponen pun tahu tema apa yang sedang dipakai.
-    <div data-tema={umkm.tema}>
+    <BingkaiTemaUmkm tema={umkm.tema} tataLetak={umkm.tataLetak}>
       <HeaderUmkm nama={umkm.nama} foto={umkm.foto} slug={umkm.slug} />
       <main className="min-h-[60vh]">
         {blok.map((b) => (
@@ -99,6 +100,6 @@ export default async function HalamanUmkm({ params }: { params: { slug: string }
         ))}
       </main>
       <Footer />
-    </div>
+    </BingkaiTemaUmkm>
   );
 }

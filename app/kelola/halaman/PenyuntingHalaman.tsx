@@ -7,6 +7,7 @@ import Link from 'next/link';
 import Dialog from '@/components/Dialog';
 import { useKabar } from '@/components/Pemberitahuan';
 import RenderBlok from '@/components/blok/Blok';
+import BingkaiTemaUmkm from '@/components/BingkaiTemaUmkm';
 import {
   JENIS_BLOK,
   LABEL_BLOK,
@@ -302,8 +303,9 @@ export default function PenyuntingHalaman({
         <Judul sub="Persis seperti yang akan dilihat pengunjung. Belum tersimpan sampai tombol Simpan ditekan.">
           Pratinjau
         </Judul>
-        <div
-          data-tema={umkm.tema}
+        <BingkaiTemaUmkm
+          tema={umkm.tema}
+          tataLetak={umkm.tataLetak}
           className="mt-4 overflow-hidden rounded-kartu border border-line bg-paper"
         >
           {tampil.length === 0 ? (
@@ -317,7 +319,7 @@ export default function PenyuntingHalaman({
               ))}
             </>
           )}
-        </div>
+        </BingkaiTemaUmkm>
       </section>
 
       <Dialog

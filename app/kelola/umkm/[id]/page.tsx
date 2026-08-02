@@ -2,7 +2,7 @@ import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import { wajibSesi } from '@/lib/sesi';
 import { ambilAkunSemua, ambilProdukSemuaServer, ambilUmkmSemua } from '@/lib/backend';
-import { LABEL_TATA_LETAK, LABEL_TEMA } from '@/lib/blok';
+import { LABEL_TATA_LETAK, namaTema } from '@/lib/blok';
 import { formatRupiah } from '@/lib/api';
 import { Galat, Judul, Kartu } from '../../Kotak';
 import FormProfilUmkm from '../../profil/FormProfilUmkm';
@@ -59,7 +59,7 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
             sub={
               <>
                 /umkm/{usaha.slug} &middot; {LABEL_TATA_LETAK[usaha.tataLetak].nama},{' '}
-                {LABEL_TEMA[usaha.tema].nama}
+                {namaTema(usaha.tema)}
                 {usaha.status === 'nonaktif' && ' · nonaktif, halaman publiknya tidak bisa dibuka'}
               </>
             }
