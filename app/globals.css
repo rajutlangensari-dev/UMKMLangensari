@@ -152,37 +152,31 @@ body {
   transform: scale(0.97);
 }
 
-/* Hover hanya untuk penunjuk presisi. Di layar sentuh, hover ikut
-   menyala saat disentuh dan efeknya tertinggal setelah jari lepas. */
-@media (hover: hover) and (pointer: fine) {
-  .angkat {
-    transition: transform 0.2s var(--keluar);
-  }
-  .angkat:hover {
-    transform: translateY(-3px);
-  }
-  .zoom-produk,
-  .zoom-kategori {
-    transition: transform 0.24s var(--keluar);
-  }
-  .group:hover .zoom-produk {
-    transform: scale(1.03);
-  }
-  .group:focus-within .zoom-produk {
-    transform: scale(1.03);
-  }
-  .group:hover .zoom-kategori {
-    transform: scale(1.05);
-  }
-  .warna-interaktif {
-    transition: color 0.18s ease;
-  }
-  .group:hover .warna-interaktif {
-    color: rgb(var(--aksen));
-  }
-  .group:focus-within .warna-interaktif {
-    color: rgb(var(--aksen));
-  }
+/* Interaksi hover tidak dibatasi oleh media query pointer. Laptop hibrida dapat
+   melaporkan pointer utama sebagai sentuh meskipun mouse sedang digunakan. */
+.angkat {
+  transition: transform 0.2s var(--keluar);
+}
+.angkat:hover {
+  transform: translateY(-3px);
+}
+.zoom-produk,
+.zoom-kategori {
+  transition: transform 0.24s var(--keluar);
+}
+.group:hover .zoom-produk,
+.group:focus-within .zoom-produk {
+  transform: scale(1.03);
+}
+.group:hover .zoom-kategori {
+  transform: scale(1.05);
+}
+.warna-interaktif {
+  transition: color 0.18s ease;
+}
+.group:hover .warna-interaktif,
+.group:focus-within .warna-interaktif {
+  color: rgb(var(--aksen));
 }
 
 /* Kartu yang menebal saat disentuh kursor.
@@ -209,7 +203,6 @@ body {
     box-shadow 0.2s var(--keluar),
     transform 0.2s var(--keluar);
 }
-@media (hover: hover) and (pointer: fine) {
   /* Membesar sedikit, bukan cuma terangkat. Kartu keterangan tidak punya foto
      yang bisa di-zoom di dalamnya, jadi kartunya sendiri yang jadi sasaran
      kursor — dan itu yang membuat ia terasa bisa ditekan.
@@ -222,23 +215,22 @@ body {
      `z-index` yang membuat pembesarannya berarti: tanpa itu, kartu yang
      terangkat justru masuk KE BAWAH kartu berikutnya di kisi, karena elemen
      yang datang belakangan digambar di atas. */
-  .kartu-hover:hover {
-    z-index: 2;
-    border-color: rgb(var(--aksen-kuat));
-    box-shadow:
-      inset 0 0 0 1px rgb(var(--aksen-kuat)),
-      0 14px 30px rgb(var(--ink) / 0.12);
-    transform: translateY(-2px) scale(1.03);
-  }
-  .kartu-hover:hover .kartu-hover-judul {
-    color: rgb(var(--aksen));
-  }
+.kartu-hover:hover {
+  z-index: 2;
+  border-color: rgb(var(--aksen-kuat));
+  box-shadow:
+    inset 0 0 0 1px rgb(var(--aksen-kuat)),
+    0 14px 30px rgb(var(--ink) / 0.12);
+  transform: translateY(-2px) scale(1.03);
+}
+.kartu-hover:hover .kartu-hover-judul {
+  color: rgb(var(--aksen));
+}
   /* Til produk sudah membesarkan fotonya sendiri di dalam bingkai. Dua zoom
      bertumpuk (kartu 1.03 x foto 1.03) membuat fotonya melonjak; yang di dalam
      dikembalikan supaya yang bergerak cuma kartunya. */
-  .kartu-hover:hover .zoom-produk {
-    transform: none;
-  }
+.kartu-hover:hover .zoom-produk {
+  transform: none;
 }
 /* Papan ketik mendapat perlakuan yang sama. Kartu keterangan bukan tautan, jadi
    fokusnya datang dari isinya — `:focus-within` menangani keduanya sekaligus,
@@ -328,6 +320,25 @@ body {
   scroll-snap-align: start;
   scroll-snap-stop: always;
 }
+/* Ponsel portrait menampilkan sorotan sebagai satu layar utuh setelah header.
+   `svh` menjaga batasnya saat bilah alamat peramban sedang terbuka. */
+@media (max-width: 639px) and (orientation: portrait) {
+  .hero-penuh {
+    height: calc(100svh - 4.0625rem);
+  }
+  .hero-penuh > [role='region'] {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+  .hero-penuh > [role='region'] > .hero-rel {
+    min-height: 0;
+    flex: 1 1 auto;
+  }
+  .hero-slide > div {
+    height: 100%;
+  }
+}
 /* Sasaran sentuhnya 44x44 penuh, garisnya yang terlihat kecil. Versi
    sebelumnya 32px lebar — di bawah batas yang bisa ditekan dengan andal oleh
    ibu jari, dan indikator carousel justru salah satu yang paling sering
@@ -355,10 +366,8 @@ body {
   background: rgb(var(--aksen));
   transform: translateY(-50%) scaleX(1.12);
 }
-@media (hover: hover) and (pointer: fine) {
-  .hero-indikator:hover::after {
-    background: rgb(var(--aksen));
-  }
+.hero-indikator:hover::after {
+  background: rgb(var(--aksen));
 }
 .hero-kontrol,
 .tombol-rel {
@@ -373,13 +382,11 @@ body {
   background: rgb(var(--paper));
   transition: border-color var(--gerak-cepat) ease, color var(--gerak-cepat) ease, background-color var(--gerak-cepat) ease;
 }
-@media (hover: hover) and (pointer: fine) {
-  .hero-kontrol:hover,
-  .tombol-rel:not(:disabled):hover {
-    border-color: rgb(var(--aksen));
-    color: rgb(var(--aksen-ink));
-    background: rgb(var(--aksen));
-  }
+.hero-kontrol:hover,
+.tombol-rel:not(:disabled):hover {
+  border-color: rgb(var(--aksen));
+  color: rgb(var(--aksen-ink));
+  background: rgb(var(--aksen));
 }
 /* Tombol rel yang sudah mentok dimatikan, bukan dilepas dari DOM — lihat
    komentar di RelProduk.tsx. Ia tetap memakan tempat yang sama supaya tombol
@@ -555,11 +562,9 @@ body {
   transform-origin: right;
   transition: transform 0.2s var(--keluar);
 }
-@media (hover: hover) and (pointer: fine) {
-  .tautan-nav:hover::after {
-    transform: scaleX(1);
-    transform-origin: left;
-  }
+.tautan-nav:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 .tautan-nav:focus-visible::after {
   transform: scaleX(1);
@@ -1027,10 +1032,8 @@ dialog.kotak[open] {
     transform 0.12s var(--keluar),
     box-shadow 0.18s var(--keluar);
 }
-@media (hover: hover) and (pointer: fine) {
-  .avatar-akun:hover {
-    box-shadow: 0 0 0 3px rgb(var(--aksen) / 0.22);
-  }
+.avatar-akun:hover {
+  box-shadow: 0 0 0 3px rgb(var(--aksen) / 0.22);
 }
 /* Di menu HP avatarnya cuma keterangan, bukan tombol. */
 .avatar-akun-mati {
