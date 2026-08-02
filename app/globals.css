@@ -859,6 +859,9 @@ body {
   clip-path: inset(0 0 42% 0 round 0 0 12px 12px);
   transition: clip-path 0.38s var(--keluar), transform 0.42s var(--keluar);
 }
+.kartu-profil-umkm {
+  transition: transform 0.24s var(--keluar), border-color 0.24s var(--keluar);
+}
 .kartu-profil-scrim,
 .kartu-profil-dasar,
 .kartu-profil-judul,
@@ -869,37 +872,37 @@ body {
     border-color 0.24s var(--keluar), background-color 0.24s var(--keluar);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .kartu-profil-umkm:hover {
-    transform: translateY(-4px);
-  }
-  .kartu-profil-umkm:hover .kartu-profil-foto,
-  .kartu-profil-umkm:focus-visible .kartu-profil-foto {
-    clip-path: inset(0 round 0);
-    transform: scale(1.035);
-  }
-  .kartu-profil-umkm:hover .kartu-profil-scrim,
-  .kartu-profil-umkm:focus-visible .kartu-profil-scrim {
-    opacity: 1;
-  }
-  .kartu-profil-umkm:hover .kartu-profil-dasar,
-  .kartu-profil-umkm:focus-visible .kartu-profil-dasar {
-    opacity: 0;
-  }
-  .kartu-profil-umkm:hover .kartu-profil-judul,
-  .kartu-profil-umkm:focus-visible .kartu-profil-judul,
-  .kartu-profil-umkm:hover .kartu-profil-bio,
-  .kartu-profil-umkm:focus-visible .kartu-profil-bio,
-  .kartu-profil-umkm:hover .kartu-profil-meta,
-  .kartu-profil-umkm:focus-visible .kartu-profil-meta {
-    color: rgb(255 255 255);
-  }
-  .kartu-profil-umkm:hover .kartu-profil-aksi,
-  .kartu-profil-umkm:focus-visible .kartu-profil-aksi {
-    border-color: rgb(255 255 255);
-    background: rgb(255 255 255);
-    color: rgb(15 15 17);
-  }
+.kartu-profil-umkm:hover,
+.kartu-profil-umkm:focus-visible {
+  border-color: rgb(var(--aksen-kuat));
+  transform: translateY(-4px);
+}
+.kartu-profil-umkm:hover .kartu-profil-foto,
+.kartu-profil-umkm:focus-visible .kartu-profil-foto {
+  clip-path: inset(0 round 0);
+  transform: scale(1.035);
+}
+.kartu-profil-umkm:hover .kartu-profil-scrim,
+.kartu-profil-umkm:focus-visible .kartu-profil-scrim {
+  opacity: 1;
+}
+.kartu-profil-umkm:hover .kartu-profil-dasar,
+.kartu-profil-umkm:focus-visible .kartu-profil-dasar {
+  opacity: 0;
+}
+.kartu-profil-umkm:hover .kartu-profil-judul,
+.kartu-profil-umkm:focus-visible .kartu-profil-judul,
+.kartu-profil-umkm:hover .kartu-profil-bio,
+.kartu-profil-umkm:focus-visible .kartu-profil-bio,
+.kartu-profil-umkm:hover .kartu-profil-meta,
+.kartu-profil-umkm:focus-visible .kartu-profil-meta {
+  color: rgb(255 255 255);
+}
+.kartu-profil-umkm:hover .kartu-profil-aksi,
+.kartu-profil-umkm:focus-visible .kartu-profil-aksi {
+  border-color: rgb(255 255 255);
+  background: rgb(255 255 255);
+  color: rgb(15 15 17);
 }
 
 @media (prefers-reduced-motion: reduce) {

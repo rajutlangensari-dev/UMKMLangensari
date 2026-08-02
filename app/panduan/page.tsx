@@ -271,7 +271,10 @@ export default function HalamanPanduan() {
         </section>
 
         <section className="mx-auto grid max-w-6xl gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[17rem_1fr] lg:gap-14">
-          <nav aria-label="Tutorial akun toko" className="lg:sticky lg:top-24 lg:self-start">
+          <nav
+            aria-label="Tutorial akun toko"
+            className="min-w-0 lg:sticky lg:top-24 lg:self-start"
+          >
             <h2 className="font-display text-lg font-bold text-ink">Tutorial akun toko</h2>
             <ol className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 lg:block lg:space-y-1 lg:overflow-visible lg:pb-0">
               {TUTORIAL.map((tutorial, i) => (
