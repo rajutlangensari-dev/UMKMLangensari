@@ -1,12 +1,113 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 
 export const metadata: Metadata = {
   title: 'Panduan usaha',
   description:
-    'Materi workshop UMKM Desa Langensari: NIB, foto produk, toko online, QRIS, Google Maps, catatan kas, dan modal usaha.',
+    'Panduan memakai akun toko UMKM Langensari, mulai dari masuk hingga menambah produk dan mengatur halaman usaha.',
 };
+
+type Tutorial = {
+  id: string;
+  judul: string;
+  ringkas: string;
+  langkah: string[];
+  gambar: string;
+  alt: string;
+  keterangan: string;
+};
+
+const TUTORIAL: Tutorial[] = [
+  {
+    id: 'masuk',
+    judul: 'Masuk ke akun toko',
+    ringkas: 'Gunakan nama pengguna dan kata sandi yang diberikan pengelola portal.',
+    langkah: [
+      'Tekan MASUK pada header portal.',
+      'Isi Nama pengguna dan Kata sandi.',
+      'Tekan Tampilkan jika Anda perlu memeriksa kata sandi yang diketik.',
+      'Tekan Masuk. Portal akan membuka beranda panel akun Anda.',
+    ],
+    gambar: '/panduan/01-masuk.webp',
+    alt: 'Form masuk yang memuat kolom nama pengguna, kata sandi, dan tombol Masuk',
+    keterangan: 'Form masuk akun toko.',
+  },
+  {
+    id: 'beranda-panel',
+    judul: 'Periksa beranda panel',
+    ringkas: 'Beranda merangkum produk yang tayang dan bagian profil yang perlu Anda lengkapi.',
+    langkah: [
+      'Baca ringkasan di bagian atas untuk mengetahui keadaan toko Anda.',
+      'Tekan salah satu catatan pada Yang bisa dilengkapi untuk membuka bagian yang perlu diperbaiki.',
+      'Gunakan menu di sebelah kiri. Pada ponsel, tekan tombol Menu lebih dahulu.',
+      'Tekan Lihat halaman saya untuk memeriksa tampilan yang dilihat pembeli.',
+    ],
+    gambar: '/panduan/02-dashboard.webp',
+    alt: 'Beranda panel pemilik usaha dengan ringkasan produk dan menu pengelolaan',
+    keterangan: 'Beranda panel akun toko.',
+  },
+  {
+    id: 'produk',
+    judul: 'Tambah dan ubah produk',
+    ringkas: 'Setiap produk memerlukan nama, harga, stok, kategori, dan foto yang jelas.',
+    langkah: [
+      'Buka Produk saya, lalu tekan Tambah produk.',
+      'Pilih foto produk. Isi Nama produk, Harga, Stok, dan Kategori.',
+      'Tambahkan deskripsi singkat yang menjelaskan bahan, ukuran, atau cara pemesanan.',
+      'Pilih status Aktif agar produk tampil kepada pembeli, lalu tekan Simpan.',
+      'Gunakan tombol Ubah atau Hapus pada daftar produk jika datanya perlu diperbarui.',
+    ],
+    gambar: '/panduan/03-produk.webp',
+    alt: 'Form tambah produk pada panel akun toko',
+    keterangan: 'Form untuk menambahkan produk.',
+  },
+  {
+    id: 'profil',
+    judul: 'Lengkapi profil usaha',
+    ringkas: 'Profil yang lengkap membantu pembeli mengenali usaha dan menghubungi Anda.',
+    langkah: [
+      'Buka Profil usaha dari menu panel.',
+      'Unggah foto usaha, lalu periksa nama, nomor WhatsApp, alamat, dan keterangan usaha.',
+      'Pilih warna halaman dari preset atau gunakan pemilih warna bebas.',
+      'Pilih bentuk halaman Toko, Portofolio, atau Cerita sesuai kebutuhan usaha.',
+      'Tekan Simpan profil setelah semua data diperiksa.',
+    ],
+    gambar: '/panduan/04-profil.webp',
+    alt: 'Form profil usaha dengan data kontak, tema warna, dan pilihan bentuk halaman',
+    keterangan: 'Pengaturan profil dan tampilan usaha.',
+  },
+  {
+    id: 'halaman',
+    judul: 'Susun halaman toko',
+    ringkas: 'Atur urutan sampul, cerita, galeri, produk, dan kontak dari Halaman saya.',
+    langkah: [
+      'Buka Halaman saya untuk melihat daftar blok yang membentuk halaman toko.',
+      'Tekan Ubah pada blok yang ingin disunting. Gunakan Naik atau Turun untuk mengatur urutannya.',
+      'Tekan Tambah blok jika Anda memerlukan galeri, keunggulan, angka, atau bagian lain.',
+      'Periksa hasilnya pada Pratinjau di bagian bawah.',
+      'Tekan Simpan halaman. Buka halaman publik untuk memeriksa foto, teks, katalog, dan tombol WhatsApp.',
+    ],
+    gambar: '/panduan/05-halaman.webp',
+    alt: 'Penyunting halaman toko dengan daftar blok dan pratinjau halaman publik',
+    keterangan: 'Penyunting susunan halaman toko.',
+  },
+  {
+    id: 'kata-sandi',
+    judul: 'Ganti kata sandi',
+    ringkas: 'Ganti kata sandi jika orang lain mengetahuinya atau jika pengelola meminta pembaruan.',
+    langkah: [
+      'Buka Kata sandi dari menu panel.',
+      'Isi kata sandi sekarang.',
+      'Buat kata sandi baru dengan sedikitnya 10 karakter, lalu ketik ulang.',
+      'Tekan Ganti kata sandi dan simpan kata sandi baru di tempat yang aman.',
+    ],
+    gambar: '/panduan/06-sandi.webp',
+    alt: 'Form untuk mengganti kata sandi akun toko',
+    keterangan: 'Form penggantian kata sandi.',
+  },
+];
 
 // Isi keychain QR yang dibagikan di workshop. Dibaca ulang di rumah, dari HP,
 // sering oleh pembaca lanjut usia, jadi ukuran huruf di sini sengaja lebih besar
@@ -159,17 +260,96 @@ export default function HalamanPanduan() {
 
       <main>
         <section className="bg-aksen px-5 pb-14 pt-14 sm:px-8 sm:pb-16 sm:pt-20">
-          <div className="mx-auto max-w-3xl">
+          <div className="mx-auto max-w-6xl">
             <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-[-0.02em] text-aksen-ink text-balance sm:text-5xl">
-              Panduan usaha untuk UMKM Langensari
+              Panduan akun toko
             </h1>
             <p className="mt-5 max-w-xl font-body text-lg leading-relaxed text-aksen-ink/85 text-pretty">
-              Semua materi workshop ada di halaman ini. Bisa dibuka kapan saja dari HP. Tidak
-              perlu dihafal, tinggal dibaca lagi saat mengerjakan.
+              Pelajari cara masuk, menambah produk, mengatur profil, dan memeriksa halaman toko Anda.
             </p>
           </div>
         </section>
 
+        <section className="mx-auto grid max-w-6xl gap-10 px-5 py-12 sm:px-8 sm:py-16 lg:grid-cols-[17rem_1fr] lg:gap-14">
+          <nav aria-label="Tutorial akun toko" className="lg:sticky lg:top-24 lg:self-start">
+            <h2 className="font-display text-lg font-bold text-ink">Tutorial akun toko</h2>
+            <ol className="mt-4 flex snap-x gap-3 overflow-x-auto pb-2 lg:block lg:space-y-1 lg:overflow-visible lg:pb-0">
+              {TUTORIAL.map((tutorial, i) => (
+                <li key={tutorial.id} className="min-w-64 snap-start lg:min-w-0">
+                  <a
+                    href={`#${tutorial.id}`}
+                    className="flex min-h-11 items-center gap-3 rounded-kartu border border-line bg-surface px-4 py-3 font-body text-sm text-ink transition-[color,border-color,background-color] hover:border-aksen hover:bg-paper"
+                  >
+                    <span className="angka-rata font-semibold text-aksen-kuat">{i + 1}</span>
+                    {tutorial.judul}
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </nav>
+
+          <div className="min-w-0">
+            {TUTORIAL.map((tutorial, i) => (
+              <article
+                key={tutorial.id}
+                id={tutorial.id}
+                className="scroll-mt-24 border-t border-line py-10 first:border-0 first:pt-0 sm:py-14"
+              >
+                <div className="flex items-start gap-4">
+                  <span className="angka-rata flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-aksen font-body text-sm font-bold text-aksen-ink">
+                    {i + 1}
+                  </span>
+                  <div>
+                    <h2 className="font-display text-2xl font-bold tracking-[-0.02em] text-ink text-balance sm:text-3xl">
+                      {tutorial.judul}
+                    </h2>
+                    <p className="mt-3 max-w-2xl font-body leading-relaxed text-muted text-pretty">
+                      {tutorial.ringkas}
+                    </p>
+                  </div>
+                </div>
+
+                <figure className="mt-7 overflow-hidden rounded-kartu border border-line bg-surface">
+                  <a href={tutorial.gambar} target="_blank" rel="noopener noreferrer">
+                    <Image
+                      src={tutorial.gambar}
+                      alt={tutorial.alt}
+                      width={1280}
+                      height={900}
+                      className="h-auto w-full"
+                    />
+                  </a>
+                  <figcaption className="border-t border-line px-4 py-3 font-body text-xs text-muted">
+                    {tutorial.keterangan} Tekan gambar untuk membukanya dalam ukuran penuh.
+                  </figcaption>
+                </figure>
+
+                <ol className="mt-7 space-y-4">
+                  {tutorial.langkah.map((langkah, j) => (
+                    <li key={langkah} className="flex gap-4">
+                      <span className="angka-rata mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-surface font-body text-xs font-semibold text-ink">
+                        {j + 1}
+                      </span>
+                      <span className="max-w-2xl font-body leading-relaxed text-ink/85 text-pretty">
+                        {langkah}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="border-t border-line pt-14 sm:pt-16">
+          <div className="mx-auto max-w-3xl px-5 sm:px-8">
+            <h2 className="font-display text-2xl font-bold tracking-[-0.02em] text-ink sm:text-3xl">
+              Materi berjualan digital
+            </h2>
+            <p className="mt-3 max-w-2xl font-body leading-relaxed text-muted text-pretty">
+              Gunakan materi berikut saat Anda menyiapkan izin, foto, pembayaran, dan catatan usaha.
+            </p>
+          </div>
 
         {/* Daftar isi berupa tautan lompat. Di HP, halaman sepanjang ini tanpa
             daftar isi memaksa orang menggulir jauh untuk mencari satu bagian. */}
@@ -241,6 +421,7 @@ export default function HalamanPanduan() {
             </section>
           ))}
         </div>
+        </section>
       </main>
 
       <Footer />

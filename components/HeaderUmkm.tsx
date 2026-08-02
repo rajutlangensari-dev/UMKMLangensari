@@ -128,7 +128,7 @@ export default function HeaderUmkm({
                 href={l.href}
                 tabIndex={buka ? undefined : -1}
                 onClick={() => setBuka(false)}
-                className="block rounded-[10px] px-3.5 py-2.5 font-body text-sm text-ink transition-colors hover:bg-surface"
+                className="block rounded-[10px] px-3.5 py-2.5 font-body text-xs font-semibold uppercase tracking-[0.08em] text-ink transition-colors hover:bg-surface"
               >
                 {l.label}
               </Link>

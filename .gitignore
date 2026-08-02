@@ -27,6 +27,11 @@
 *catatan akun*
 *akun*.txt
 
+# Keluaran `scripts/buat-akun-massal.py`: nama pengguna dan kata sandi POLOS
+# untuk sekumpulan akun sekaligus. Sama sifatnya dengan dua baris di atas,
+# cuma bentuknya CSV karena dibuat untuk banyak akun dalam sekali jalan.
+scripts/akun-baru.csv
+
 # ---------------------------------------------------------------
 # Hasil bangun dan dependensi
 # ---------------------------------------------------------------
@@ -94,3 +99,9 @@ scripts/buat-og.py
 # tidak berarti apa-apa di komputer lain. Ini contoh cara yang benar:
 # berkasnya, bukan foldernya.
 scripts/.dummy.json
+
+# Sama seperti buat-og.py di atas: TIDAK disebut package.json, butuh Python
+# yang tidak dipakai proyek ini di tempat lain mana pun. Dipakai sekali saat
+# 20-an usaha pertama didaftarkan sekaligus, lalu tidak diperlukan lagi —
+# akun berikutnya dibuat satu-satu lewat `npm run akun` seperti biasa.
+scripts/buat-akun-massal.py

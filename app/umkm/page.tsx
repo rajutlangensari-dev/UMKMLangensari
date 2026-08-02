@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
+import KartuUmkm from '@/components/KartuUmkm';
 import { produkPublik, umkmPublik } from '@/lib/publik';
-import { normalisasiFotoUrl } from '@/lib/api';
 
 /**
  * Dirender ULANG TIAP PERMINTAAN, tapi datanya diambil dari cache 60 detik
@@ -52,6 +51,9 @@ export default async function HalamanDaftarUmkm() {
         <h1 className="font-display text-2xl font-bold tracking-[-0.02em] text-ink sm:text-3xl">
           Usaha warga Langensari
         </h1>
+        <p className="mt-3 max-w-2xl font-body leading-relaxed text-muted text-pretty">
+          Pilih usaha untuk melihat profil, produk, dan cara menghubungi pemiliknya.
+        </p>
 
         {gagal ? (
           <p className="mt-8 font-body text-sm text-muted">
@@ -60,38 +62,15 @@ export default async function HalamanDaftarUmkm() {
         ) : daftar.length === 0 ? (
           <p className="mt-8 font-body text-sm text-muted">Belum ada usaha yang tampil di portal ini.</p>
         ) : (
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {daftar.map((u, i) => {
-              const foto = normalisasiFotoUrl(u.foto, 200);
-              const n = jumlahProduk[u.id] || 0;
-              return (
-                <Link
-                  key={u.id}
-                  href={`/umkm/${u.slug}`}
-                  className="naik angkat tekan flex items-center gap-4 rounded-kartu border border-line bg-paper p-4"
-                  style={{ animationDelay: `${Math.min(i, 10) * 45}ms` }}
-                >
-                  <div className="h-16 w-16 shrink-0 overflow-hidden rounded-full bg-surface">
-                    {foto ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img src={foto} alt="" className="h-full w-full object-cover" />
-                    ) : (
-                      <div className="flex h-full w-full items-center justify-center font-display text-xl font-bold text-muted/50">
-                        {u.nama.charAt(0)}
-                      </div>
-                    )}
-                  </div>
-                  <div className="min-w-0">
-                    <h2 className="warna-interaktif truncate font-display font-semibold text-ink">
-                      {u.nama}
-                    </h2>
-                    <p className="mt-0.5 font-body text-sm text-muted">
-                      {n === 0 ? 'Produk belum tersedia' : `${n} produk tersedia`}
-                    </p>
-                  </div>
-                </Link>
-              );
-            })}
+          <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+            {daftar.map((u, i) => (
+              <KartuUmkm
+                key={u.id}
+                umkm={u}
+                jumlahProduk={jumlahProduk[u.id] || 0}
+                indeks={i}
+              />
+            ))}
           </div>
         )}
       </main>

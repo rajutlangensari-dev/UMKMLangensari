@@ -6,6 +6,7 @@ import HeaderUmkm from '@/components/HeaderUmkm';
 import BingkaiTemaUmkm from '@/components/BingkaiTemaUmkm';
 import RelProduk from '@/components/RelProduk';
 import Footer from '@/components/Footer';
+import TombolKembali from '@/components/TombolKembali';
 import { formatRupiah, normalisasiFotoUrl, tautanWhatsapp } from '@/lib/api';
 import { produkPublik, umkmPublik } from '@/lib/publik';
 import type { Produk } from '@/lib/types';
@@ -157,12 +158,7 @@ function Isi({
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-12 sm:px-8 sm:py-16">
-      <Link
-        href="/katalog"
-        className="font-body text-sm text-muted transition-colors hover:text-ink"
-      >
-        Kembali ke katalog
-      </Link>
+      <TombolKembali fallbackHref="/katalog" />
 
       <div className="mt-6 grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-14">
         <div className="overflow-hidden rounded-kartu border border-line bg-surface">

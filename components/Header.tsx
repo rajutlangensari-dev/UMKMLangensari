@@ -43,7 +43,7 @@ export default function Header() {
               <a
                 key={l.href}
                 href={l.href}
-                className="tautan-nav font-body text-sm text-muted transition-colors hover:text-ink"
+                className="tautan-nav font-body text-xs font-semibold uppercase tracking-[0.08em] text-muted transition-colors hover:text-ink"
               >
                 {l.label}
               </a>
@@ -104,7 +104,7 @@ export default function Header() {
             href={l.href}
             onClick={() => setBuka(false)}
             data-menu-item
-            className="block border-b border-line py-3.5 font-body text-ink last:border-0"
+            className="block border-b border-line py-3.5 font-body text-xs font-semibold uppercase tracking-[0.08em] text-ink last:border-0"
           >
             {l.label}
           </a>

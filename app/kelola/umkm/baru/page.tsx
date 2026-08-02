@@ -1,6 +1,6 @@
 import { redirect } from 'next/navigation';
-import Link from 'next/link';
 import Header from '@/components/Header';
+import TombolKembali from '@/components/TombolKembali';
 import { wajibSesi } from '@/lib/sesi';
 import FormUmkmBaru from './FormUmkmBaru';
 
@@ -17,12 +17,7 @@ export default function HalamanUmkmBaru() {
     <>
       <Header />
       <main className="mx-auto min-h-[70vh] max-w-2xl px-5 py-12 sm:px-8">
-        <Link
-          href="/kelola"
-          className="font-body text-sm text-muted transition-colors hover:text-ink"
-        >
-          Kembali ke kelola
-        </Link>
+        <TombolKembali fallbackHref="/kelola/umkm" />
         <h1 className="mt-6 font-display text-2xl font-bold tracking-[-0.02em] text-ink">
           Daftarkan usaha
         </h1>

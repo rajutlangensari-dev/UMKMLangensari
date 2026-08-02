@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import HeaderUmkm from '@/components/HeaderUmkm';
 import BingkaiTemaUmkm from '@/components/BingkaiTemaUmkm';
 import Footer from '@/components/Footer';
 import GridProduk from '@/components/GridProduk';
+import TombolKembali from '@/components/TombolKembali';
 import { normalisasiFotoUrl, tautanWhatsapp } from '@/lib/api';
 import { ambilUmkm, produkUmkm } from '../data';
 
@@ -94,12 +94,7 @@ export default async function KatalogUmkm({ params, searchParams }: {
       <HeaderUmkm nama={umkm.nama} foto={umkm.foto} slug={umkm.slug} />
       <main className="min-h-[60vh] pt-10 sm:pt-14">
         <div className="mx-auto max-w-6xl px-5 sm:px-8">
-          <Link
-            href={`/umkm/${umkm.slug}`}
-            className="font-body text-sm text-muted transition-colors hover:text-ink"
-          >
-            &larr; Kembali ke {umkm.nama}
-          </Link>
+          <TombolKembali fallbackHref={`/umkm/${umkm.slug}`} />
         </div>
 
         {gagal ? (

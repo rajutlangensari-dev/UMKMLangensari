@@ -72,19 +72,19 @@ function BerandaAdmin({
   const urusan = [
     yatim.length > 0 && {
       href: '/kelola/produk?pemilik=kosong',
-      teks: `${yatim.length} produk belum punya pemilik — tampil di katalog tapi tidak di halaman usaha mana pun`,
+      teks: `${yatim.length} produk belum terhubung dengan usaha`,
     },
     tanpaProduk.length > 0 && {
       href: '/kelola/umkm',
-      teks: `${tanpaProduk.length} usaha belum punya produk sama sekali`,
+      teks: `${tanpaProduk.length} usaha belum memiliki produk`,
     },
     tanpaFoto.length > 0 && {
       href: '/kelola/umkm',
-      teks: `${tanpaFoto.length} usaha belum punya foto — halamannya jadi polos dan pratinjau WhatsApp-nya kosong`,
+      teks: `${tanpaFoto.length} usaha belum memiliki foto profil`,
     },
     halamanBawaan.length > 0 && {
       href: '/kelola/umkm',
-      teks: `${halamanBawaan.length} halaman usaha masih susunan bawaan, belum pernah disesuaikan`,
+      teks: `${halamanBawaan.length} halaman usaha masih memakai susunan bawaan`,
     },
   ].filter(Boolean) as { href: string; teks: string }[];
 
@@ -93,8 +93,8 @@ function BerandaAdmin({
   // pekerjaan tertinggal — bukan basa-basi tetap yang lama-lama tidak dibaca.
   const ringkas =
     urusan.length === 0
-      ? `${umkmAktif.length} usaha dan ${tayang.length} produk sedang tayang. Tidak ada yang tertinggal hari ini.`
-      : `${umkmAktif.length} usaha dan ${tayang.length} produk sedang tayang. Ada ${urusan.length} hal yang menunggu diurus di bawah.`;
+      ? `Pengunjung dapat melihat ${umkmAktif.length} usaha dan ${tayang.length} produk. Semua data usaha aktif sudah lengkap.`
+      : `Pengunjung dapat melihat ${umkmAktif.length} usaha dan ${tayang.length} produk. Periksa ${urusan.length} catatan di bawah.`;
 
   return (
     <>
@@ -105,32 +105,32 @@ function BerandaAdmin({
       />
 
       <section>
-        <Judul sub="Dihitung ulang tiap halaman ini dibuka.">Keadaan portal</Judul>
+        <Judul sub="Ringkasan usaha dan produk yang tampil kepada pengunjung.">Keadaan portal</Judul>
         <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
           <Kartu
             angka={umkmAktif.length}
             dari={umkm.length}
             label="Usaha aktif"
-            jelas="Halamannya tayang dan bisa dibuka pengunjung."
+            jelas="Pengunjung dapat membuka halaman usaha."
             href="/kelola/umkm"
           />
           <Kartu
             angka={umkm.length - umkmAktif.length}
             label="Usaha nonaktif"
-            jelas="Tidak muncul di situs sampai diaktifkan lagi."
+            jelas="Portal menyimpan datanya tanpa menampilkannya."
             href="/kelola/umkm"
           />
           <Kartu
             angka={tayang.length}
             dari={produk.length}
             label="Produk tayang"
-            jelas="Terlihat di katalog dan bisa dipesan lewat WhatsApp."
+            jelas="Pengunjung dapat melihat dan menanyakan stoknya."
             href="/kelola/produk"
           />
           <Kartu
             angka={produk.length - tayang.length}
             label="Produk nonaktif"
-            jelas="Tersimpan tapi disembunyikan dari pengunjung."
+            jelas="Portal menyimpan produk tanpa menampilkannya."
             href="/kelola/produk?status=nonaktif"
           />
         </div>
@@ -145,7 +145,7 @@ function BerandaAdmin({
         </Judul>
         {urusan.length === 0 ? (
           <p className="mt-4 rounded-kartu border border-line bg-surface px-4 py-5 font-body text-sm text-muted">
-            Tidak ada yang tertinggal. Semua usaha punya foto, produk, dan halamannya sendiri.
+            Tidak ada data usaha aktif yang perlu diperiksa.
           </p>
         ) : (
           <ul className="mt-4 space-y-2.5">
@@ -161,22 +161,22 @@ function BerandaAdmin({
             di kartu sambutan paling atas. Satu tautan yang muncul dua kali di
             layar yang sama membuat orang mengira keduanya mengerjakan hal
             berbeda, lalu ragu memilih yang mana. */}
-        <Judul sub="Tiga hal yang paling sering dikerjakan dari sini.">Mulai dari sini</Judul>
+        <Judul sub="Buka pekerjaan yang paling sering digunakan.">Akses cepat</Judul>
         <div className="mt-4 grid gap-3 sm:grid-cols-3 sm:gap-4">
           <KartuAksi
             utama
             judul="Tambah produk"
-            jelas="Pasang barang jualan untuk usaha mana pun."
+            jelas="Tambahkan produk untuk usaha yang terdaftar."
             href="/kelola/produk"
           />
           <KartuAksi
             judul="Kelola akun"
-            jelas="Atur siapa yang boleh masuk dan ganti kata sandinya."
+            jelas="Buat akun pemilik usaha dan kelola aksesnya."
             href="/kelola/akun"
           />
           <KartuAksi
             judul="Lihat situs publik"
-            jelas="Periksa tampilannya seperti yang dilihat pembeli."
+            jelas="Periksa portal dari sisi pengunjung."
             href="/"
           />
         </div>
@@ -213,15 +213,15 @@ function BerandaUmkm({
   }
 
   const kurang = [
-    !saya.foto.trim() && { href: '/kelola/profil', teks: 'Pasang foto usaha — halaman Anda masih polos' },
-    !saya.bio.trim() && { href: '/kelola/profil', teks: 'Tulis keterangan usaha supaya pembeli tahu Anda menjual apa' },
+    !saya.foto.trim() && { href: '/kelola/profil', teks: 'Tambahkan foto profil usaha' },
+    !saya.bio.trim() && { href: '/kelola/profil', teks: 'Jelaskan produk atau layanan yang Anda tawarkan' },
     !saya.kontakWa.trim() && {
       href: '/kelola/profil',
-      teks: 'Isi nomor WhatsApp — tanpa itu tombol pesan tidak muncul di halaman Anda',
+      teks: 'Tambahkan nomor WhatsApp agar pembeli dapat menghubungi Anda',
     },
     saya.halaman.length === 0 && {
       href: '/kelola/halaman',
-      teks: 'Susun halaman Anda sendiri — sekarang masih memakai susunan bawaan',
+      teks: 'Sesuaikan susunan halaman usaha',
     },
   ].filter(Boolean) as { href: string; teks: string }[];
 
@@ -229,10 +229,10 @@ function BerandaUmkm({
   // barangnya yang sedang bisa dilihat pembeli. Bukan sapaan kosong.
   const ringkas =
     milik.length === 0
-      ? 'Halaman usaha Anda sudah tayang, tapi belum ada produk di dalamnya. Satu produk berfoto sudah cukup untuk memulai.'
+      ? 'Tambahkan produk pertama agar pembeli dapat melihat penawaran usaha Anda.'
       : kurang.length === 0
-        ? `${tayang.length} produk Anda sedang bisa dilihat dan dipesan pembeli. Halaman Anda sudah lengkap.`
-        : `${tayang.length} produk Anda sedang bisa dilihat pembeli. Ada ${kurang.length} hal yang masih bisa dilengkapi di bawah.`;
+        ? `Pembeli dapat melihat dan menanyakan ${tayang.length} produk Anda. Profil usaha sudah lengkap.`
+        : `Pembeli dapat melihat ${tayang.length} produk Anda. Lengkapi ${kurang.length} bagian profil di bawah.`;
 
   return (
     <>
@@ -249,17 +249,17 @@ function BerandaUmkm({
             angka={tayang.length}
             dari={milik.length}
             label="Produk tayang"
-            jelas="Terlihat pembeli dan bisa dipesan lewat WhatsApp."
+            jelas="Pembeli dapat melihat dan menanyakan stoknya."
             href="/kelola/produk"
           />
           <Kartu
             angka={milik.length - tayang.length}
             label="Produk nonaktif"
-            jelas="Tersimpan tapi belum ditampilkan."
+            jelas="Produk tersimpan tanpa tampil di katalog."
             href="/kelola/produk"
           />
           <Kartu
-            angka={saya.halaman.length || '—'}
+            angka={saya.halaman.length || 'Bawaan'}
             label="Blok halaman"
             jelas={
               saya.halaman.length
@@ -273,7 +273,7 @@ function BerandaUmkm({
 
       {kurang.length > 0 && (
         <section>
-          <Judul sub="Semuanya bisa dikerjakan dari panel ini, tidak perlu menghubungi siapa pun.">
+          <Judul sub="Pilih bagian yang ingin Anda lengkapi.">
             Yang bisa dilengkapi
           </Judul>
           <ul className="mt-4 space-y-2.5">
@@ -287,7 +287,7 @@ function BerandaUmkm({
       {milik.length === 0 && (
         <Kosong
           judul="Belum ada produk"
-          jelas="Pasang satu produk berfoto dulu. Cukup foto, nama, dan harga — sisanya bisa menyusul kapan saja."
+          jelas="Tambahkan foto, nama, dan harga produk pertama Anda."
           aksi={{ href: '/kelola/produk', label: 'Tambah produk pertama' }}
         />
       )}

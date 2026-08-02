@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { lupakanFotoSaatPergi } from '@/lib/api';
 import { useRouter } from 'next/navigation';
-import Link from 'next/link';
 import Dialog from '@/components/Dialog';
+import TombolKembali from '@/components/TombolKembali';
 import { useKabar } from '@/components/Pemberitahuan';
 import RenderBlok from '@/components/blok/Blok';
 import BingkaiTemaUmkm from '@/components/BingkaiTemaUmkm';
@@ -167,9 +167,7 @@ export default function PenyuntingHalaman({
 
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <Link href={kembali.href} className="font-body text-sm text-muted transition-colors hover:text-ink">
-            &larr; {kembali.label}
-          </Link>
+          <TombolKembali fallbackHref={kembali.href} label="Kembali" />
           <div className="mt-3">
             <Judul sub={`Halaman publiknya ada di /umkm/${umkm.slug}`}>Susun halaman</Judul>
           </div>
