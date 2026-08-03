@@ -46,11 +46,11 @@ export default async function HalamanDaftarUmkm({
         <Judul sub={q ? `${tampil.length} dari ${umkm.length} usaha` : `${umkm.length} usaha terdaftar`}>
           Pelaku usaha
         </Judul>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
           <Cari nama="q" label="Cari usaha" awal={q} />
           <Link
             href="/kelola/umkm/baru"
-            className="tekan flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+            className="tekan flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat sm:min-h-11 sm:w-auto sm:text-sm"
           >
             Daftarkan usaha
           </Link>
@@ -71,7 +71,7 @@ export default async function HalamanDaftarUmkm({
             </p>
             <Link
               href="/kelola/umkm"
-              className="tekan mt-6 inline-flex min-h-11 items-center rounded-full border border-line px-6 font-body text-sm text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink"
+              className="tekan mt-6 flex min-h-12 w-full items-center justify-center rounded-full border border-line px-6 font-body text-base text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink sm:inline-flex sm:min-h-11 sm:w-auto sm:text-sm"
             >
               Tampilkan semua
             </Link>

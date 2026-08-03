@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
-import { ambilAkunUntukMasuk, catatMasuk } from '@/lib/backend';
+import {
+  ambilAkunSemua,
+  ambilAkunUntukMasuk,
+  ambilUmkmSemua,
+  catatMasuk,
+} from '@/lib/backend';
 import {
   buatToken,
   hashSandi,
@@ -8,11 +13,12 @@ import {
   verifikasiSandi,
 } from '@/lib/auth';
 import { opsiCookieTampilan, tulisTampilan } from '@/lib/tampilan';
+import { namaPenggunaDariNamaUsaha } from '@/lib/pengenal-masuk';
 
-// Satu pesan untuk semua kegagalan. Membedakan "nama pengguna tidak ada" dari
-// "kata sandi salah" berarti memberi tahu penebak bahwa nama itu benar, dan
-// pemilik UMKM di desa memakai nama pengguna yang mudah ditebak.
-const GAGAL = 'Nama pengguna atau kata sandi salah.';
+// Satu pesan untuk semua kegagalan. Membedakan "nama usaha tidak ditemukan",
+// "nama pengguna tidak ada", dan "kata sandi salah" akan membocorkan pengenal
+// akun mana yang terdaftar.
+const GAGAL = 'Nama usaha, nama pengguna, atau kata sandi tidak sesuai.';
 
 export async function POST(request: Request) {
   let namaPengguna = '';
@@ -30,10 +36,25 @@ export async function POST(request: Request) {
   }
 
   try {
-    const akun = await ambilAkunUntukMasuk(namaPengguna);
+    // Nama pengguna tetap jalur utama dan tercepat. Jika tidak ditemukan, masukan
+    // dicoba sebagai nama usaha. Pemetaan ini memakai aksi backend yang sudah
+    // ada; Apps Script dan susunan sheet tidak perlu diubah.
+    let akun = await ambilAkunUntukMasuk(namaPengguna);
+    if (!akun) {
+      const [semuaAkun, semuaUmkm] = await Promise.all([
+        ambilAkunSemua(),
+        ambilUmkmSemua(),
+      ]);
+      const namaPenggunaAlias = namaPenggunaDariNamaUsaha(
+        namaPengguna,
+        semuaAkun,
+        semuaUmkm
+      );
+      if (namaPenggunaAlias) akun = await ambilAkunUntukMasuk(namaPenggunaAlias);
+    }
 
-    // Nama pengguna tidak ada: tetap jalankan scrypt sekali supaya lamanya
-    // jawaban tidak membocorkan nama mana yang terdaftar.
+    // Pengenal tidak ada: tetap jalankan scrypt sekali supaya jawaban gagal
+    // tidak menjadi jauh lebih cepat daripada kata sandi yang perlu diperiksa.
     if (!akun) {
       await hashSandi(sandi);
       return NextResponse.json({ error: GAGAL }, { status: 401 });

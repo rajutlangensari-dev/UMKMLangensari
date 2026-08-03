@@ -87,13 +87,13 @@ export default function DaftarAkun({
         >
           Akun
         </Judul>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
           <Cari nama="q" label="Cari akun" awal={kataKunci} />
           {!buatBaru && (
             <button
               type="button"
               onClick={() => setBuatBaru(true)}
-              className="tekan flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+              className="tekan flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat sm:min-h-11 sm:w-auto sm:text-sm"
             >
               Tambah akun
             </button>
@@ -132,13 +132,13 @@ export default function DaftarAkun({
           const diriSendiri = a.id === akunSaya;
           const belumPernah = !a.terakhirMasuk;
           return (
-            <li key={a.id} className="flex flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
+            <li key={a.id} className="flex flex-wrap items-start gap-x-4 gap-y-3 p-4 sm:items-center sm:py-3">
               <div className="min-w-0 flex-1 basis-44">
-                <p className="truncate font-body text-sm text-ink">
+                <p className="break-words font-body text-base font-semibold text-ink sm:truncate sm:text-sm sm:font-normal">
                   {a.namaPengguna}
                   {diriSendiri && <span className="text-muted"> · Anda</span>}
                 </p>
-                <p className="truncate font-body text-xs text-muted">
+                <p className="mt-0.5 break-words font-body text-sm leading-relaxed text-muted sm:mt-0 sm:truncate sm:text-xs">
                   {a.peran === 'admin'
                     ? 'Super admin'
                     : namaUmkm[a.umkmId] || 'Usaha tidak ditemukan'}
@@ -155,18 +155,18 @@ export default function DaftarAkun({
                     sampai ke orangnya, bukan bahwa dia malas. Ditandai supaya
                     ada yang menindaklanjuti, bukan sekadar dicatat. */}
                 {belumPernah && a.status === 'aktif' && (
-                  <p className="mt-0.5 font-body text-xs text-aksen">
+                  <p className="mt-1 font-body text-sm leading-relaxed text-aksen sm:mt-0.5 sm:text-xs">
                     Belum pernah masuk — kata sandinya mungkin belum sampai ke orangnya
                   </p>
                 )}
               </div>
 
-              <div className="flex shrink-0 flex-wrap gap-1">
+              <div className="grid w-full grid-cols-1 gap-2 min-[390px]:grid-cols-2 sm:flex sm:w-auto sm:shrink-0 sm:flex-wrap sm:gap-1">
                 <button
                   type="button"
                   onClick={() => setTanya({ akun: a, jenis: 'sandi' })}
                   disabled={sibuk === a.id}
-                  className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-[transform,color] duration-150 ease-out hover:text-ink disabled:opacity-50"
+                  className="tekan flex min-h-12 items-center justify-center rounded-full border border-line px-4 font-body text-base text-ink transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen disabled:opacity-50 sm:min-h-11 sm:border-0 sm:text-sm sm:text-muted"
                 >
                   Setel ulang sandi
                 </button>
@@ -183,7 +183,7 @@ export default function DaftarAkun({
                       ? 'Anda tidak bisa menonaktifkan akun sendiri — kalau ini satu-satunya akun super admin, portal jadi tidak bisa dikelola sama sekali.'
                       : undefined
                   }
-                  className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-[transform,color] duration-150 ease-out hover:text-ink disabled:opacity-40"
+                  className="tekan flex min-h-12 items-center justify-center rounded-full border border-line px-4 font-body text-base text-ink transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen disabled:opacity-40 sm:min-h-11 sm:border-0 sm:text-sm sm:text-muted"
                 >
                   {a.status === 'aktif' ? 'Nonaktifkan' : 'Aktifkan'}
                 </button>
@@ -192,7 +192,7 @@ export default function DaftarAkun({
           );
         })}
         {tampil.length === 0 && (
-          <li className="px-4 py-10 text-center font-body text-sm text-muted">
+          <li className="px-4 py-10 text-center font-body text-base text-muted sm:text-sm">
             Tidak ada akun yang cocok dengan &ldquo;{kataKunci}&rdquo;.
           </li>
         )}

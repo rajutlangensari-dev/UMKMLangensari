@@ -6,6 +6,7 @@ import { LABEL_TATA_LETAK, namaTema } from '@/lib/blok';
 import { formatRupiah } from '@/lib/api';
 import { Galat, Judul, Kartu } from '../../Kotak';
 import FormProfilUmkm from '../../profil/FormProfilUmkm';
+import TombolKembali from '@/components/TombolKembali';
 
 export const metadata = { title: 'Kelola usaha' };
 
@@ -48,12 +49,7 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
   return (
     <div className="space-y-8">
       <div>
-        <Link
-          href="/kelola/umkm"
-          className="font-body text-sm text-muted transition-colors hover:text-ink"
-        >
-          &larr; Semua pelaku usaha
-        </Link>
+        <TombolKembali fallbackHref="/kelola/umkm" label="Semua pelaku usaha" />
         <div className="mt-3 flex flex-wrap items-start justify-between gap-4">
           <Judul
             sub={
@@ -66,16 +62,16 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
           >
             {usaha.nama}
           </Judul>
-          <div className="flex flex-wrap gap-2">
+          <div className="grid w-full grid-cols-1 gap-2 min-[390px]:grid-cols-2 sm:flex sm:w-auto sm:flex-wrap">
             <Link
               href={`/kelola/umkm/${usaha.id}/halaman`}
-              className="tekan flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+              className="tekan flex min-h-12 items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat sm:min-h-11 sm:text-sm"
             >
               Susun halaman
             </Link>
             <Link
               href={`/umkm/${usaha.slug}`}
-              className="tekan flex min-h-11 items-center rounded-full border border-line px-6 font-body text-sm text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink"
+              className="tekan flex min-h-12 items-center justify-center rounded-full border border-line px-6 font-body text-base text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink sm:min-h-11 sm:text-sm"
             >
               Lihat halaman
             </Link>
@@ -83,7 +79,7 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <Kartu angka={tayang.length} label="produk tayang" href={`/kelola/produk?umkm=${usaha.id}`} />
         <Kartu
           angka={miliknya.length - tayang.length}

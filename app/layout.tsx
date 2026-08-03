@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Instrument_Sans } from 'next/font/google';
 import './globals.css';
 
@@ -39,6 +39,15 @@ export const metadata: Metadata = {
     type: 'website',
   },
   robots: { index: true, follow: true },
+};
+
+// Safe-area dipakai panel pada perangkat berponi dan bilah gestur. Tanpa
+// viewport-fit, env(safe-area-inset-*) selalu nol di iPhone sehingga tombol
+// paling bawah bisa berhimpit dengan indikator Home.
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
 };
 
 const themeInit = `(function(){try{var t=localStorage.getItem('tema');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();`;

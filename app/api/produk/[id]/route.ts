@@ -3,6 +3,7 @@ import { revalidateTag } from 'next/cache';
 import { bolehSentuhProduk, butuhSesi } from '@/lib/otorisasi';
 import { hapusProdukServer, perbaruiProdukServer } from '@/lib/backend';
 import { TAG_PRODUK } from '@/lib/publik';
+import { dataProdukDariPermintaan } from '@/lib/produk';
 
 export async function PATCH(request: Request, { params }: { params: { id: string } }) {
   const hasil = butuhSesi();
@@ -18,13 +19,16 @@ export async function PATCH(request: Request, { params }: { params: { id: string
     return NextResponse.json({ error: 'Permintaan tidak terbaca.' }, { status: 400 });
   }
 
-  // `umkmId` dibuang dari badan permintaan untuk peran umkm: memindahkan produk
-  // ke UMKM lain adalah wewenang super admin, dan kalau dibiarkan lewat, satu
-  // pemilik bisa menyerahkan produknya ke halaman orang lain.
-  if (hasil.sesi.peran !== 'admin') delete body.umkmId;
+  const isi = dataProdukDariPermintaan(body);
+
+  // Memindahkan produk ke usaha lain adalah wewenang super admin. Field profil
+  // penjual tidak disalin dari permintaan karena sumbernya selalu Profil usaha.
+  if (hasil.sesi.peran === 'admin' && body.umkmId !== undefined) {
+    isi.umkmId = String(body.umkmId || '');
+  }
 
   try {
-    const data = await perbaruiProdukServer({ ...body, id: params.id });
+    const data = await perbaruiProdukServer({ ...isi, id: params.id });
     // Cache halaman publik dibuang SETELAH backend menjawab berhasil, bukan
     // sebelum. Membuangnya lebih dulu berarti kegagalan penyimpanan tetap
     // memaksa pengunjung berikutnya menanggung 4 detik ke Apps Script demi data

@@ -58,7 +58,7 @@ export default function FormUmkmBaru() {
   }
 
   const inputCls =
-    'w-full rounded-kartu border border-line bg-surface px-4 py-2.5 font-body text-ink placeholder:text-muted focus:border-aksen focus:outline-none';
+    'min-h-12 w-full rounded-kartu border border-line bg-surface px-4 py-2.5 font-body text-base text-ink placeholder:text-muted focus:border-aksen focus:outline-none sm:min-h-11';
 
   // Kata sandi hanya ada di layar ini, sekali. Tidak disimpan di mana pun dan
   // tidak bisa ditampilkan ulang — kalau hilang, super admin menyetel ulang.
@@ -94,10 +94,10 @@ export default function FormUmkmBaru() {
           setelah halaman ini ditutup.
         </p>
 
-        <div className="mt-6 flex flex-wrap gap-3">
+        <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <Link
             href="/kelola"
-            className="tekan rounded-full bg-aksen px-6 py-2.5 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+            className="tekan min-h-12 w-full rounded-full bg-aksen px-6 py-2.5 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat sm:min-h-11 sm:w-auto sm:text-sm"
           >
             Selesai
           </Link>
@@ -113,7 +113,7 @@ export default function FormUmkmBaru() {
               setAlamat('');
               setNamaPenggunaManual('');
             }}
-            className="tekan rounded-full border border-line px-6 py-2.5 font-body text-sm text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink"
+            className="tekan min-h-12 w-full rounded-full border border-line px-6 py-2.5 font-body text-base text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink sm:min-h-11 sm:w-auto sm:text-sm"
           >
             Daftarkan satu lagi
           </button>
@@ -125,7 +125,7 @@ export default function FormUmkmBaru() {
   return (
     <form onSubmit={simpan} className="mt-8 space-y-5">
       <label className="block">
-        <span className="font-body text-sm text-muted">Nama usaha</span>
+        <span className="font-body text-base text-muted sm:text-sm">Nama usaha</span>
         <input
           className={`${inputCls} mt-1.5`}
           value={nama}
@@ -135,21 +135,21 @@ export default function FormUmkmBaru() {
       </label>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Alamat halaman</span>
+        <span className="font-body text-base text-muted sm:text-sm">Alamat halaman</span>
         <input
           className={`${inputCls} mt-1.5`}
           value={slug}
           onChange={(e) => setSlugManual(keSlug(e.target.value))}
           placeholder="otomatis dari nama usaha"
         />
-        <span className="mt-1 block font-body text-xs text-muted">
+        <span className="mt-1 block font-body text-sm leading-relaxed text-muted sm:text-xs">
           Halamannya jadi /umkm/{slug || '...'}. Tidak bisa diubah setelah dibuat,
           karena tautan yang sudah tersebar akan mati.
         </span>
       </label>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Nomor WhatsApp</span>
+        <span className="font-body text-base text-muted sm:text-sm">Nomor WhatsApp</span>
         <input
           className={`${inputCls} mt-1.5`}
           value={kontakWa}
@@ -159,7 +159,7 @@ export default function FormUmkmBaru() {
       </label>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Alamat</span>
+        <span className="font-body text-base text-muted sm:text-sm">Alamat</span>
         <input
           className={`${inputCls} mt-1.5`}
           value={alamat}
@@ -169,7 +169,7 @@ export default function FormUmkmBaru() {
       </label>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Keterangan usaha</span>
+        <span className="font-body text-base text-muted sm:text-sm">Keterangan usaha</span>
         <textarea
           className={`${inputCls} mt-1.5 min-h-24`}
           value={bio}
@@ -179,14 +179,14 @@ export default function FormUmkmBaru() {
       </label>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Nama pengguna pemilik</span>
+        <span className="font-body text-base text-muted sm:text-sm">Nama pengguna pemilik</span>
         <input
           className={`${inputCls} mt-1.5`}
           value={namaPengguna}
           onChange={(e) => setNamaPenggunaManual(e.target.value.trim())}
           placeholder="otomatis dari nama usaha"
         />
-        <span className="mt-1 block font-body text-xs text-muted">
+        <span className="mt-1 block font-body text-sm leading-relaxed text-muted sm:text-xs">
           Dipakai pemiliknya untuk masuk. Kata sandi dibuatkan sistem dan
           ditampilkan sekali setelah disimpan.
         </span>
@@ -207,7 +207,7 @@ export default function FormUmkmBaru() {
       <button
         type="submit"
         disabled={kirim || !nama.trim()}
-        className="tekan rounded-full bg-aksen px-7 py-3 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-60"
+        className="tekan min-h-12 w-full rounded-full bg-aksen px-7 py-3 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-60 sm:min-h-11 sm:w-auto sm:text-sm"
       >
         {kirim ? 'Menyimpan...' : 'Daftarkan usaha'}
       </button>

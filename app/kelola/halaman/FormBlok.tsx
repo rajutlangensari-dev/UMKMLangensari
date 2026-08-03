@@ -171,27 +171,27 @@ function Bungkus({
 }) {
   return (
     <label className={`block ${lebar ? 'sm:col-span-2' : ''}`}>
-      <span className="font-body text-sm text-muted">{label}</span>
+      <span className="font-body text-base text-muted sm:text-sm">{label}</span>
       {children}
-      {bantuan && <span className="mt-1 block font-body text-xs text-muted/80">{bantuan}</span>}
+      {bantuan && <span className="mt-1 block font-body text-sm leading-relaxed text-muted/80 sm:text-xs">{bantuan}</span>}
     </label>
   );
 }
 
 const inputCls =
-  'mt-1.5 w-full min-h-11 rounded-kartu border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink placeholder:text-muted focus:border-aksen focus:outline-none';
+  'mt-1.5 w-full min-h-12 rounded-kartu border border-line bg-paper px-4 py-2.5 font-body text-base text-ink placeholder:text-muted focus:border-aksen focus:outline-none sm:min-h-11 sm:text-sm';
 
 /** Field terkunci — hanya menampilkan, tidak bisa diketik. */
 function Terkunci({ label, nilai, lebar }: { label: string; nilai: string; lebar?: boolean }) {
   return (
     <div className={`block ${lebar ? 'sm:col-span-2' : ''}`}>
-      <span className="font-body text-sm text-muted">{label}</span>
-      <div className="mt-1.5 flex min-h-11 w-full items-center gap-2 rounded-kartu border border-dashed border-line bg-surface px-4 py-2.5">
+      <span className="font-body text-base text-muted sm:text-sm">{label}</span>
+      <div className="mt-1.5 flex min-h-12 w-full items-center gap-2 rounded-kartu border border-dashed border-line bg-surface px-4 py-2.5 sm:min-h-11">
         <svg viewBox="0 0 16 16" aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-muted/60" fill="none">
           <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
           <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
         </svg>
-        <span className="font-body text-sm text-muted line-clamp-1">{nilai}</span>
+        <span className="font-body text-base text-muted line-clamp-1 sm:text-sm">{nilai}</span>
       </div>
     </div>
   );
@@ -308,7 +308,7 @@ function FotoSatu({
 
   return (
     <div>
-      <span className="font-body text-sm text-muted">{label}</span>
+      <span className="font-body text-base text-muted sm:text-sm">{label}</span>
       <div className="mt-1.5 flex items-center gap-3">
         <span className="h-16 w-16 shrink-0 overflow-hidden rounded-kartu bg-paper">
           {nilai ? (
@@ -324,8 +324,8 @@ function FotoSatu({
             </span>
           )}
         </span>
-        <div className="flex flex-wrap gap-1">
-          <label className="tekan flex min-h-11 cursor-pointer items-center rounded-full border border-line px-4 font-body text-sm text-ink transition-colors hover:border-aksen">
+        <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-1">
+          <label className="tekan flex min-h-12 cursor-pointer items-center justify-center rounded-full border border-line px-4 font-body text-base text-ink transition-colors hover:border-aksen sm:min-h-11 sm:text-sm">
             {sibuk ? 'Mengunggah...' : nilai ? 'Ganti' : 'Pilih foto'}
             <input type="file" accept="image/*" className="hidden" disabled={sibuk} onChange={pilih} />
           </label>
@@ -336,7 +336,7 @@ function FotoSatu({
                 lepasKalauBelumTersimpan(nilai);
                 onUbah('');
               }}
-              className="tekan flex min-h-11 items-center rounded-full px-3 font-body text-sm text-muted transition-colors hover:text-ink"
+              className="tekan flex min-h-12 items-center justify-center rounded-full border border-line px-3 font-body text-base text-muted transition-colors hover:text-ink sm:min-h-11 sm:border-0 sm:text-sm"
             >
               Buang
             </button>
@@ -344,11 +344,11 @@ function FotoSatu({
         </div>
       </div>
       {galat && (
-        <p role="alert" className="mt-1 font-body text-xs text-ink">
+        <p role="alert" className="mt-1 font-body text-sm text-ink sm:text-xs">
           {galat}
         </p>
       )}
-      {bantuan && <p className="mt-1 font-body text-xs text-muted/80">{bantuan}</p>}
+      {bantuan && <p className="mt-1 font-body text-sm leading-relaxed text-muted/80 sm:text-xs">{bantuan}</p>}
     </div>
   );
 }
@@ -374,13 +374,13 @@ function Deret<T>({
       {butir.map((b, i) => (
         <div key={i} className="rounded-kartu border border-line bg-paper p-3">
           <div className="mb-2 flex items-center justify-between">
-            <span className="angka-rata font-body text-xs text-muted">
+            <span className="angka-rata font-body text-sm text-muted sm:text-xs">
               {namaButir} {i + 1}
             </span>
             <button
               type="button"
               onClick={() => onUbah(butir.filter((_, k) => k !== i))}
-              className="tekan flex min-h-9 items-center rounded-full px-3 font-body text-xs text-muted transition-colors hover:text-ink"
+              className="tekan flex min-h-12 items-center rounded-full border border-line px-4 font-body text-base text-muted transition-colors hover:text-ink sm:min-h-9 sm:border-0 sm:px-3 sm:text-xs"
             >
               Buang
             </button>
@@ -393,14 +393,14 @@ function Deret<T>({
         <button
           type="button"
           onClick={() => onUbah([...butir, kosong])}
-          className="tekan flex min-h-11 w-full items-center justify-center rounded-kartu border border-dashed border-line font-body text-sm text-muted transition-colors hover:border-aksen hover:text-ink"
+          className="tekan flex min-h-12 w-full items-center justify-center rounded-kartu border border-dashed border-line font-body text-base text-muted transition-colors hover:border-aksen hover:text-ink sm:min-h-11 sm:text-sm"
         >
           + Tambah {namaButir}
         </button>
       ) : (
         // Batasnya disebut, bukan cuma tombolnya hilang. Tombol yang lenyap
         // tanpa keterangan terbaca sebagai kerusakan.
-        <p className="font-body text-xs text-muted">
+        <p className="font-body text-sm leading-relaxed text-muted sm:text-xs">
           Sudah mencapai batas {maks} {namaButir}. Buang salah satu untuk menambah yang lain.
         </p>
       )}

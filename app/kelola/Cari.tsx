@@ -61,7 +61,7 @@ export default function Cari({
         onChange={(e) => setNilai(e.target.value)}
         aria-label={label}
         placeholder={label}
-        className="input-cari min-h-11 w-full bg-transparent py-2 pl-11 pr-11 font-body text-sm text-ink placeholder:text-muted focus:outline-none"
+        className="input-cari min-h-12 w-full bg-transparent py-2 pl-11 pr-14 font-body text-base text-ink placeholder:text-muted focus:outline-none sm:min-h-11 sm:pr-11 sm:text-sm"
       />
       <button
         type="button"
@@ -69,7 +69,7 @@ export default function Cari({
         data-visible={nilai.length > 0}
         aria-label="Hapus pencarian"
         tabIndex={nilai ? undefined : -1}
-        className="hapus-cari absolute right-3 top-1/2 flex h-8 w-8 items-center justify-center rounded-full text-muted hover:text-ink"
+        className="hapus-cari absolute right-1.5 top-1/2 flex h-11 w-11 items-center justify-center rounded-full text-muted hover:text-ink sm:right-2 sm:h-9 sm:w-9"
       >
         <svg viewBox="0 0 14 14" aria-hidden="true" className="h-3 w-3">
           <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.8" />

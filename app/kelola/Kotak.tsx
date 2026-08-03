@@ -61,11 +61,11 @@ export function Kartu({
           <span className="ml-1.5 font-body text-xs font-semibold text-muted">dari {dari}</span>
         )}
       </span>
-      <span className="kartu-hover-judul mt-1.5 block font-display text-sm font-semibold leading-snug text-ink">
+      <span className="kartu-hover-judul mt-1.5 block font-display text-base font-semibold leading-snug text-ink sm:text-sm">
         {label}
       </span>
       {jelas && (
-        <span className="mt-1 block font-body text-xs leading-relaxed text-muted text-pretty">
+        <span className="mt-1 block font-body text-sm leading-relaxed text-muted text-pretty sm:text-xs">
           {jelas}
         </span>
       )}
@@ -119,10 +119,10 @@ export function KartuAksi({
         utama ? 'border-aksen-kuat bg-aksen-kuat/[0.06]' : 'border-line bg-surface'
       }`}
     >
-      <span className="kartu-hover-judul font-display text-sm font-semibold text-ink">
+      <span className="kartu-hover-judul font-display text-base font-semibold text-ink sm:text-sm">
         {judul}
       </span>
-      <span className="mt-1.5 font-body text-xs leading-relaxed text-muted text-pretty">
+      <span className="mt-1.5 font-body text-sm leading-relaxed text-muted text-pretty sm:text-xs">
         {jelas}
       </span>
     </Link>
@@ -172,17 +172,17 @@ export function Sapaan({
 }) {
   return (
     <section className="sapaan rounded-kartu border border-line px-5 py-6 sm:px-7 sm:py-7">
-      <p className="font-body text-sm text-muted">{salam()},</p>
+      <p className="font-body text-base text-muted sm:text-sm">{salam()},</p>
       <h2 className="mt-0.5 font-display text-xl font-bold tracking-[-0.02em] text-ink sm:text-2xl">
         {nama}
       </h2>
-      <p className="mt-2.5 max-w-prose font-body text-sm leading-relaxed text-muted text-pretty">
+      <p className="mt-2.5 max-w-prose font-body text-base leading-relaxed text-muted text-pretty sm:text-sm">
         {kalimat}
       </p>
       {aksi && (
         <Link
           href={aksi.href}
-          className="tekan mt-5 inline-flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+          className="tekan mt-5 flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat sm:inline-flex sm:min-h-11 sm:w-auto sm:text-sm"
         >
           {aksi.label}
         </Link>
@@ -194,8 +194,8 @@ export function Sapaan({
 export function Judul({ children, sub }: { children: React.ReactNode; sub?: React.ReactNode }) {
   return (
     <div>
-      <h2 className="font-display text-lg font-bold tracking-[-0.02em] text-ink">{children}</h2>
-      {sub && <p className="mt-1 font-body text-sm text-muted text-pretty">{sub}</p>}
+      <h2 className="font-display text-xl font-bold tracking-[-0.02em] text-ink sm:text-lg">{children}</h2>
+      {sub && <p className="mt-1 font-body text-base leading-relaxed text-muted text-pretty sm:text-sm">{sub}</p>}
     </div>
   );
 }
@@ -204,7 +204,7 @@ export function Galat({ pesan }: { pesan: string }) {
   return (
     <p
       role="alert"
-      className="rounded-kartu border border-line bg-surface p-4 font-body text-sm text-ink"
+      className="rounded-kartu border border-line bg-surface p-4 font-body text-base text-ink sm:text-sm"
     >
       {pesan}
     </p>
@@ -231,13 +231,13 @@ export function Kosong({
   return (
     <div className="rounded-kartu border border-dashed border-line bg-surface px-6 py-12 text-center">
       <p className="font-display text-base font-semibold text-ink">{judul}</p>
-      <p className="mx-auto mt-2 max-w-sm font-body text-sm leading-relaxed text-muted text-pretty">
+      <p className="mx-auto mt-2 max-w-sm font-body text-base leading-relaxed text-muted text-pretty sm:text-sm">
         {jelas}
       </p>
       {aksi?.href && (
         <Link
           href={aksi.href}
-          className="tekan mt-6 inline-flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+          className="tekan mt-6 flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat sm:inline-flex sm:min-h-11 sm:w-auto sm:text-sm"
         >
           {aksi.label}
         </Link>
@@ -252,9 +252,9 @@ export function Urusan({ href, teks }: { href: string; teks: string }) {
     <li>
       <Link
         href={href}
-        className="tekan group flex min-h-11 items-center justify-between gap-4 rounded-kartu border border-line bg-surface px-4 py-3 transition-colors hover:border-aksen"
+        className="tekan group flex min-h-12 items-center justify-between gap-4 rounded-kartu border border-line bg-surface px-4 py-3 transition-colors hover:border-aksen"
       >
-        <span className="warna-interaktif font-body text-sm text-ink text-pretty">{teks}</span>
+        <span className="warna-interaktif font-body text-base text-ink text-pretty sm:text-sm">{teks}</span>
         <svg
           viewBox="0 0 12 12"
           aria-hidden="true"

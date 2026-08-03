@@ -6,7 +6,7 @@ import Footer from '@/components/Footer';
 import { tampilanDariDokumen } from '@/lib/tampilan';
 
 export default function FormMasuk() {
-  const [namaPengguna, setNamaPengguna] = useState('');
+  const [pengenal, setPengenal] = useState('');
   const [sandi, setSandi] = useState('');
   const [lihatSandi, setLihatSandi] = useState(false);
   const [galat, setGalat] = useState('');
@@ -20,7 +20,7 @@ export default function FormMasuk() {
       const res = await fetch('/api/masuk', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ namaPengguna, sandi }),
+        body: JSON.stringify({ namaPengguna: pengenal, sandi }),
       });
       const json = await res.json();
       if (!res.ok) {
@@ -57,16 +57,20 @@ export default function FormMasuk() {
       <Header />
       <main className="mx-auto flex min-h-[60vh] max-w-sm flex-col justify-center px-5 py-16">
         <h1 className="font-display text-2xl font-bold tracking-[-0.02em] text-ink">Masuk</h1>
+        <p className="mt-3 font-body text-sm leading-relaxed text-muted">
+          Gunakan nama usaha yang tercantum di katalog atau nama pengguna akun Anda.
+        </p>
 
         <form onSubmit={masuk} className="mt-8 space-y-5">
           <label className="block">
-            <span className="font-body text-sm text-ink">Nama pengguna</span>
+            <span className="font-body text-sm text-ink">Nama usaha atau nama pengguna</span>
             <input
               type="text"
               autoComplete="username"
               autoCapitalize="none"
-              value={namaPengguna}
-              onChange={(e) => setNamaPengguna(e.target.value)}
+              value={pengenal}
+              onChange={(e) => setPengenal(e.target.value)}
+              placeholder="Contoh: Dapoer Bu Nia"
               required
               className="mt-1.5 w-full rounded-kartu border border-line bg-surface px-4 py-3 font-body text-ink placeholder:text-muted focus:border-aksen focus:outline-none"
             />

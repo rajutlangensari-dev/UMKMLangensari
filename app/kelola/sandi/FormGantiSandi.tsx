@@ -51,13 +51,13 @@ export default function FormGantiSandi() {
   }
 
   const inputCls =
-    'w-full rounded-kartu border border-line bg-surface px-4 py-2.5 font-body text-ink focus:border-aksen focus:outline-none';
+    'min-h-12 w-full rounded-kartu border border-line bg-surface px-4 py-2.5 font-body text-base text-ink focus:border-aksen focus:outline-none sm:min-h-11';
 
   return (
     <div className="mt-8 max-w-md">
       <form onSubmit={simpan} className="space-y-5">
         <label className="block">
-          <span className="font-body text-sm text-muted">Kata sandi sekarang</span>
+          <span className="font-body text-base text-muted sm:text-sm">Kata sandi sekarang</span>
           <input
             type={lihat ? 'text' : 'password'}
             autoComplete="current-password"
@@ -69,7 +69,7 @@ export default function FormGantiSandi() {
         </label>
 
         <label className="block">
-          <span className="font-body text-sm text-muted">Kata sandi baru</span>
+          <span className="font-body text-base text-muted sm:text-sm">Kata sandi baru</span>
           <input
             type={lihat ? 'text' : 'password'}
             autoComplete="new-password"
@@ -78,11 +78,11 @@ export default function FormGantiSandi() {
             onChange={(e) => setSandiBaru(e.target.value)}
             required
           />
-          <span className="mt-1 block font-body text-xs text-muted">Minimal {MIN} karakter.</span>
+          <span className="mt-1 block font-body text-sm text-muted sm:text-xs">Minimal {MIN} karakter.</span>
         </label>
 
         <label className="block">
-          <span className="font-body text-sm text-muted">Ulangi kata sandi baru</span>
+          <span className="font-body text-base text-muted sm:text-sm">Ulangi kata sandi baru</span>
           <input
             type={lihat ? 'text' : 'password'}
             autoComplete="new-password"
@@ -93,8 +93,8 @@ export default function FormGantiSandi() {
           />
         </label>
 
-        <label className="flex items-center gap-2 font-body text-sm text-muted">
-          <input type="checkbox" checked={lihat} onChange={(e) => setLihat(e.target.checked)} />
+        <label className="flex min-h-12 items-center gap-3 font-body text-base text-muted sm:min-h-11 sm:text-sm">
+          <input className="h-5 w-5" type="checkbox" checked={lihat} onChange={(e) => setLihat(e.target.checked)} />
           Tampilkan kata sandi
         </label>
 
@@ -112,7 +112,7 @@ export default function FormGantiSandi() {
         <button
           type="submit"
           disabled={kirim}
-          className="tekan rounded-full bg-aksen px-7 py-3 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-60"
+          className="tekan min-h-12 w-full rounded-full bg-aksen px-7 py-3 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-60 sm:min-h-11 sm:w-auto sm:text-sm"
         >
           {kirim ? 'Menyimpan...' : 'Ganti kata sandi'}
         </button>

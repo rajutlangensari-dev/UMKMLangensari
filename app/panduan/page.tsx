@@ -23,15 +23,15 @@ const TUTORIAL: Tutorial[] = [
   {
     id: 'masuk',
     judul: 'Masuk ke akun toko',
-    ringkas: 'Gunakan nama pengguna dan kata sandi yang diberikan pengelola portal.',
+    ringkas: 'Gunakan nama usaha atau nama pengguna, lalu masukkan kata sandi akun.',
     langkah: [
       'Tekan MASUK pada header portal.',
-      'Isi Nama pengguna dan Kata sandi.',
+      'Isi Nama usaha atau nama pengguna, kemudian isi Kata sandi.',
       'Tekan Tampilkan jika Anda perlu memeriksa kata sandi yang diketik.',
       'Tekan Masuk. Portal akan membuka beranda panel akun Anda.',
     ],
     gambar: '/panduan/01-masuk.webp',
-    alt: 'Form masuk yang memuat kolom nama pengguna, kata sandi, dan tombol Masuk',
+    alt: 'Form masuk yang memuat kolom nama usaha atau nama pengguna, kata sandi, dan tombol Masuk',
     keterangan: 'Form masuk akun toko.',
   },
   {

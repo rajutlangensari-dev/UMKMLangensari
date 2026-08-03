@@ -42,7 +42,7 @@ export function PenyediaKabar({ children }: { children: React.ReactNode }) {
       <div
         role="status"
         aria-live="polite"
-        className="pointer-events-none fixed inset-x-4 bottom-4 z-50 flex flex-col items-center gap-2 sm:inset-x-auto sm:right-6 sm:items-end"
+        className="pointer-events-none fixed inset-x-4 bottom-[max(1rem,env(safe-area-inset-bottom))] z-50 flex flex-col items-center gap-2 sm:inset-x-auto sm:right-6 sm:items-end"
       >
         {antre.map((k) => (
           <Satu key={k.id} kabar={k} onSelesai={() => setAntre((a) => a.filter((x) => x.id !== k.id))} />
@@ -59,13 +59,13 @@ function Satu({ kabar, onSelesai }: { kabar: Kabar; onSelesai: () => void }) {
   }, [onSelesai]);
 
   return (
-    <div className="pemberitahuan pointer-events-auto flex max-w-sm items-center gap-3 rounded-full border border-line bg-paper py-2 pl-4 pr-2 shadow-[0_12px_32px_rgb(0_0_0/0.12)]">
-      <span className="font-body text-sm text-ink">{kabar.pesan}</span>
+    <div className="pemberitahuan pointer-events-auto flex w-full max-w-sm items-center gap-3 rounded-kartu border border-line bg-paper py-2 pl-4 pr-1 shadow-sm sm:w-auto sm:rounded-full sm:pr-2">
+      <span className="min-w-0 flex-1 font-body text-base leading-snug text-ink sm:text-sm">{kabar.pesan}</span>
       <button
         type="button"
         onClick={onSelesai}
         aria-label="Tutup pemberitahuan"
-        className="tekan flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:text-ink"
+        className="tekan flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-muted transition-colors hover:text-ink sm:h-9 sm:w-9"
       >
         <svg viewBox="0 0 14 14" aria-hidden="true" className="h-3 w-3">
           <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.8" />

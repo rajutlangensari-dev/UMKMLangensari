@@ -119,13 +119,13 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
   }
 
   const inputCls =
-    'w-full min-h-11 rounded-kartu border border-line bg-surface px-4 py-2.5 font-body text-ink placeholder:text-muted focus:border-aksen focus:outline-none';
+    'w-full min-h-12 rounded-kartu border border-line bg-surface px-4 py-2.5 font-body text-base text-ink placeholder:text-muted focus:border-aksen focus:outline-none sm:min-h-11';
 
   return (
     <form onSubmit={simpan} className="max-w-2xl space-y-6">
       <div>
-        <span className="font-body text-sm text-muted">Foto usaha</span>
-        <div className="mt-1.5 flex items-center gap-4">
+        <span className="font-body text-base text-muted sm:text-sm">Foto usaha</span>
+        <div className="mt-2 flex items-start gap-4 sm:items-center">
           <span className="h-20 w-20 shrink-0 overflow-hidden rounded-full bg-surface">
             {form.foto ? (
               // eslint-disable-next-line @next/next/no-img-element
@@ -136,8 +136,8 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
               </span>
             )}
           </span>
-          <div className="flex flex-wrap gap-2">
-            <label className="tekan flex min-h-11 cursor-pointer items-center rounded-full border border-line px-5 font-body text-sm font-semibold text-ink transition-[transform,border-color] duration-150 ease-out hover:border-aksen">
+          <div className="flex min-w-0 flex-1 flex-col gap-2 sm:flex-row sm:flex-wrap">
+            <label className="tekan flex min-h-12 cursor-pointer items-center justify-center rounded-full border border-line px-4 font-body text-base font-semibold text-ink transition-[transform,border-color] duration-150 ease-out hover:border-aksen sm:min-h-11 sm:px-5 sm:text-sm">
               {mengunggah ? 'Mengunggah...' : form.foto ? 'Ganti foto' : 'Pilih foto'}
               <input
                 type="file"
@@ -154,7 +154,7 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
                   lepasFotoBelumTersimpan(form.foto);
                   ubah('foto', '');
                 }}
-                className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-colors hover:text-ink"
+                className="tekan flex min-h-12 items-center justify-center rounded-full border border-line px-4 font-body text-base text-muted transition-colors hover:text-ink sm:min-h-11 sm:border-0 sm:text-sm"
               >
                 Buang
               </button>
@@ -164,7 +164,7 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
       </div>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Nama usaha</span>
+        <span className="font-body text-base text-muted sm:text-sm">Nama usaha</span>
         <input
           className={`${inputCls} mt-1.5`}
           value={form.nama}
@@ -173,14 +173,14 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
         />
         {/* Slug tidak ikut berubah saat nama diganti — tautan yang sudah tersebar
             di WhatsApp harus tetap hidup. Dijelaskan supaya tidak dikira bug. */}
-        <span className="mt-1 block font-body text-xs text-muted">
+        <span className="mt-1 block font-body text-sm leading-relaxed text-muted sm:text-xs">
           Alamat halaman tetap /umkm/{umkm.slug} walaupun namanya diganti, supaya tautan
           yang sudah dibagikan tidak mati.
         </span>
       </label>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Nomor WhatsApp</span>
+        <span className="font-body text-base text-muted sm:text-sm">Nomor WhatsApp</span>
         <input
           className={`${inputCls} mt-1.5`}
           inputMode="numeric"
@@ -191,7 +191,7 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
       </label>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Alamat</span>
+        <span className="font-body text-base text-muted sm:text-sm">Alamat</span>
         <input
           className={`${inputCls} mt-1.5`}
           value={form.alamat}
@@ -201,7 +201,7 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
       </label>
 
       <label className="block">
-        <span className="font-body text-sm text-muted">Keterangan usaha</span>
+        <span className="font-body text-base text-muted sm:text-sm">Keterangan usaha</span>
         <textarea
           className={`${inputCls} mt-1.5 min-h-28`}
           value={form.bio}
@@ -222,7 +222,7 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
       <button
         type="submit"
         disabled={menyimpan || mengunggah}
-        className="tekan flex min-h-11 items-center rounded-full bg-aksen px-7 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-60"
+        className="tekan flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-7 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-60 sm:min-h-11 sm:w-auto sm:text-sm"
       >
         {menyimpan ? 'Menyimpan...' : 'Simpan profil'}
       </button>
@@ -240,13 +240,13 @@ export function PilihTema({ nilai, onPilih }: { nilai: Tema; onPilih: (t: Tema) 
 
   return (
     <fieldset>
-      <legend className="font-body text-sm text-muted">Warna halaman</legend>
+      <legend className="font-body text-base text-muted sm:text-sm">Warna halaman</legend>
       <div className="mt-2 grid gap-2 sm:grid-cols-2">
         {TEMA.map((t) => (
           <label
             key={t}
             data-tema={t}
-            className={`tekan flex cursor-pointer items-start gap-3 rounded-kartu border p-3 transition-colors ${
+            className={`tekan flex min-h-12 cursor-pointer items-start gap-3 rounded-kartu border p-4 transition-colors sm:p-3 ${
               nilai === t ? 'border-aksen bg-surface' : 'border-line hover:border-aksen'
             }`}
           >
@@ -263,8 +263,8 @@ export function PilihTema({ nilai, onPilih }: { nilai: Tema; onPilih: (t: Tema) 
                 meleset saat temanya diubah. */}
             <span aria-hidden="true" className="mt-0.5 h-5 w-5 shrink-0 rounded-full bg-aksen" />
             <span className="min-w-0">
-              <span className="block font-body text-sm text-ink">{LABEL_TEMA[t].nama}</span>
-              <span className="block font-body text-xs leading-snug text-muted">
+              <span className="block font-body text-base text-ink sm:text-sm">{LABEL_TEMA[t].nama}</span>
+              <span className="mt-0.5 block font-body text-sm leading-relaxed text-muted sm:mt-0 sm:text-xs sm:leading-snug">
                 {LABEL_TEMA[t].jelas}
               </span>
             </span>
@@ -272,7 +272,7 @@ export function PilihTema({ nilai, onPilih }: { nilai: Tema; onPilih: (t: Tema) 
         ))}
       </div>
       <label
-        className={`mt-2 flex cursor-pointer items-center gap-4 rounded-kartu border p-3 transition-colors ${
+        className={`mt-2 flex min-h-12 cursor-pointer flex-wrap items-start gap-3 rounded-kartu border p-4 transition-colors sm:flex-nowrap sm:items-center sm:gap-4 sm:p-3 ${
           warnaKustom ? 'border-aksen bg-surface' : 'border-line hover:border-aksen'
         }`}
       >
@@ -284,12 +284,12 @@ export function PilihTema({ nilai, onPilih }: { nilai: Tema; onPilih: (t: Tema) 
           aria-label="Pilih warna khusus"
         />
         <span className="min-w-0 flex-1">
-          <span className="block font-body text-sm text-ink">Pilih warna sendiri</span>
-          <span className="block font-body text-xs leading-snug text-muted">
+          <span className="block font-body text-base text-ink sm:text-sm">Pilih warna sendiri</span>
+          <span className="mt-0.5 block font-body text-sm leading-relaxed text-muted sm:mt-0 sm:text-xs sm:leading-snug">
             Gunakan roda warna. Sistem akan menyesuaikan tingkat gelap dan terang agar teks tetap terbaca.
           </span>
         </span>
-        <span className="angka-rata shrink-0 font-body text-xs uppercase text-muted">
+        <span className="angka-rata w-full text-right font-body text-sm uppercase text-muted sm:w-auto sm:shrink-0 sm:text-xs">
           {warnaKustom || 'Bebas'}
         </span>
       </label>
@@ -307,12 +307,12 @@ export function PilihTataLetak({
 }) {
   return (
     <fieldset>
-      <legend className="font-body text-sm text-muted">Bentuk halaman</legend>
+      <legend className="font-body text-base text-muted sm:text-sm">Bentuk halaman</legend>
       <div className="mt-2 space-y-2">
         {TATA_LETAK.map((t) => (
           <label
             key={t}
-            className={`tekan flex cursor-pointer items-center gap-4 rounded-kartu border p-3 transition-colors ${
+            className={`tekan flex min-h-12 cursor-pointer flex-col items-start gap-3 rounded-kartu border p-4 transition-colors sm:flex-row sm:items-center sm:gap-4 sm:p-3 ${
               nilai === t ? 'border-aksen bg-surface' : 'border-line hover:border-aksen'
             }`}
           >
@@ -326,7 +326,7 @@ export function PilihTataLetak({
             />
             <SketsaTataLetak jenis={t} />
             <span className="min-w-0">
-              <span className="flex items-center gap-2 font-body text-sm text-ink">
+              <span className="flex items-center gap-2 font-body text-base text-ink sm:text-sm">
                 <span
                   aria-hidden="true"
                   className={`h-3.5 w-3.5 shrink-0 rounded-full border-[3px] ${
@@ -335,10 +335,10 @@ export function PilihTataLetak({
                 />
                 {LABEL_TATA_LETAK[t].nama}
               </span>
-              <span className="block font-body text-xs leading-snug text-muted">
+              <span className="mt-0.5 block font-body text-sm leading-relaxed text-muted sm:mt-0 sm:text-xs sm:leading-snug">
                 {LABEL_TATA_LETAK[t].jelas}
               </span>
-              <span className="mt-1 block font-body text-xs text-muted/80">
+              <span className="mt-1 block font-body text-sm text-muted/80 sm:text-xs">
                 {LABEL_TATA_LETAK[t].sketsa}
               </span>
             </span>
@@ -347,7 +347,7 @@ export function PilihTataLetak({
       </div>
       {/* Ditulis terang-terangan: orang tidak akan mencoba pilihan lain kalau
           menduga percobaannya bisa menghapus tulisan yang sudah dibuatnya. */}
-      <p className="mt-2 font-body text-xs leading-relaxed text-muted">
+      <p className="mt-2 font-body text-sm leading-relaxed text-muted sm:text-xs">
         Mengganti bentuk halaman tidak menghapus blok yang sudah Anda isi. Yang berubah
         hanya kerangkanya.
       </p>

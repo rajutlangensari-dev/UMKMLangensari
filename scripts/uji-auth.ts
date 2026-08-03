@@ -19,6 +19,7 @@ import {
   MAKS_GAGAL,
 } from '../lib/auth.ts';
 import { tulisTampilan, bacaTampilan, inisial } from '../lib/tampilan.ts';
+import { kunciNamaMasuk, namaPenggunaDariNamaUsaha } from '../lib/pengenal-masuk.ts';
 import type { Sesi } from '../lib/types.ts';
 
 process.env.SESSION_SECRET =
@@ -139,6 +140,37 @@ async function jalan() {
 
   assert.equal(inisial('rajut'), 'R', 'avatar memakai huruf awal kapital');
   assert.equal(inisial('   '), '?', 'nama kosong tetap menghasilkan sesuatu');
+
+  // --- Nama usaha sebagai alias masuk ---
+  const usaha = [
+    { id: 'u1', nama: 'Dapoer Bu Nia' },
+    { id: 'u2', nama: 'Keripik Sale Pisang 3R' },
+  ];
+  const akun = [
+    { namaPengguna: 'bunia', peran: 'umkm' as const, umkmId: 'u1', status: 'aktif' as const },
+    { namaPengguna: 'sale3r', peran: 'umkm' as const, umkmId: 'u2', status: 'aktif' as const },
+  ];
+  assert.equal(kunciNamaMasuk('  DAPOER   Bu Nia '), 'dapoer bu nia');
+  assert.equal(
+    namaPenggunaDariNamaUsaha('  DAPOER   Bu Nia ', akun, usaha),
+    'bunia',
+    'nama usaha mengarah ke username akun aktifnya'
+  );
+  assert.equal(
+    namaPenggunaDariNamaUsaha('nama yang tidak ada', akun, usaha),
+    null,
+    'nama usaha asing tidak boleh diarahkan ke akun mana pun'
+  );
+  assert.equal(
+    namaPenggunaDariNamaUsaha('Dapoer Bu Nia', [...akun, { ...akun[0], namaPengguna: 'bunia2' }], usaha),
+    null,
+    'lebih dari satu akun aktif tidak boleh dipilih dengan tebakan'
+  );
+  assert.equal(
+    namaPenggunaDariNamaUsaha('Dapoer Bu Nia', akun, [...usaha, { id: 'u3', nama: 'dapoer bu nia' }]),
+    null,
+    'nama usaha ganda wajib memakai username asli'
+  );
 
   console.log('OK — semua pemeriksaan auth lolos.');
 }

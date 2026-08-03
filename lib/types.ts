@@ -12,12 +12,9 @@ export interface Produk {
   foto: string;
   kontakWa: string;
   /**
-   * Nama perajin yang mengerjakan produk ini (Gemilang, Lilih, ...).
-   *
-   * BUKAN penentu kepemilikan. Yang menentukan halaman dan hak edit adalah
-   * `umkmId`. Satu UMKM bisa punya beberapa perajin di dalamnya, dan nama itu
-   * tetap ditampilkan di kartu produk. Jangan menyaring apa pun berdasarkan
-   * field ini.
+   * Nama usaha yang ditampilkan. Untuk produk yang memiliki `umkmId`, lapisan
+   * baca menggantinya dengan nama terbaru dari Profil usaha. Nilai pada baris
+   * produk hanya menjadi cadangan bagi data lawas yang belum terhubung.
    */
   namaUmkm: string;
   /** UMKM pemilik produk. Kosong berarti produk lama yang belum dipindahkan. */

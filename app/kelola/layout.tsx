@@ -85,22 +85,22 @@ export default async function LayoutKelola({ children }: { children: React.React
   return (
     <PenyediaKabar>
       <Header />
-      <div className="mx-auto min-h-[70vh] max-w-6xl px-5 py-8 sm:px-8 sm:py-10">
-        <div className="flex flex-wrap items-start justify-between gap-4">
+      <div className="panel-kelola mx-auto min-h-[70vh] max-w-6xl px-4 pb-[max(2rem,env(safe-area-inset-bottom))] pt-5 sm:px-8 sm:py-10">
+        <div className="flex flex-col items-stretch gap-4 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
           <div className="min-w-0">
             <h1 className="font-display text-2xl font-bold tracking-[-0.02em] text-ink">
               {superAdmin ? 'Kelola portal' : `Kelola ${namaUsaha || 'usaha saya'}`}
             </h1>
-            <p className="mt-1.5 font-body text-sm text-muted">
+            <p className="mt-1.5 font-body text-base text-muted sm:text-sm">
               Masuk sebagai {sesi.namaPengguna}
               {superAdmin ? ' · super admin' : ''}
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className={`grid w-full gap-2 sm:flex sm:w-auto ${slugUsaha ? 'grid-cols-1 min-[390px]:grid-cols-2' : 'grid-cols-1'}`}>
             {slugUsaha && (
               <Link
                 href={`/umkm/${slugUsaha}`}
-                className="tekan flex min-h-11 items-center rounded-full border border-line px-5 font-body text-sm text-muted transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen hover:text-ink"
+                className="tekan flex min-h-12 items-center justify-center rounded-full border border-line px-4 font-body text-base text-muted transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen hover:text-ink sm:min-h-11 sm:px-5 sm:text-sm"
               >
                 Lihat halaman saya
               </Link>
@@ -109,8 +109,8 @@ export default async function LayoutKelola({ children }: { children: React.React
           </div>
         </div>
 
-        <div className="mt-7 grid gap-7 lg:grid-cols-[15rem_1fr] lg:gap-10">
-          <aside className="lg:sticky lg:top-24 lg:self-start">
+        <div className="mt-4 grid gap-5 sm:mt-7 sm:gap-7 lg:grid-cols-[15rem_1fr] lg:gap-10">
+          <aside className="sticky top-16 z-50 -mx-4 border-y border-line bg-paper px-4 py-3 sm:-mx-8 sm:px-8 lg:top-24 lg:mx-0 lg:self-start lg:border-0 lg:bg-transparent lg:p-0">
             <Sidebar butir={butir} />
           </aside>
           <main className="min-w-0">{children}</main>

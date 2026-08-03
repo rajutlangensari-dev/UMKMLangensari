@@ -26,7 +26,7 @@ export default function TombolKembali({
     <button
       type="button"
       onClick={kembali}
-      className={`tekan inline-flex min-h-11 items-center gap-2 rounded-full border border-line px-4 font-body text-sm text-muted transition-[transform,color,border-color,background-color] duration-150 ease-out hover:border-aksen hover:bg-surface hover:text-ink ${className}`}
+      className={`tekan inline-flex min-h-12 items-center gap-2 rounded-full border border-line px-5 font-body text-base text-muted transition-[transform,color,border-color,background-color] duration-150 ease-out hover:border-aksen hover:bg-surface hover:text-ink sm:min-h-11 sm:px-4 sm:text-sm ${className}`}
     >
       <span aria-hidden="true">&larr;</span>
       {label}

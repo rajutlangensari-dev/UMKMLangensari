@@ -51,7 +51,7 @@ export default function FormAkunBaru({
   }
 
   const inputCls =
-    'mt-1.5 w-full min-h-11 rounded-kartu border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink placeholder:text-muted focus:border-aksen focus:outline-none';
+    'mt-1.5 w-full min-h-12 rounded-kartu border border-line bg-paper px-4 py-2.5 font-body text-base text-ink placeholder:text-muted focus:border-aksen focus:outline-none sm:min-h-11 sm:text-sm';
 
   return (
     <form onSubmit={simpan} className="rounded-kartu border border-line bg-surface p-5 sm:p-6">
@@ -59,7 +59,7 @@ export default function FormAkunBaru({
 
       <div className="mt-5 grid gap-4 sm:grid-cols-2">
         <label className="block">
-          <span className="font-body text-sm text-muted">Jenis akun</span>
+          <span className="font-body text-base text-muted sm:text-sm">Jenis akun</span>
           <select
             className={inputCls}
             value={peran}
@@ -72,7 +72,7 @@ export default function FormAkunBaru({
 
         {peran === 'umkm' && (
           <label className="block">
-            <span className="font-body text-sm text-muted">Usaha</span>
+            <span className="font-body text-base text-muted sm:text-sm">Usaha</span>
             <select className={inputCls} value={umkmId} onChange={(e) => setUmkmId(e.target.value)}>
               <option value="">Pilih usaha...</option>
               {daftarUmkm.map((u) => (
@@ -86,14 +86,14 @@ export default function FormAkunBaru({
         )}
 
         <label className="block sm:col-span-2">
-          <span className="font-body text-sm text-muted">Nama pengguna</span>
+          <span className="font-body text-base text-muted sm:text-sm">Nama pengguna</span>
           <input
             className={inputCls}
             value={namaPengguna}
             onChange={(e) => setNamaPengguna(e.target.value.trim().toLowerCase())}
             placeholder={usul || 'huruf kecil, tanpa spasi'}
           />
-          <span className="mt-1 block font-body text-xs text-muted">
+          <span className="mt-1 block font-body text-sm leading-relaxed text-muted sm:text-xs">
             Dipakai untuk masuk. Kata sandi dibuatkan sistem dan ditampilkan sekali setelah
             disimpan.
           </span>
@@ -114,18 +114,18 @@ export default function FormAkunBaru({
         </p>
       )}
 
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
         <button
           type="submit"
           disabled={kirim || (peran === 'umkm' && !umkmId) || !(namaPengguna || usul)}
-          className="tekan flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-50"
+          className="tekan flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-50 sm:min-h-11 sm:w-auto sm:text-sm"
         >
           {kirim ? 'Membuat...' : 'Buat akun'}
         </button>
         <button
           type="button"
           onClick={onBatal}
-          className="tekan flex min-h-11 items-center rounded-full border border-line px-6 font-body text-sm text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink"
+          className="tekan flex min-h-12 w-full items-center justify-center rounded-full border border-line px-6 font-body text-base text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink sm:min-h-11 sm:w-auto sm:text-sm"
         >
           Batal
         </button>

@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "uji": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/uji-auth.ts",
+    "uji:produk": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/uji-produk.ts",
     "uji:blok": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/uji-blok.ts",
     "uji:warna": "node --disable-warning=MODULE_TYPELESS_PACKAGE_JSON scripts/uji-warna.ts",
     "uji:alur": "node scripts/uji-alur.mjs",

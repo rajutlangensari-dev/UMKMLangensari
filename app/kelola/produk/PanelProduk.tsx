@@ -13,6 +13,7 @@ import { Galat, Kosong } from '../Kotak';
 export default function PanelProduk({
   produk,
   daftarUmkm,
+  profilUsaha,
   umkmTerkunci,
   adaSaringan,
   kataKunci,
@@ -22,6 +23,8 @@ export default function PanelProduk({
   produk: Produk[];
   /** Terisi hanya untuk super admin; peran umkm tidak memilih pemilik. */
   daftarUmkm: Umkm[];
+  /** Hanya profil milik sesi, supaya data usaha lain tidak dikirim ke peramban. */
+  profilUsaha?: Umkm;
   umkmTerkunci?: string;
   adaSaringan: boolean;
   kataKunci: string;
@@ -65,11 +68,11 @@ export default function PanelProduk({
   return (
     <section>
       {sedangDiedit === undefined && (
-        <div className="flex justify-end">
+        <div className="flex justify-stretch sm:justify-end">
           <button
             type="button"
             onClick={() => setSedangDiedit(null)}
-            className="tekan flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+            className="tekan flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat sm:min-h-11 sm:w-auto sm:text-sm"
           >
             Tambah produk
           </button>
@@ -81,6 +84,7 @@ export default function PanelProduk({
           <FormProduk
             produkAwal={sedangDiedit}
             daftarUmkm={daftarUmkm}
+            profilUsaha={profilUsaha}
             umkmTerkunci={umkmTerkunci}
             onBatal={() => setSedangDiedit(undefined)}
             onTersimpan={selesai}
@@ -99,20 +103,20 @@ export default function PanelProduk({
           {kosongTotal ? (
             <Kosong
               judul="Belum ada produk"
-              jelas="Mulai dari satu produk berfoto. Cukup foto, nama, dan harga — rincian lainnya bisa menyusul kapan saja."
+              jelas="Mulai dengan menambahkan foto, nama, dan harga produk pertama Anda."
             />
           ) : (
             <div className="rounded-kartu border border-dashed border-line bg-surface px-6 py-12 text-center">
               <p className="font-display text-base font-semibold text-ink">
                 {kataKunci ? `Tidak ada yang cocok dengan "${kataKunci}"` : 'Tidak ada yang cocok'}
               </p>
-              <p className="mt-2 font-body text-sm text-muted">
+              <p className="mt-2 font-body text-base text-muted sm:text-sm">
                 Coba kata lain, atau tampilkan semuanya lagi.
               </p>
               {adaSaringan && (
                 <Link
                   href={jalurBersih}
-                  className="tekan mt-6 inline-flex min-h-11 items-center rounded-full border border-line px-6 font-body text-sm text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink"
+                  className="tekan mt-6 flex min-h-12 w-full items-center justify-center rounded-full border border-line px-6 font-body text-base text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink sm:inline-flex sm:min-h-11 sm:w-auto sm:text-sm"
                 >
                   Hapus semua saringan
                 </Link>
@@ -126,7 +130,7 @@ export default function PanelProduk({
             const foto = normalisasiFotoUrl(p.foto, 160);
             const nonaktif = p.status.toLowerCase() !== 'aktif';
             return (
-              <li key={p.id} className="flex flex-wrap items-center gap-x-4 gap-y-3 p-4">
+              <li key={p.id} className="flex flex-wrap items-start gap-x-4 gap-y-3 p-4 sm:items-center">
                 <div className="h-14 w-14 shrink-0 overflow-hidden rounded-kartu bg-surface">
                   {foto ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -139,9 +143,9 @@ export default function PanelProduk({
                 </div>
 
                 <div className="min-w-0 flex-1 basis-40">
-                  <h3 className="truncate font-body text-sm text-ink">{p.namaProduk}</h3>
-                  <p className="truncate font-body text-xs text-muted">
-                    {p.namaUmkm || 'Tanpa nama pembuat'} &middot; {formatRupiah(p.harga)}
+                  <h3 className="break-words font-body text-base font-semibold text-ink sm:truncate sm:text-sm sm:font-normal">{p.namaProduk}</h3>
+                  <p className="mt-0.5 break-words font-body text-sm leading-relaxed text-muted sm:mt-0 sm:truncate sm:text-xs">
+                    {p.namaUmkm || 'Usaha belum terhubung'} &middot; {formatRupiah(p.harga)}
                     {nonaktif && ' · nonaktif'}
                     {/* Ditandai jelas: produk tanpa umkmId tidak pernah muncul di
                         halaman UMKM mana pun, dan tanpa penanda ini tidak ada
@@ -150,18 +154,18 @@ export default function PanelProduk({
                   </p>
                 </div>
 
-                <div className="flex shrink-0 gap-1">
+                <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:shrink-0 sm:gap-1">
                   <button
                     type="button"
                     onClick={() => setSedangDiedit(p)}
-                    className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-[transform,color] duration-150 ease-out hover:text-ink"
+                    className="tekan flex min-h-12 items-center justify-center rounded-full border border-line font-body text-base text-ink transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen sm:min-h-11 sm:border-0 sm:px-4 sm:text-sm sm:text-muted"
                   >
                     Ubah
                   </button>
                   <button
                     type="button"
                     onClick={() => setAkanDihapus(p)}
-                    className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-[transform,color] duration-150 ease-out hover:text-ink"
+                    className="tekan flex min-h-12 items-center justify-center rounded-full border border-line font-body text-base text-ink transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen sm:min-h-11 sm:border-0 sm:px-4 sm:text-sm sm:text-muted"
                   >
                     Hapus
                   </button>

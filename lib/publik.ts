@@ -37,6 +37,7 @@
 import { unstable_cache } from 'next/cache';
 import { ambilProdukAktif } from './api';
 import { ambilUmkmAktif, ambilUmkmBySlug } from './backend';
+import { produkDenganProfil } from './produk';
 
 /**
  * Tag untuk membuang cache saat data berubah.
@@ -58,16 +59,18 @@ export const TAG_UMKM = 'umkm';
  */
 const UMUR_DETIK = 60;
 
-export const produkPublik = unstable_cache(
-  () => ambilProdukAktif(),
-  ['publik-produk-aktif'],
-  { revalidate: UMUR_DETIK, tags: [TAG_PRODUK] }
-);
-
 export const umkmPublik = unstable_cache(
   () => ambilUmkmAktif(),
   ['publik-umkm-aktif'],
   { revalidate: UMUR_DETIK, tags: [TAG_UMKM] }
+);
+
+export const produkPublik = unstable_cache(
+  async () => produkDenganProfil(await ambilProdukAktif(), await umkmPublik()),
+  ['publik-produk-aktif'],
+  // Produk publik ikut bergantung pada profil pemiliknya. Mengubah nama usaha,
+  // WhatsApp, atau alamat harus langsung membuang hasil gabungan ini juga.
+  { revalidate: UMUR_DETIK, tags: [TAG_PRODUK, TAG_UMKM] }
 );
 
 /**

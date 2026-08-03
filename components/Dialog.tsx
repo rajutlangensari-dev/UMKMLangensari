@@ -63,22 +63,22 @@ export default function Dialog({
       }}
       onClose={onBatal}
       aria-labelledby="judul-dialog"
-      className="kotak m-auto w-[calc(100vw-2.5rem)] max-w-md rounded-kartu border border-line bg-paper p-0 text-ink backdrop:bg-black/45"
+      className="kotak m-auto max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-md overflow-y-auto overscroll-contain rounded-kartu border border-line bg-paper p-0 text-ink backdrop:bg-black/45"
     >
-      <div className="p-6 sm:p-7">
+      <div className="p-5 sm:p-7">
         <h2 id="judul-dialog" className="font-display text-lg font-bold tracking-[-0.02em] text-ink">
           {judul}
         </h2>
-        <div className="mt-2.5 font-body text-sm leading-relaxed text-muted text-pretty">
+        <div className="mt-2.5 font-body text-base leading-relaxed text-muted text-pretty sm:text-sm">
           {keterangan}
         </div>
 
-        <div className="mt-7 flex flex-wrap gap-3">
+        <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
           <button
             type="button"
             onClick={onIya}
             disabled={sibuk}
-            className={`tekan min-h-11 rounded-full px-6 font-body text-sm font-semibold transition-[transform,background-color] duration-150 ease-out disabled:opacity-60 ${
+            className={`tekan min-h-12 w-full rounded-full px-6 font-body text-base font-semibold transition-[transform,background-color] duration-150 ease-out disabled:opacity-60 sm:min-h-11 sm:w-auto sm:text-sm ${
               merusak
                 ? 'bg-ink text-paper hover:bg-ink/85'
                 : 'bg-aksen text-aksen-ink hover:bg-aksen-kuat'
@@ -91,7 +91,7 @@ export default function Dialog({
             type="button"
             onClick={onBatal}
             disabled={sibuk}
-            className="tekan min-h-11 rounded-full border border-line px-6 font-body text-sm text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink disabled:opacity-60"
+            className="tekan min-h-12 w-full rounded-full border border-line px-6 font-body text-base text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink disabled:opacity-60 sm:min-h-11 sm:w-auto sm:text-sm"
           >
             Batal
           </button>

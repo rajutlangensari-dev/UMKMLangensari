@@ -41,6 +41,12 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
   useEffect(() => {
     if (!buka) return;
 
+    // Saat laci terbuka, halaman di belakang tidak ikut bergerak ketika jari
+    // menggulir menu. Nilai sebelumnya dipulihkan supaya tidak mengganggu
+    // dialog atau halaman lain yang juga mengatur gulir badan dokumen.
+    const overflowSebelum = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+
     function tekan(e: KeyboardEvent) {
       if (e.key === 'Escape') {
         setBuka(false);
@@ -67,8 +73,15 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
 
     window.addEventListener('keydown', tekan);
     laci.current?.querySelector<HTMLElement>('a[href]')?.focus();
-    return () => window.removeEventListener('keydown', tekan);
+    return () => {
+      window.removeEventListener('keydown', tekan);
+      document.body.style.overflow = overflowSebelum;
+    };
   }, [buka]);
+
+  const butirAktif =
+    butir.find((b) => (b.href === '/kelola' ? jalur === b.href : jalur.startsWith(b.href))) ??
+    butir[0];
 
   // Judul kelompok memecah daftar tujuh butir jadi dua-tiga kumpulan pendek.
   // Daftar rata tanpa jeda dibaca dari atas ke bawah setiap kali; daftar
@@ -83,7 +96,7 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
         const judulGrup = b.grup && (
           <p
             key={`grup-${b.grup}`}
-            className="mb-1 mt-4 px-4 font-body text-[11px] font-semibold uppercase tracking-[0.12em] text-muted first:mt-0"
+            className="mb-1 mt-5 px-4 font-body text-xs font-semibold uppercase tracking-[0.12em] text-muted first:mt-0 lg:mt-4 lg:text-[11px]"
           >
             {b.grup}
           </p>
@@ -94,7 +107,7 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
           <Link
             href={b.href}
             aria-current={aktif ? 'page' : undefined}
-            className={`tekan flex min-h-11 items-center gap-3 rounded-full px-4 font-body text-sm transition-[transform,color,background-color] duration-150 ease-out ${
+            className={`tekan flex min-h-12 items-center gap-3 rounded-full px-4 font-body text-base transition-[transform,color,background-color] duration-150 ease-out lg:min-h-11 lg:text-sm ${
               aktif ? 'bg-aksen font-semibold text-aksen-ink' : 'text-muted hover:bg-surface hover:text-ink'
             }`}
           >
@@ -121,12 +134,14 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
         onClick={() => setBuka(true)}
         aria-expanded={buka}
         aria-controls="laci-panel"
-        className="tekan flex min-h-11 items-center gap-2 rounded-full border border-line px-4 font-body text-sm text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink lg:hidden"
+        aria-label={`Buka menu pengelolaan. Halaman saat ini: ${butirAktif?.label ?? 'Panel'}`}
+        className="tekan flex min-h-12 w-full items-center gap-3 rounded-full border border-line bg-surface px-4 font-body text-base text-ink transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen lg:hidden"
       >
         <svg viewBox="0 0 16 12" aria-hidden="true" className="h-3 w-4">
           <path d="M0 1h16M0 6h16M0 11h16" stroke="currentColor" strokeWidth="1.6" />
         </svg>
-        Menu
+        <span className="font-semibold">Menu pengelolaan</span>
+        <span className="ml-auto truncate text-sm text-muted">{butirAktif?.label}</span>
       </button>
 
       <div
@@ -140,10 +155,10 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
         id="laci-panel"
         aria-hidden={!buka}
         data-open={buka}
-        className="laci fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] overflow-y-auto border-r border-line bg-paper p-4 lg:hidden"
+        className="laci fixed inset-y-0 left-0 z-50 w-[min(22rem,calc(100vw-1.5rem))] overflow-y-auto overscroll-contain border-r border-line bg-paper px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] lg:hidden"
       >
         <div className="mb-4 flex items-center justify-between px-1">
-          <span className="font-display text-sm font-semibold text-ink">Panel</span>
+          <span className="font-display text-base font-semibold text-ink">Menu pengelolaan</span>
           <button
             type="button"
             onClick={() => {
@@ -151,7 +166,7 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
               pemicu.current?.focus();
             }}
             aria-label="Tutup menu"
-            className="tekan flex h-11 w-11 items-center justify-center rounded-full text-muted hover:text-ink"
+            className="tekan flex h-12 w-12 items-center justify-center rounded-full text-muted hover:text-ink sm:h-11 sm:w-11"
           >
             <svg viewBox="0 0 14 14" aria-hidden="true" className="h-3.5 w-3.5">
               <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.8" />

@@ -172,7 +172,7 @@ export default function PenyuntingHalaman({
             <Judul sub={`Halaman publiknya ada di /umkm/${umkm.slug}`}>Susun halaman</Judul>
           </div>
         </div>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="flex w-full flex-col items-stretch gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
           {kotor && (
             <span className="font-body text-sm text-muted">Ada perubahan belum disimpan</span>
           )}
@@ -180,7 +180,7 @@ export default function PenyuntingHalaman({
             type="button"
             onClick={simpan}
             disabled={menyimpan || !kotor}
-            className="tekan flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-50"
+            className="tekan flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat disabled:opacity-50 sm:min-h-11 sm:w-auto sm:text-sm"
           >
             {menyimpan ? 'Menyimpan...' : 'Simpan halaman'}
           </button>
@@ -194,7 +194,7 @@ export default function PenyuntingHalaman({
           <p className="font-display text-base font-semibold text-ink">
             Halaman ini masih memakai susunan bawaan
           </p>
-          <p className="mx-auto mt-2 max-w-md font-body text-sm leading-relaxed text-muted text-pretty">
+          <p className="mx-auto mt-2 max-w-md font-body text-base leading-relaxed text-muted text-pretty sm:text-sm">
             Halamannya tetap tayang penuh sekarang. Tambahkan blok pertama kalau ingin
             menyusunnya sendiri.
           </p>
@@ -206,7 +206,7 @@ export default function PenyuntingHalaman({
           <li key={b.id} className="rounded-kartu border border-line bg-surface">
             <div className="flex flex-wrap items-center justify-between gap-3 border-b border-line px-4 py-3">
               <div className="min-w-0">
-                <span className="font-body text-sm font-semibold text-ink">
+                <span className="font-body text-base font-semibold text-ink sm:text-sm">
                   {LABEL_BLOK[b.jenis].nama}
                 </span>
                 <span className="angka-rata ml-2 font-body text-xs text-muted">
@@ -215,7 +215,7 @@ export default function PenyuntingHalaman({
                 {!b.aktif && <span className="ml-2 font-body text-xs text-muted">· disembunyikan</span>}
               </div>
 
-              <div className="flex shrink-0 items-center gap-1">
+              <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:shrink-0 sm:items-center sm:gap-1">
                 <TombolIkon
                   label={`Pindahkan ${LABEL_BLOK[b.jenis].nama} ke atas`}
                   // Dimatikan, bukan disembunyikan. Tombol yang hilang-muncul
@@ -236,14 +236,14 @@ export default function PenyuntingHalaman({
                 <button
                   type="button"
                   onClick={() => ganti(b.id, { ...b, aktif: !b.aktif })}
-                  className="tekan flex min-h-11 items-center rounded-full px-3 font-body text-sm text-muted transition-colors hover:text-ink"
+                  className="tekan flex min-h-12 items-center justify-center rounded-full border border-line px-3 font-body text-base text-ink transition-colors hover:text-ink sm:min-h-11 sm:border-0 sm:text-sm sm:text-muted"
                 >
                   {b.aktif ? 'Sembunyikan' : 'Tampilkan'}
                 </button>
                 <button
                   type="button"
                   onClick={() => setAkanDibuang(b)}
-                  className="tekan flex min-h-11 items-center rounded-full px-3 font-body text-sm text-muted transition-colors hover:text-ink"
+                  className="tekan flex min-h-12 items-center justify-center rounded-full border border-line px-3 font-body text-base text-ink transition-colors hover:text-ink sm:min-h-11 sm:border-0 sm:text-sm sm:text-muted"
                 >
                   Buang
                 </button>
@@ -261,11 +261,11 @@ export default function PenyuntingHalaman({
         {pilihJenis ? (
           <div className="rounded-kartu border border-line bg-surface p-4">
             <div className="flex items-center justify-between gap-3">
-              <span className="font-body text-sm font-semibold text-ink">Tambah blok apa?</span>
+              <span className="font-body text-base font-semibold text-ink sm:text-sm">Tambah blok apa?</span>
               <button
                 type="button"
                 onClick={() => setPilihJenis(false)}
-                className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-colors hover:text-ink"
+                className="tekan flex min-h-12 items-center rounded-full border border-line px-4 font-body text-base text-muted transition-colors hover:text-ink sm:min-h-11 sm:border-0 sm:text-sm"
               >
                 Batal
               </button>
@@ -276,10 +276,10 @@ export default function PenyuntingHalaman({
                   key={j}
                   type="button"
                   onClick={() => tambah(j)}
-                  className="tekan rounded-kartu border border-line bg-paper p-3 text-left transition-colors hover:border-aksen"
+                  className="tekan min-h-12 rounded-kartu border border-line bg-paper p-4 text-left transition-colors hover:border-aksen sm:p-3"
                 >
-                  <span className="block font-body text-sm text-ink">{LABEL_BLOK[j].nama}</span>
-                  <span className="mt-0.5 block font-body text-xs leading-snug text-muted">
+                  <span className="block font-body text-base text-ink sm:text-sm">{LABEL_BLOK[j].nama}</span>
+                  <span className="mt-1 block font-body text-sm leading-relaxed text-muted sm:mt-0.5 sm:text-xs sm:leading-snug">
                     {LABEL_BLOK[j].jelas}
                   </span>
                 </button>
@@ -290,7 +290,7 @@ export default function PenyuntingHalaman({
           <button
             type="button"
             onClick={() => setPilihJenis(true)}
-            className="tekan flex min-h-11 w-full items-center justify-center rounded-kartu border border-dashed border-line px-6 font-body text-sm text-muted transition-colors hover:border-aksen hover:text-ink"
+            className="tekan flex min-h-12 w-full items-center justify-center rounded-kartu border border-dashed border-line px-6 font-body text-base text-muted transition-colors hover:border-aksen hover:text-ink sm:min-h-11 sm:text-sm"
           >
             + Tambah blok
           </button>
@@ -352,7 +352,7 @@ function TombolIkon({
       onClick={onClick}
       disabled={mati}
       aria-label={label}
-      className="tekan flex h-11 w-11 items-center justify-center rounded-full text-muted transition-colors hover:text-ink disabled:opacity-30"
+      className="tekan flex h-12 w-full items-center justify-center rounded-full border border-line text-muted transition-colors hover:text-ink disabled:opacity-30 sm:h-11 sm:w-11 sm:border-0"
     >
       <svg viewBox="0 0 20 20" aria-hidden="true" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
         {children}

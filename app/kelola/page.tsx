@@ -106,7 +106,7 @@ function BerandaAdmin({
 
       <section>
         <Judul sub="Ringkasan usaha dan produk yang tampil kepada pengunjung.">Keadaan portal</Judul>
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-4">
           <Kartu
             angka={umkmAktif.length}
             dari={umkm.length}
@@ -144,7 +144,7 @@ function BerandaAdmin({
           Perlu diurus
         </Judul>
         {urusan.length === 0 ? (
-          <p className="mt-4 rounded-kartu border border-line bg-surface px-4 py-5 font-body text-sm text-muted">
+          <p className="mt-4 rounded-kartu border border-line bg-surface px-4 py-5 font-body text-base text-muted sm:text-sm">
             Tidak ada data usaha aktif yang perlu diperiksa.
           </p>
         ) : (
@@ -244,7 +244,7 @@ function BerandaUmkm({
 
       <section>
         <Judul sub={`Halaman Anda ada di /umkm/${saya.slug}`}>{saya.nama}</Judul>
-        <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+        <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4">
           <Kartu
             angka={tayang.length}
             dari={milik.length}

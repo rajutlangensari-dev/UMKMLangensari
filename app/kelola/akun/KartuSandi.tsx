@@ -36,24 +36,24 @@ export default function KartuSandi({
 
   return (
     <div className="rounded-kartu border-2 border-aksen bg-surface p-5 sm:p-6">
-      <p className="font-body text-sm text-muted">
+      <p className="font-body text-base text-muted sm:text-sm">
         Kata sandi untuk <strong className="text-ink">{nama}</strong>
       </p>
 
       <div className="mt-3 flex flex-wrap items-center gap-3">
-        <code className="angka-rata rounded-kartu bg-paper px-4 py-3 font-display text-xl font-semibold tracking-wider text-ink">
+        <code className="angka-rata min-w-0 break-all rounded-kartu bg-paper px-4 py-3 font-display text-xl font-semibold tracking-wider text-ink">
           {sandi}
         </code>
         <button
           type="button"
           onClick={salin}
-          className="tekan flex min-h-11 items-center rounded-full border border-line px-5 font-body text-sm text-ink transition-[transform,border-color] duration-150 ease-out hover:border-aksen"
+          className="tekan flex min-h-12 w-full items-center justify-center rounded-full border border-line px-5 font-body text-base text-ink transition-[transform,border-color] duration-150 ease-out hover:border-aksen sm:min-h-11 sm:w-auto sm:text-sm"
         >
           {disalin ? 'Tersalin' : 'Salin'}
         </button>
       </div>
 
-      <p className="mt-4 font-body text-sm leading-relaxed text-ink text-pretty">
+      <p className="mt-4 font-body text-base leading-relaxed text-ink text-pretty sm:text-sm">
         Catat atau salin sekarang, lalu serahkan ke orangnya. Kata sandi ini tidak
         disimpan di mana pun dan <strong>tidak bisa dilihat lagi</strong> setelah kotak ini
         ditutup. Kalau hilang, satu-satunya jalan adalah menyetel ulang.
@@ -62,7 +62,7 @@ export default function KartuSandi({
       <button
         type="button"
         onClick={onTutup}
-        className="tekan mt-5 flex min-h-11 items-center rounded-full bg-aksen px-6 font-body text-sm font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat"
+        className="tekan mt-5 flex min-h-12 w-full items-center justify-center rounded-full bg-aksen px-6 font-body text-base font-semibold text-aksen-ink transition-[transform,background-color] duration-150 ease-out hover:bg-aksen-kuat sm:min-h-11 sm:w-auto sm:text-sm"
       >
         Sudah dicatat
       </button>

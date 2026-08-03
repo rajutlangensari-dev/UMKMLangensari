@@ -54,7 +54,7 @@ export default function BarisUmkm({
   const foto = normalisasiFotoUrl(umkm.foto, 96);
 
   return (
-    <li className="flex flex-wrap items-center gap-x-4 gap-y-3 p-4">
+    <li className="flex flex-wrap items-start gap-x-4 gap-y-3 p-4 sm:items-center">
       <span className="h-11 w-11 shrink-0 overflow-hidden rounded-full bg-surface">
         {foto ? (
           // eslint-disable-next-line @next/next/no-img-element
@@ -68,38 +68,38 @@ export default function BarisUmkm({
 
       <div className="min-w-0 flex-1 basis-44">
         <Link href={`/kelola/umkm/${umkm.id}`} className="warna-interaktif group block">
-          <span className="block truncate font-body text-sm text-ink">{umkm.nama}</span>
+          <span className="block break-words font-body text-base font-semibold text-ink sm:truncate sm:text-sm sm:font-normal">{umkm.nama}</span>
         </Link>
-        <p className="truncate font-body text-xs text-muted">
+        <p className="mt-0.5 break-words font-body text-sm leading-relaxed text-muted sm:mt-0 sm:truncate sm:text-xs">
           /umkm/{umkm.slug} &middot; {jumlahProduk} produk &middot; {jumlahAkun} akun &middot; {tataLetak},{' '}
           {tema}
           {umkm.status === 'nonaktif' && ' · nonaktif'}
           {umkm.halaman.length === 0 && ' · halaman bawaan'}
         </p>
         {galat && (
-          <p role="alert" className="mt-1 font-body text-xs text-ink">
+          <p role="alert" className="mt-1 font-body text-sm text-ink sm:text-xs">
             {galat}
           </p>
         )}
       </div>
 
-      <div className="flex shrink-0 flex-wrap gap-1">
+      <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:shrink-0 sm:flex-wrap sm:gap-1">
         <Link
           href={`/kelola/umkm/${umkm.id}`}
-          className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-[transform,color] duration-150 ease-out hover:text-ink"
+          className="tekan flex min-h-12 items-center justify-center rounded-full border border-line font-body text-base text-ink transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen sm:min-h-11 sm:border-0 sm:px-4 sm:text-sm sm:text-muted"
         >
           Kelola
         </Link>
         <Link
           href={`/umkm/${umkm.slug}`}
-          className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-[transform,color] duration-150 ease-out hover:text-ink"
+          className="tekan flex min-h-12 items-center justify-center rounded-full border border-line font-body text-base text-ink transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen sm:min-h-11 sm:border-0 sm:px-4 sm:text-sm sm:text-muted"
         >
           Lihat
         </Link>
         <button
           type="button"
           onClick={() => setTanya(true)}
-          className="tekan flex min-h-11 items-center rounded-full px-4 font-body text-sm text-muted transition-[transform,color] duration-150 ease-out hover:text-ink"
+          className="tekan col-span-2 flex min-h-12 items-center justify-center rounded-full border border-line font-body text-base text-ink transition-[transform,color,border-color] duration-150 ease-out hover:border-aksen sm:col-span-1 sm:min-h-11 sm:border-0 sm:px-4 sm:text-sm sm:text-muted"
         >
           {jadiNonaktif ? 'Nonaktifkan' : 'Aktifkan'}
         </button>

@@ -5,6 +5,7 @@ import { Galat, Judul } from '../Kotak';
 import Cari from '../Cari';
 import { cocok } from '../cocok';
 import PanelProduk from './PanelProduk';
+import { produkDenganProfil } from '@/lib/produk';
 
 export const metadata = { title: 'Produk' };
 
@@ -27,7 +28,10 @@ export default async function HalamanProduk({ searchParams }: { searchParams: Pa
   // dikirim ke browser. Kalau dikerjakan di klien, data UMKM lain tetap sampai
   // ke perangkatnya dan tinggal dibuka lewat alat pengembang. Saringan di bawah
   // ini bekerja di atas hasilnya — ia alat menemukan, bukan pengaman.
-  const milik = superAdmin ? produk : produk.filter((p) => p.umkmId === sesi.umkmId);
+  const produkTerkini = produkDenganProfil(produk, umkm);
+  const milik = superAdmin
+    ? produkTerkini
+    : produkTerkini.filter((p) => p.umkmId === sesi.umkmId);
 
   const q = searchParams.q ?? '';
   const namaUmkm = Object.fromEntries(umkm.map((u) => [u.id, u.nama]));
@@ -105,6 +109,7 @@ export default async function HalamanProduk({ searchParams }: { searchParams: Pa
       <PanelProduk
         produk={tampil}
         daftarUmkm={superAdmin ? umkm : []}
+        profilUsaha={superAdmin ? undefined : umkm.find((u) => u.id === sesi.umkmId)}
         umkmTerkunci={sesi.umkmId}
         adaSaringan={adaSaringan}
         kataKunci={q}
@@ -125,14 +130,14 @@ function Saring({
   if (butir.length <= 2) return null;
   return (
     <div className="flex flex-wrap items-center gap-2">
-      <span className="font-body text-xs uppercase tracking-label text-muted">{label}</span>
+      <span className="w-full font-body text-sm font-semibold text-muted sm:w-auto sm:text-xs sm:font-normal sm:uppercase sm:tracking-label">{label}</span>
       {butir.map((b) => (
         <Link
           key={b.href + b.teks}
           href={b.href}
           scroll={false}
           aria-current={b.aktif ? 'true' : undefined}
-          className={`tekan flex min-h-9 items-center rounded-full px-4 font-body text-sm transition-[transform,color,background-color,border-color] duration-150 ease-out ${
+          className={`tekan flex min-h-12 items-center rounded-full px-4 font-body text-base transition-[transform,color,background-color,border-color] duration-150 ease-out sm:min-h-9 sm:text-sm ${
             b.aktif
               ? 'bg-aksen font-semibold text-aksen-ink'
               : 'border border-line text-muted hover:border-aksen hover:text-ink'

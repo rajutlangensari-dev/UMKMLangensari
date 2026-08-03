@@ -3,6 +3,7 @@ import { revalidateTag } from 'next/cache';
 import { butuhSesi } from '@/lib/otorisasi';
 import { buatProdukServer } from '@/lib/backend';
 import { TAG_PRODUK } from '@/lib/publik';
+import { dataProdukDariPermintaan } from '@/lib/produk';
 
 export async function POST(request: Request) {
   const hasil = butuhSesi();
@@ -28,7 +29,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const data = await buatProdukServer({ ...body, umkmId });
+    const data = await buatProdukServer({ ...dataProdukDariPermintaan(body), umkmId });
     // Cache halaman publik dibuang SETELAH backend menjawab berhasil, bukan
     // sebelum. Membuangnya lebih dulu berarti kegagalan penyimpanan tetap
     // memaksa pengunjung berikutnya menanggung 4 detik ke Apps Script demi data

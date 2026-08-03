@@ -146,6 +146,7 @@ body {
    antarmuka terasa mendengar. Nilai di bawah 0.95 mulai terlihat
    seperti tombol rusak. */
 .tekan {
+  touch-action: manipulation;
   transition: transform 0.12s var(--keluar);
 }
 .tekan:active {
