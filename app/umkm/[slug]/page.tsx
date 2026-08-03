@@ -50,14 +50,13 @@ export async function generateMetadata({
   const umkm = await ambilUmkm(params.slug);
   if (!umkm || umkm.status === 'nonaktif') return { title: 'UMKM tidak ditemukan' };
 
-  // Judul dan foto pratinjau ikut blok sampul kalau pemiliknya sudah mengaturnya
-  // — yang dibagikan ke WhatsApp jadi kalimat yang dia pilih sendiri, bukan
-  // potongan bio yang kebetulan ada di baris pertama.
+  // Nama dan keterangan SELALU dari Profil usaha — sama seperti Hero.tsx yang
+  // menguncinya. Hanya foto sampul yang masih dibaca dari blok hero, karena ia
+  // aset terpisah yang sengaja bisa diunggah di penyunting halaman.
   const blok = halamanAtauBawaan(umkm.halaman, sumber(umkm), umkm.tataLetak);
   const hero = blok.find((b) => b.jenis === 'hero');
-  const judul = (hero?.jenis === 'hero' && hero.judul) || umkm.nama;
+  const judul = umkm.nama;
   const deskripsi =
-    (hero?.jenis === 'hero' && hero.subJudul) ||
     umkm.bio?.trim() ||
     `Produk buatan ${umkm.nama} di Desa Langensari.`;
   const foto = normalisasiFotoUrl((hero?.jenis === 'hero' && hero.foto) || umkm.foto, 1200);

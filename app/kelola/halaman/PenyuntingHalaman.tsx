@@ -251,7 +251,7 @@ export default function PenyuntingHalaman({
             </div>
 
             <div className="p-4">
-              <FormBlok blok={b} onUbah={(baru) => ganti(b.id, baru)} />
+              <FormBlok blok={b} onUbah={(baru) => ganti(b.id, baru)} umkm={umkm} />
             </div>
           </li>
         ))}

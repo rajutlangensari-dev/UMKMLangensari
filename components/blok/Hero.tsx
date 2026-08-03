@@ -7,12 +7,11 @@ export default function Hero({ blok, konteks }: { blok: BlokHero; konteks: Konte
   const { tataLetak, umkm } = konteks;
   const fotoProfil = normalisasiFotoUrl(umkm.foto, 560);
   const sampul = normalisasiFotoUrl(blok.foto, 1600);
-  const judul = blok.judul || umkm.nama;
-  // Kalau pemilik belum menulis kalimat pembuka khusus di penyunting halaman,
-  // baris pertama keterangan dari Profil usaha yang ditampilkan. Dengan begitu
-  // mengubah bio di profil langsung muncul di sampul tanpa harus menyunting
-  // halaman juga.
-  const subJudul = blok.subJudul || umkm.bio?.trim().split(/\n/)[0] || '';
+  // Nama dan keterangan SELALU dari Profil usaha, tidak pernah dari blok.
+  // Penyunting halaman mengunci kedua field ini dan mengarahkan pemilik ke
+  // halaman Profil kalau mau mengubahnya. Satu sumber, nol desinkronisasi.
+  const judul = umkm.nama;
+  const subJudul = umkm.bio?.trim().split(/\n/)[0] || '';
   const sasaran = blok.sasaranTombol || '#produk';
 
   if (tataLetak === 'portofolio') {

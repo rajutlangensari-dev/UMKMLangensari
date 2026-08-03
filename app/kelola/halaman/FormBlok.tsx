@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { lupakanFoto, uploadFoto } from '@/lib/api';
 import { MAKS_FAKTA, MAKS_GALERI, MAKS_KEUNGGULAN, SOROT_KATALOG, type Blok } from '@/lib/blok';
+import type { Umkm } from '@/lib/types';
 
 /**
  * Formulir isi satu blok. Tiap jenis hanya menampilkan field miliknya sendiri.
@@ -15,16 +16,23 @@ import { MAKS_FAKTA, MAKS_GALERI, MAKS_KEUNGGULAN, SOROT_KATALOG, type Blok } fr
 export default function FormBlok({
   blok,
   onUbah,
+  umkm,
 }: {
   blok: Blok;
   onUbah: (b: Blok) => void;
+  /** Data profil usaha. Dipakai menampilkan field terkunci yang ikut profil. */
+  umkm?: Umkm;
 }) {
   switch (blok.jenis) {
     case 'hero':
       return (
         <div className="grid gap-4 sm:grid-cols-2">
-          <Teks lebar label="Judul" nilai={blok.judul} onUbah={(v) => onUbah({ ...blok, judul: v })} bantuan="Kosongkan agar selalu mengikuti nama usaha dari Profil." />
-          <Teks lebar label="Kalimat pembuka" nilai={blok.subJudul} onUbah={(v) => onUbah({ ...blok, subJudul: v })} bantuan="Kosongkan agar mengikuti keterangan usaha dari Profil." />
+          <Terkunci lebar label="Judul" nilai={umkm?.nama || '—'} />
+          <Terkunci lebar label="Kalimat pembuka" nilai={umkm?.bio?.trim().split(/\n/)[0] || '—'} />
+          <p className="font-body text-xs leading-relaxed text-muted sm:col-span-2">
+            Nama dan keterangan diambil dari Profil usaha, supaya seluruh halaman
+            selalu menampilkan data yang sama. Ubah di menu <strong>Profil</strong>.
+          </p>
           <FotoSatu label="Foto sampul" nilai={blok.foto} onUbah={(v) => onUbah({ ...blok, foto: v })} bantuan="Kosongkan untuk memakai foto profil usaha." />
           <Teks label="Teks tombol" nilai={blok.teksTombol} onUbah={(v) => onUbah({ ...blok, teksTombol: v })} bantuan="Kosongkan untuk menyembunyikan tombolnya." />
         </div>
@@ -172,6 +180,22 @@ function Bungkus({
 
 const inputCls =
   'mt-1.5 w-full min-h-11 rounded-kartu border border-line bg-paper px-4 py-2.5 font-body text-sm text-ink placeholder:text-muted focus:border-aksen focus:outline-none';
+
+/** Field terkunci — hanya menampilkan, tidak bisa diketik. */
+function Terkunci({ label, nilai, lebar }: { label: string; nilai: string; lebar?: boolean }) {
+  return (
+    <div className={`block ${lebar ? 'sm:col-span-2' : ''}`}>
+      <span className="font-body text-sm text-muted">{label}</span>
+      <div className="mt-1.5 flex min-h-11 w-full items-center gap-2 rounded-kartu border border-dashed border-line bg-surface px-4 py-2.5">
+        <svg viewBox="0 0 16 16" aria-hidden="true" className="h-3.5 w-3.5 shrink-0 text-muted/60" fill="none">
+          <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" strokeWidth="1.3" />
+          <path d="M5.5 7V5a2.5 2.5 0 0 1 5 0v2" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" />
+        </svg>
+        <span className="font-body text-sm text-muted line-clamp-1">{nilai}</span>
+      </div>
+    </div>
+  );
+}
 
 function Teks({
   label,
