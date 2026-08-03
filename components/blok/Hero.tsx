@@ -8,6 +8,11 @@ export default function Hero({ blok, konteks }: { blok: BlokHero; konteks: Konte
   const fotoProfil = normalisasiFotoUrl(umkm.foto, 560);
   const sampul = normalisasiFotoUrl(blok.foto, 1600);
   const judul = blok.judul || umkm.nama;
+  // Kalau pemilik belum menulis kalimat pembuka khusus di penyunting halaman,
+  // baris pertama keterangan dari Profil usaha yang ditampilkan. Dengan begitu
+  // mengubah bio di profil langsung muncul di sampul tanpa harus menyunting
+  // halaman juga.
+  const subJudul = blok.subJudul || umkm.bio?.trim().split(/\n/)[0] || '';
   const sasaran = blok.sasaranTombol || '#produk';
 
   if (tataLetak === 'portofolio') {
@@ -38,9 +43,9 @@ export default function Hero({ blok, konteks }: { blok: BlokHero; konteks: Konte
             </div>
           </div>
           <div className="mt-5 flex flex-wrap items-center gap-5 pl-0 sm:gap-7">
-            {blok.subJudul && (
+            {subJudul && (
               <p className="naik max-w-2xl font-body leading-relaxed text-white/85 text-pretty sm:text-lg" style={{ animationDelay: '60ms' }}>
-                {blok.subJudul}
+                {subJudul}
               </p>
             )}
             {blok.teksTombol && (
@@ -70,9 +75,9 @@ export default function Hero({ blok, konteks }: { blok: BlokHero; konteks: Konte
             <h1 className="naik mt-4 max-w-3xl font-display text-3xl font-bold leading-[1.08] tracking-[-0.035em] text-ink text-balance sm:text-5xl" style={{ animationDelay: '40ms' }}>
               {judul}
             </h1>
-            {blok.subJudul && (
+            {subJudul && (
               <p className="naik mt-5 max-w-2xl font-body leading-relaxed text-muted text-pretty sm:text-lg" style={{ animationDelay: '80ms' }}>
-                {blok.subJudul}
+                {subJudul}
               </p>
             )}
             {blok.teksTombol && (
@@ -121,9 +126,9 @@ export default function Hero({ blok, konteks }: { blok: BlokHero; konteks: Konte
               <h1 className="mt-2 font-display text-3xl font-bold leading-[1.08] tracking-[-0.035em] text-ink text-balance sm:text-5xl">
                 {judul}
               </h1>
-              {blok.subJudul && (
+              {subJudul && (
                 <p className="mt-4 max-w-2xl font-body leading-relaxed text-muted text-pretty sm:text-lg">
-                  {blok.subJudul}
+                  {subJudul}
                 </p>
               )}
             </div>

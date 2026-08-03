@@ -588,8 +588,17 @@ export function halamanBawaan(sumber: SumberBawaan, tataLetak: TataLetak): Blok[
       id: idBlok(),
       aktif: true,
       jenis: 'hero',
-      judul: sumber.nama,
-      subJudul: sumber.bio.trim().split(/\n/)[0]?.slice(0, 140) || `Produk buatan warga Desa Langensari.`,
+      // Judul dan subJudul sengaja DIKOSONGKAN. Hero.tsx sudah punya fallback
+      // `blok.judul || umkm.nama` dan `blok.subJudul || umkm.bio`, jadi
+      // mengosongkannya berarti sampul SELALU menampilkan nama dan keterangan
+      // terbaru dari Profil usaha. Pemilik tetap bisa mengisinya dengan teks
+      // promosi khusus yang berbeda dari profil.
+      //
+      // Versi sebelumnya menyalin `sumber.nama` ke sini saat UMKM dibuat.
+      // Salinan itu membatu dan tidak pernah ikut berubah saat profil diubah,
+      // yang menyebabkan sampul dan kartu Usaha Warga menampilkan data berbeda.
+      judul: '',
+      subJudul: '',
       // Foto sampul sengaja DIKOSONGKAN, tidak diisi foto profil.
       //
       // Keduanya berperan beda: foto profil itu potret kecil dan bulat yang
@@ -616,7 +625,7 @@ export function halamanBawaan(sumber: SumberBawaan, tataLetak: TataLetak): Blok[
           }
         : null,
     katalog: () => ({ id: idBlok(), aktif: true, jenis: 'katalog', judul: 'Produk', batas: 0, kategoriAwal: '' }),
-    kontak: () => ({ id: idBlok(), aktif: true, jenis: 'kontak', judul: `Hubungi ${sumber.nama}`, jamBuka: '' }),
+    kontak: () => ({ id: idBlok(), aktif: true, jenis: 'kontak', judul: '', jamBuka: '' }),
     // Galeri dan fakta sengaja tidak dibuat otomatis: keduanya butuh bahan yang
     // belum ada saat pendaftaran, dan blok kosong lebih buruk daripada tidak ada.
     galeri: () => null,

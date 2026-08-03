@@ -23,8 +23,8 @@ export default function FormBlok({
     case 'hero':
       return (
         <div className="grid gap-4 sm:grid-cols-2">
-          <Teks lebar label="Judul" nilai={blok.judul} onUbah={(v) => onUbah({ ...blok, judul: v })} bantuan="Kosongkan untuk memakai nama usaha." />
-          <Teks lebar label="Kalimat pembuka" nilai={blok.subJudul} onUbah={(v) => onUbah({ ...blok, subJudul: v })} />
+          <Teks lebar label="Judul" nilai={blok.judul} onUbah={(v) => onUbah({ ...blok, judul: v })} bantuan="Kosongkan agar selalu mengikuti nama usaha dari Profil." />
+          <Teks lebar label="Kalimat pembuka" nilai={blok.subJudul} onUbah={(v) => onUbah({ ...blok, subJudul: v })} bantuan="Kosongkan agar mengikuti keterangan usaha dari Profil." />
           <FotoSatu label="Foto sampul" nilai={blok.foto} onUbah={(v) => onUbah({ ...blok, foto: v })} bantuan="Kosongkan untuk memakai foto profil usaha." />
           <Teks label="Teks tombol" nilai={blok.teksTombol} onUbah={(v) => onUbah({ ...blok, teksTombol: v })} bantuan="Kosongkan untuk menyembunyikan tombolnya." />
         </div>
