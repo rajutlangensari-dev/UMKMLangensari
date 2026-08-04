@@ -143,7 +143,12 @@ export const buatAkun = (data: {
   umkmId?: string;
 }) => panggil<Akun>('portal.buatAkun', data);
 
-export const perbaruiAkun = (data: { id: string; hashSandi?: string; status?: string }) =>
+export const perbaruiAkun = (data: {
+  id: string;
+  hashSandi?: string;
+  status?: string;
+  namaPengguna?: string;
+}) =>
   panggil<Akun>('portal.perbaruiAkun', data);
 
 // ---------- Foto ----------

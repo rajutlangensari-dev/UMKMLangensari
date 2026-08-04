@@ -32,6 +32,7 @@ import {
   type Blok,
 } from '../lib/blok.ts';
 import { nomorWa, tautanWhatsapp } from '../lib/api.ts';
+import { pengenalBerikutnya } from '../lib/pengenal-umkm.ts';
 
 let lulus = 0;
 function uji(nama: string, jalan: () => void) {
@@ -407,6 +408,34 @@ uji('paragraf dipecah dari baris kosong, bukan dari tag', () => {
   assert.deepEqual(keParagraf('satu\n\ndua'), ['satu', 'dua']);
   assert.deepEqual(keParagraf('satu\ndua'), ['satu\ndua']);
   assert.deepEqual(keParagraf('\n\n  \n\n'), []);
+});
+
+console.log('\nPengenal usaha baru');
+
+uji('melanjutkan nomor terbesar, bukan menghitung jumlah baris', () => {
+  // Bedanya baru terasa saat ada yang bolong. Menghitung jumlah baris pada
+  // daftar 24 usaha yang nomor terbesarnya 25 akan mengusulkan `-25` — slug
+  // milik orang lain, dan pendaftarannya ditolak backend.
+  assert.equal(
+    pengenalBerikutnya(['umkm-langensari-1', 'umkm-langensari-25']),
+    'umkm-langensari-26'
+  );
+  assert.equal(pengenalBerikutnya([]), 'umkm-langensari-1');
+});
+
+uji('nomor dua digit tidak kalah oleh satu digit', () => {
+  // Kalau dibandingkan sebagai teks, '9' > '25' dan usulannya jadi -10.
+  assert.equal(
+    pengenalBerikutnya(['umkm-langensari-9', 'umkm-langensari-25']),
+    'umkm-langensari-26'
+  );
+});
+
+uji('slug di luar pola diabaikan, bukan bikin salah hitung', () => {
+  assert.equal(
+    pengenalBerikutnya(['bubur-bu-cicah', 'umkm-langensari-3', 'umkm-langensari-abc']),
+    'umkm-langensari-4'
+  );
 });
 
 console.log('\nNomor WhatsApp');

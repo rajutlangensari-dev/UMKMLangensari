@@ -8,7 +8,8 @@ import {
   buatAkun,
   perbaruiAkun,
 } from '@/lib/backend';
-import { hashSandi, sandiAcak, SANDI_MIN, verifikasiSandi } from '@/lib/auth';
+import { hashSandi, opsiCookie, sandiAcak, SANDI_MIN, verifikasiSandi } from '@/lib/auth';
+import { opsiCookieTampilan } from '@/lib/tampilan';
 import { TAG_AKUN } from '@/lib/publik';
 
 /**
@@ -135,6 +136,51 @@ export async function PATCH(request: Request) {
 
     await perbaruiAkun({ id: akun.id, hashSandi: await hashSandi(sandiBaru) });
     return NextResponse.json({ ok: true });
+  }
+
+  // --- Ganti nama pengguna sendiri ---
+  //
+  // Untuk diri sendiri saja, bukan akun orang lain. Nama pengguna bawaan
+  // (`umkm-langensari-17`) sulit diketik ibu-ibu pemilik warung; membiarkan
+  // mereka menggantinya sendiri lebih murah daripada Korwil jadi tempat
+  // bertanya tiap kali ada yang lupa.
+  if (aksi === 'gantiNamaPengguna') {
+    const baru = String(body.namaPengguna || '').trim().toLowerCase();
+    if (!/^[a-z0-9._-]{3,}$/.test(baru)) {
+      return NextResponse.json(
+        { error: 'Minimal 3 karakter, hanya huruf kecil, angka, titik, dan strip.' },
+        { status: 400 }
+      );
+    }
+    if (baru === sesi.namaPengguna.toLowerCase()) {
+      return NextResponse.json({ error: 'Nama penggunanya sama dengan yang sekarang.' }, { status: 400 });
+    }
+
+    // Kata sandi diminta walaupun sesinya sah, sama seperti ganti sandi.
+    // Layar panel yang ditinggal terbuka tidak boleh cukup untuk mengganti
+    // pengenal masuk pemiliknya.
+    const akun = await ambilAkunUntukMasuk(sesi.namaPengguna);
+    if (!akun) return NextResponse.json({ error: 'Akun tidak ditemukan.' }, { status: 404 });
+    if (!(await verifikasiSandi(String(body.sandi || ''), akun.hashSandi))) {
+      return NextResponse.json({ error: 'Kata sandi salah.' }, { status: 401 });
+    }
+
+    try {
+      await perbaruiAkun({ id: akun.id, namaPengguna: baru });
+    } catch (err) {
+      const pesan = err instanceof Error ? err.message : 'Tidak dapat disimpan.';
+      return NextResponse.json({ error: pesan }, { status: 400 });
+    }
+    revalidateTag(TAG_AKUN);
+
+    // Sesi lama memuat nama pengguna yang sudah tidak ada, dan jalur ganti
+    // sandi mencari akun BERDASARKAN NAMA itu — dibiarkan hidup, orangnya akan
+    // ditolak "Akun tidak ditemukan" di panelnya sendiri. Jadi cookie-nya
+    // dibuang di sini dan dia masuk lagi dengan nama barunya.
+    const res = NextResponse.json({ ok: true, namaPengguna: baru });
+    res.cookies.set({ ...opsiCookie, value: '', maxAge: 0 });
+    res.cookies.set({ ...opsiCookieTampilan, value: '', maxAge: 0 });
+    return res;
   }
 
   // --- Sisanya khusus super admin ---

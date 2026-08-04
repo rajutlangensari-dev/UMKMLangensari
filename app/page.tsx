@@ -94,8 +94,8 @@ export default async function Beranda() {
   ]);
 
   const produk: Produk[] = hasilProduk.status === 'fulfilled' ? hasilProduk.value : [];
-  const sorotan =
-    hasilUmkm.status === 'fulfilled' ? susunSorotan(hasilUmkm.value, produk) : [];
+  const umkm = hasilUmkm.status === 'fulfilled' ? hasilUmkm.value : [];
+  const sorotan = susunSorotan(umkm, produk);
 
   // Cerita.tsx dibuang dari beranda. Isinya kisah satu usaha rajut — benar saat
   // situs ini memang toko rajut, salah begitu naik jadi portal desa: menaruh
@@ -109,7 +109,7 @@ export default async function Beranda() {
         <Hero sorotan={sorotan} />
         {/* Angkanya dihitung dari data yang sudah ada di atas — tidak ada
             permintaan tambahan ke Apps Script untuk baris ini. */}
-        <Fakta produk={produk} sorotan={sorotan} />
+        <Fakta produk={produk} jumlahUsaha={umkm.length} />
         <RailKategori produk={produk} />
         <PratinjauProduk produk={produk} />
       </main>

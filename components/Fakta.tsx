@@ -17,7 +17,7 @@
 // Angkanya datang dari data yang SUDAH diambil beranda, jadi bagian ini tidak
 // menambah satu pun permintaan ke Apps Script.
 
-import type { Produk, SorotanUsaha } from '@/lib/types';
+import type { Produk } from '@/lib/types';
 
 const KALIMAT = [
   {
@@ -32,24 +32,30 @@ const KALIMAT = [
 
 export default function Fakta({
   produk = [],
-  sorotan = [],
+  jumlahUsaha,
 }: {
   produk?: Produk[];
-  sorotan?: SorotanUsaha[];
+  /** Seluruh UMKM aktif, bukan jumlah slide sorotan yang dibatasi lima. */
+  jumlahUsaha?: number;
 }) {
-  // Kalau backend gagal, angkanya tidak dirender — bukan dirender sebagai nol.
+  // Kalau salah satu pembacaan backend gagal, hanya angka yang gagal itu yang
+  // tidak dirender — bukan dirender sebagai nol. Jumlah usaha tidak boleh
+  // memakai `sorotan.length`: slider memang sengaja dibatasi lima, sedangkan
+  // kartu ini menerangkan seluruh isi portal.
   // "0 usaha" di halaman muka lebih buruk daripada tidak ada angka sama sekali:
   // yang pertama menyatakan portal ini kosong, yang kedua cuma diam.
-  const punyaAngka = produk.length > 0 && sorotan.length > 0;
-
   const butir = [
-    ...(punyaAngka
+    ...(typeof jumlahUsaha === 'number' && jumlahUsaha > 0
       ? [
           {
-            judul: `${sorotan.length} usaha warga`,
-          teks: 'Setiap usaha dalam portal ini dikelola oleh warga Desa Langensari.',
+            judul: `${jumlahUsaha} usaha warga`,
+            teks: 'Setiap usaha dalam portal ini dikelola oleh warga Desa Langensari.',
             angka: true,
           },
+        ]
+      : []),
+    ...(produk.length > 0
+      ? [
           {
             judul: `${produk.length} produk`,
             teks: 'Setiap halaman produk mencantumkan harga dan nama pembuat.',

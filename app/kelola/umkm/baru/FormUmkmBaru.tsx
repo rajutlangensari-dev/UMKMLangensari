@@ -19,7 +19,7 @@ function keSlug(teks: string) {
     .replace(/^-+|-+$/g, '');
 }
 
-export default function FormUmkmBaru() {
+export default function FormUmkmBaru({ pengenalBerikutnya }: { pengenalBerikutnya: string }) {
   const [nama, setNama] = useState('');
   const [slugManual, setSlugManual] = useState('');
   const [bio, setBio] = useState('');
@@ -32,11 +32,21 @@ export default function FormUmkmBaru() {
   const [kirim, setKirim] = useState(false);
   const [hasil, setHasil] = useState<Hasil | null>(null);
 
-  // Slug dan nama pengguna diusulkan dari nama usaha, tapi tetap bisa disunting.
+  // Slug dan nama pengguna diusulkan otomatis, tapi tetap bisa disunting.
   // Mengetik dua kali hal yang hampir selalu sama adalah cara paling mudah
   // membuat salah ketik.
-  const slug = slugManual || keSlug(nama);
-  const namaPengguna = namaPenggunaManual || keSlug(nama).split('-')[0];
+  //
+  // Usulannya MELANJUTKAN NOMOR yang sudah ada (`umkm-langensari-26` kalau yang
+  // terakhir 25), bukan diturunkan dari nama usahanya. Dua puluh lima usaha
+  // pertama sudah memakai pola itu, dan pola yang cuma berlaku untuk pendaftaran
+  // ke-26 dan seterusnya berarti dua sistem penamaan hidup berdampingan di satu
+  // daftar — yang membacanya harus tahu kapan batasnya.
+  //
+  // Nomornya dihitung dari yang TERBESAR, bukan dari jumlah baris: satu usaha
+  // yang dihapus atau slug yang pernah dilewati akan membuat hitungan jumlah
+  // menabrak slug yang sudah dipakai.
+  const slug = slugManual || pengenalBerikutnya;
+  const namaPengguna = namaPenggunaManual || pengenalBerikutnya;
 
   async function simpan(e: React.FormEvent) {
     e.preventDefault();
