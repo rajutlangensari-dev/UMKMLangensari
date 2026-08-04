@@ -99,12 +99,12 @@ export default function FormGantiSandi() {
         </label>
 
         {galat && (
-          <p role="alert" className="font-body text-sm text-ink">
+          <p role="alert" className="font-body text-base sm:text-sm text-ink">
             {galat}
           </p>
         )}
         {pesan && (
-          <p role="status" className="font-body text-sm text-ink">
+          <p role="status" className="font-body text-base sm:text-sm text-ink">
             {pesan}
           </p>
         )}
@@ -125,7 +125,7 @@ export default function FormGantiSandi() {
           lambatnya tidak sepadan dengan risikonya. Kalau suatu saat perlu:
           simpan nomor versi sandi di baris akun, ikutkan di token, dan periksa
           di jalur tulis saja. */}
-      <p className="mt-8 border-t border-line pt-5 font-body text-sm leading-relaxed text-muted">
+      <p className="mt-8 border-t border-line pt-5 font-body text-base sm:text-sm leading-relaxed text-muted">
         Perangkat lain yang sedang masuk dengan akun ini tidak ikut keluar
         otomatis. Sesinya berakhir sendiri paling lama tujuh hari. Kalau kata
         sandi Anda dipakai orang lain, minta super admin menonaktifkan akun ini

@@ -33,7 +33,7 @@ export default async function HalamanUmkmBaru() {
         <h1 className="mt-6 font-display text-2xl font-bold tracking-[-0.02em] text-ink">
           Daftarkan usaha
         </h1>
-        <p className="mt-1.5 font-body text-sm text-muted">
+        <p className="mt-1.5 font-body text-base sm:text-sm text-muted">
           Membuat halaman usaha sekaligus akun pemiliknya.
         </p>
         <FormUmkmBaru pengenalBerikutnya={usulan} />

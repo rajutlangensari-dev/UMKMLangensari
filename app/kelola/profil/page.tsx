@@ -39,7 +39,7 @@ export default async function HalamanProfilUsaha() {
 
   return (
     <div className="space-y-6">
-      <Judul sub="Yang diisi di sini dipakai halaman publik Anda dan mengisi otomatis produk baru.">
+      <Judul sub="Data pada halaman ini digunakan untuk halaman publik usaha Anda dan mengisi setiap produk baru secara otomatis.">
         Profil usaha
       </Judul>
       <FormProfilUmkm umkm={saya} />

@@ -110,7 +110,7 @@ export default async function LayoutKelola({ children }: { children: React.React
         </div>
 
         <div className="mt-4 grid gap-5 sm:mt-7 sm:gap-7 lg:grid-cols-[15rem_1fr] lg:gap-10">
-          <aside className="sticky top-16 z-50 -mx-4 border-y border-line bg-paper px-4 py-3 sm:-mx-8 sm:px-8 lg:top-24 lg:mx-0 lg:self-start lg:border-0 lg:bg-transparent lg:p-0">
+          <aside className="sticky top-16 z-30 -mx-4 border-y border-line bg-paper px-4 py-3 sm:-mx-8 sm:px-8 lg:top-24 lg:mx-0 lg:self-start lg:border-0 lg:bg-transparent lg:p-0">
             <Sidebar butir={butir} />
           </aside>
           <main className="min-w-0">{children}</main>

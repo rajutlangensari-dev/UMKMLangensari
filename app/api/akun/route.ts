@@ -153,7 +153,7 @@ export async function PATCH(request: Request) {
       );
     }
     if (baru === sesi.namaPengguna.toLowerCase()) {
-      return NextResponse.json({ error: 'Nama penggunanya sama dengan yang sekarang.' }, { status: 400 });
+      return NextResponse.json({ error: 'Nama pengguna baru sama dengan yang digunakan saat ini.' }, { status: 400 });
     }
 
     // Kata sandi diminta walaupun sesinya sah, sama seperti ganti sandi.

@@ -49,8 +49,8 @@ export default function FormNamaPengguna({ sekarang }: { sekarang: string }) {
         Nama pengguna
       </h2>
       <p className="mt-1.5 font-body text-base leading-relaxed text-muted sm:text-sm">
-        Sekarang <strong className="font-semibold text-ink">{sekarang}</strong>. Ganti kalau
-        sulit diingat. Nama usaha juga tetap bisa dipakai untuk masuk.
+        Nama pengguna saat ini <strong className="font-semibold text-ink">{sekarang}</strong>.
+        Ubah apabila sulit diingat. Nama usaha tetap dapat digunakan untuk masuk.
       </p>
 
       <form onSubmit={simpan} className="mt-5 space-y-5">
@@ -63,11 +63,11 @@ export default function FormNamaPengguna({ sekarang }: { sekarang: string }) {
             value={baru}
             onChange={(e) => setBaru(e.target.value.toLowerCase())}
             required
-            placeholder="misalnya: dapursae"
+            placeholder="contoh: dapursae"
             className={`mt-1.5 ${inputCls}`}
           />
           <span className="mt-1.5 block font-body text-sm text-muted sm:text-xs">
-            Minimal 3 karakter. Huruf kecil, angka, titik, dan strip saja.
+            Minimal 3 karakter, hanya huruf kecil, angka, titik, dan strip.
           </span>
         </label>
 
@@ -90,7 +90,7 @@ export default function FormNamaPengguna({ sekarang }: { sekarang: string }) {
         )}
 
         <p className="font-body text-sm leading-relaxed text-muted sm:text-xs">
-          Setelah diganti, Anda akan diminta masuk lagi memakai nama yang baru.
+          Setelah perubahan disimpan, Anda perlu masuk kembali menggunakan nama pengguna baru.
         </p>
 
         <button

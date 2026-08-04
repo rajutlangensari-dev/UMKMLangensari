@@ -91,7 +91,7 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
       </div>
 
       <section>
-        <Judul sub="Dipakai halaman publiknya, dan mengisi otomatis produk baru milik usaha ini.">
+        <Judul sub="Digunakan untuk halaman publik usaha ini dan mengisi setiap produk barunya secara otomatis.">
           Profil
         </Judul>
         <div className="mt-5">
@@ -103,7 +103,7 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
         <Judul sub={`${miliknya.length} produk milik usaha ini`}>Produk</Judul>
         <div className="mt-4">
           {miliknya.length === 0 ? (
-            <p className="rounded-kartu border border-dashed border-line bg-surface px-4 py-8 text-center font-body text-sm text-muted">
+            <p className="rounded-kartu border border-dashed border-line bg-surface px-4 py-8 text-center font-body text-base sm:text-sm text-muted">
               Belum ada produk.{' '}
               <Link href="/kelola/produk" className="warna-interaktif text-ink underline underline-offset-4">
                 Tambahkan yang pertama
@@ -115,8 +115,8 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
               <ul className="divide-y divide-line overflow-hidden rounded-kartu border border-line">
                 {miliknya.slice(0, 6).map((p) => (
                   <li key={p.id} className="flex items-center justify-between gap-4 px-4 py-3">
-                    <span className="min-w-0 truncate font-body text-sm text-ink">{p.namaProduk}</span>
-                    <span className="angka-rata shrink-0 font-body text-xs text-muted">
+                    <span className="min-w-0 truncate font-body text-base sm:text-sm text-ink">{p.namaProduk}</span>
+                    <span className="angka-rata shrink-0 font-body text-sm sm:text-xs text-muted">
                       {formatRupiah(p.harga)}
                       {p.status.toLowerCase() !== 'aktif' && ' · nonaktif'}
                     </span>
@@ -125,7 +125,7 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
               </ul>
               <Link
                 href={`/kelola/produk?umkm=${usaha.id}`}
-                className="mt-3 inline-block font-body text-sm text-muted transition-colors hover:text-ink"
+                className="mt-3 inline-block font-body text-base sm:text-sm text-muted transition-colors hover:text-ink"
               >
                 Kelola {miliknya.length} produk usaha ini &rarr;
               </Link>
@@ -135,10 +135,10 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
       </section>
 
       <section>
-        <Judul sub="Siapa saja yang bisa masuk dan mengubah usaha ini.">Akun</Judul>
+        <Judul sub="Daftar akun yang dapat masuk dan mengubah data usaha ini.">Akun</Judul>
         <div className="mt-4">
           {akunnya.length === 0 ? (
-            <p className="rounded-kartu border border-dashed border-line bg-surface px-4 py-8 text-center font-body text-sm text-muted">
+            <p className="rounded-kartu border border-dashed border-line bg-surface px-4 py-8 text-center font-body text-base sm:text-sm text-muted">
               Belum ada akun. Tanpa akun, pemiliknya tidak bisa mengurus tokonya sendiri.{' '}
               <Link href="/kelola/akun" className="warna-interaktif text-ink underline underline-offset-4">
                 Buatkan akun
@@ -149,8 +149,8 @@ export default async function DetailUmkm({ params }: { params: { id: string } })
             <ul className="divide-y divide-line overflow-hidden rounded-kartu border border-line">
               {akunnya.map((a) => (
                 <li key={a.id} className="flex items-center justify-between gap-4 px-4 py-3">
-                  <span className="min-w-0 truncate font-body text-sm text-ink">{a.namaPengguna}</span>
-                  <span className="shrink-0 font-body text-xs text-muted">
+                  <span className="min-w-0 truncate font-body text-base sm:text-sm text-ink">{a.namaPengguna}</span>
+                  <span className="shrink-0 font-body text-sm sm:text-xs text-muted">
                     {a.status === 'nonaktif'
                       ? 'nonaktif'
                       : a.terakhirMasuk

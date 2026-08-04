@@ -78,30 +78,30 @@ export default function FormUmkmBaru({ pengenalBerikutnya }: { pengenalBerikutny
         <h2 className="font-display text-lg font-bold text-ink">
           {hasil.umkm.nama} sudah terdaftar
         </h2>
-        <p className="mt-2 font-body text-sm leading-relaxed text-muted">
-          Halamannya sudah hidup di{' '}
+        <p className="mt-2 font-body text-base sm:text-sm leading-relaxed text-muted">
+          Halaman usaha sudah dapat diakses di{' '}
           <Link href={`/umkm/${hasil.umkm.slug}`} className="warna-interaktif underline underline-offset-4">
             /umkm/{hasil.umkm.slug}
           </Link>
-          . Serahkan dua baris di bawah ke pemiliknya.
+          . Serahkan kedua data di bawah ini kepada pemilik usaha.
         </p>
 
         <dl className="mt-6 space-y-3 rounded-kartu border border-line bg-paper p-5">
           <div>
-            <dt className="font-body text-xs text-muted">Nama pengguna</dt>
+            <dt className="font-body text-sm sm:text-xs text-muted">Nama pengguna</dt>
             <dd className="font-display text-lg font-semibold text-ink">{hasil.namaPengguna}</dd>
           </div>
           <div>
-            <dt className="font-body text-xs text-muted">Kata sandi awal</dt>
+            <dt className="font-body text-sm sm:text-xs text-muted">Kata sandi awal</dt>
             <dd className="font-display text-lg font-semibold tracking-wider text-ink">
               {hasil.sandi}
             </dd>
           </div>
         </dl>
 
-        <p className="mt-4 font-body text-sm leading-relaxed text-ink">
-          Catat sekarang. Kata sandi ini tidak disimpan dan tidak bisa dilihat lagi
-          setelah halaman ini ditutup.
+        <p className="mt-4 font-body text-base sm:text-sm leading-relaxed text-ink">
+          Catat kata sandi ini sekarang. Portal tidak menyimpannya dan tidak dapat
+          menampilkannya kembali setelah halaman ditutup.
         </p>
 
         <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -125,7 +125,7 @@ export default function FormUmkmBaru({ pengenalBerikutnya }: { pengenalBerikutny
             }}
             className="tekan min-h-12 w-full rounded-full border border-line px-6 py-2.5 font-body text-base text-muted transition-[transform,border-color,color] duration-150 ease-out hover:border-aksen hover:text-ink sm:min-h-11 sm:w-auto sm:text-sm"
           >
-            Daftarkan satu lagi
+            Daftarkan usaha lain
           </button>
         </div>
       </div>
@@ -150,11 +150,12 @@ export default function FormUmkmBaru({ pengenalBerikutnya }: { pengenalBerikutny
           className={`${inputCls} mt-1.5`}
           value={slug}
           onChange={(e) => setSlugManual(keSlug(e.target.value))}
-          placeholder="otomatis dari nama usaha"
+          placeholder="otomatis melanjutkan nomor terakhir"
         />
         <span className="mt-1 block font-body text-sm leading-relaxed text-muted sm:text-xs">
-          Halamannya jadi /umkm/{slug || '...'}. Tidak bisa diubah setelah dibuat,
-          karena tautan yang sudah tersebar akan mati.
+          Halaman usaha berada di /umkm/{slug || '...'}. Alamat ini tidak dapat diubah
+          setelah usaha terdaftar karena tautan yang telah dibagikan akan berhenti
+          berfungsi.
         </span>
       </label>
 
@@ -209,7 +210,7 @@ export default function FormUmkmBaru({ pengenalBerikutnya }: { pengenalBerikutny
       <PilihTema nilai={tema} onPilih={setTema} />
 
       {galat && (
-        <p role="alert" className="font-body text-sm text-ink">
+        <p role="alert" className="font-body text-base sm:text-sm text-ink">
           {galat}
         </p>
       )}

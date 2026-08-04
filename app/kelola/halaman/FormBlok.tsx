@@ -29,7 +29,7 @@ export default function FormBlok({
         <div className="grid gap-4 sm:grid-cols-2">
           <Terkunci lebar label="Judul" nilai={umkm?.nama || '—'} />
           <Terkunci lebar label="Kalimat pembuka" nilai={umkm?.bio?.trim().split(/\n/)[0] || '—'} />
-          <p className="font-body text-xs leading-relaxed text-muted sm:col-span-2">
+          <p className="font-body text-sm sm:text-xs leading-relaxed text-muted sm:col-span-2">
             Nama dan keterangan diambil dari Profil usaha, supaya seluruh halaman
             selalu menampilkan data yang sama. Ubah di menu <strong>Profil</strong>.
           </p>
@@ -147,7 +147,7 @@ export default function FormBlok({
             onUbah={(v) => onUbah({ ...blok, jamBuka: v })}
             bantuan="Boleh dikosongkan. Contoh: Senin–Sabtu, 08.00–17.00"
           />
-          <p className="font-body text-xs leading-relaxed text-muted sm:col-span-2">
+          <p className="font-body text-sm sm:text-xs leading-relaxed text-muted sm:col-span-2">
             Nomor WhatsApp dan alamat diambil dari profil usaha, jadi cukup diubah di
             satu tempat dan seluruh halaman ikut.
           </p>

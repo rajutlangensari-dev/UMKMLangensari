@@ -101,7 +101,7 @@ export default function FormAkunBaru({
       </div>
 
       {peran === 'admin' && (
-        <p className="mt-4 rounded-kartu border border-line bg-paper p-4 font-body text-sm leading-relaxed text-ink text-pretty">
+        <p className="mt-4 rounded-kartu border border-line bg-paper p-4 font-body text-base sm:text-sm leading-relaxed text-ink text-pretty">
           Super admin bisa melihat dan mengubah seluruh usaha, produk, dan akun di portal
           ini — termasuk menonaktifkan akun lain. Berikan hanya ke orang yang memang
           mengelola portal.
@@ -109,7 +109,7 @@ export default function FormAkunBaru({
       )}
 
       {galat && (
-        <p role="alert" className="mt-4 font-body text-sm text-ink">
+        <p role="alert" className="mt-4 font-body text-base sm:text-sm text-ink">
           {galat}
         </p>
       )}

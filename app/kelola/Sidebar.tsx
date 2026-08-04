@@ -96,7 +96,7 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
         const judulGrup = b.grup && (
           <p
             key={`grup-${b.grup}`}
-            className="mb-1 mt-5 px-4 font-body text-xs font-semibold uppercase tracking-[0.12em] text-muted first:mt-0 lg:mt-4 lg:text-[11px]"
+            className="mb-1 mt-5 px-4 font-body text-sm sm:text-xs font-semibold uppercase tracking-[0.12em] text-muted first:mt-0 lg:mt-4 lg:text-[11px]"
           >
             {b.grup}
           </p>
@@ -141,21 +141,21 @@ export default function Sidebar({ butir }: { butir: Butir[] }) {
           <path d="M0 1h16M0 6h16M0 11h16" stroke="currentColor" strokeWidth="1.6" />
         </svg>
         <span className="font-semibold">Menu pengelolaan</span>
-        <span className="ml-auto truncate text-sm text-muted">{butirAktif?.label}</span>
+        <span className="ml-auto truncate text-base sm:text-sm text-muted">{butirAktif?.label}</span>
       </button>
 
       <div
         data-open={buka}
         onClick={() => setBuka(false)}
         aria-hidden="true"
-        className="tirai fixed inset-0 z-40 bg-black/40 lg:hidden"
+        className="tirai fixed inset-0 z-50 bg-black/40 lg:hidden"
       />
       <div
         ref={laci}
         id="laci-panel"
         aria-hidden={!buka}
         data-open={buka}
-        className="laci fixed inset-y-0 left-0 z-50 w-[min(22rem,calc(100vw-1.5rem))] overflow-y-auto overscroll-contain border-r border-line bg-paper px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] lg:hidden"
+        className="laci fixed inset-y-0 left-0 z-[60] w-[min(22rem,calc(100vw-1.5rem))] overflow-y-auto overscroll-contain border-r border-line bg-paper px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-[max(1rem,env(safe-area-inset-top))] lg:hidden"
       >
         <div className="mb-4 flex items-center justify-between px-1">
           <span className="font-display text-base font-semibold text-ink">Menu pengelolaan</span>

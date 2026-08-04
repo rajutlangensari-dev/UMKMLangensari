@@ -60,7 +60,7 @@ export default function BarisUmkm({
           // eslint-disable-next-line @next/next/no-img-element
           <img src={foto} alt="" className="h-full w-full object-cover" />
         ) : (
-          <span className="flex h-full w-full items-center justify-center font-display text-sm font-bold text-muted/60">
+          <span className="flex h-full w-full items-center justify-center font-display text-base sm:text-sm font-bold text-muted/60">
             {umkm.nama.charAt(0)}
           </span>
         )}

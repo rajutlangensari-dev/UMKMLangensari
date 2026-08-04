@@ -58,7 +58,7 @@ export function Kartu({
       <span className="angka-rata block font-display text-3xl font-bold tracking-[-0.02em] text-ink">
         {angka}
         {bagian !== null && (
-          <span className="ml-1.5 font-body text-xs font-semibold text-muted">dari {dari}</span>
+          <span className="ml-1.5 font-body text-sm sm:text-xs font-semibold text-muted">dari {dari}</span>
         )}
       </span>
       <span className="kartu-hover-judul mt-1.5 block font-display text-base font-semibold leading-snug text-ink sm:text-sm">

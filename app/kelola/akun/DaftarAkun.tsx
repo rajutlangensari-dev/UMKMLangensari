@@ -122,7 +122,7 @@ export default function DaftarAkun({
       )}
 
       {galat && (
-        <p role="alert" className="rounded-kartu border border-line bg-surface p-4 font-body text-sm text-ink">
+        <p role="alert" className="rounded-kartu border border-line bg-surface p-4 font-body text-base sm:text-sm text-ink">
           {galat}
         </p>
       )}

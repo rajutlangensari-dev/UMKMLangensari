@@ -214,7 +214,7 @@ export default function FormProfilUmkm({ umkm }: { umkm: Umkm }) {
       <PilihTataLetak nilai={form.tataLetak} onPilih={(t) => ubah('tataLetak', t)} />
 
       {galat && (
-        <p role="alert" className="font-body text-sm text-ink">
+        <p role="alert" className="font-body text-base sm:text-sm text-ink">
           {galat}
         </p>
       )}

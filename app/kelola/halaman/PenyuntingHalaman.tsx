@@ -174,7 +174,7 @@ export default function PenyuntingHalaman({
         </div>
         <div className="flex w-full flex-col items-stretch gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-3">
           {kotor && (
-            <span className="font-body text-sm text-muted">Ada perubahan belum disimpan</span>
+            <span className="font-body text-base sm:text-sm text-muted">Ada perubahan belum disimpan</span>
           )}
           <button
             type="button"
@@ -209,10 +209,10 @@ export default function PenyuntingHalaman({
                 <span className="font-body text-base font-semibold text-ink sm:text-sm">
                   {LABEL_BLOK[b.jenis].nama}
                 </span>
-                <span className="angka-rata ml-2 font-body text-xs text-muted">
+                <span className="angka-rata ml-2 font-body text-sm sm:text-xs text-muted">
                   {i + 1} dari {blok.length}
                 </span>
-                {!b.aktif && <span className="ml-2 font-body text-xs text-muted">· disembunyikan</span>}
+                {!b.aktif && <span className="ml-2 font-body text-sm sm:text-xs text-muted">· disembunyikan</span>}
               </div>
 
               <div className="grid w-full grid-cols-2 gap-2 sm:flex sm:w-auto sm:shrink-0 sm:items-center sm:gap-1">
@@ -307,7 +307,7 @@ export default function PenyuntingHalaman({
           className="mt-4 overflow-hidden rounded-kartu border border-line bg-paper"
         >
           {tampil.length === 0 ? (
-            <p className="px-5 py-16 text-center font-body text-sm text-muted">
+            <p className="px-5 py-16 text-center font-body text-base sm:text-sm text-muted">
               Semua blok disembunyikan. Halaman publiknya akan memakai susunan bawaan.
             </p>
           ) : (
@@ -323,7 +323,7 @@ export default function PenyuntingHalaman({
       <Dialog
         buka={akanDibuang !== null}
         judul={`Buang blok ${akanDibuang ? LABEL_BLOK[akanDibuang.jenis].nama : ''}?`}
-        keterangan="Isi blok ini ikut hilang dan tidak bisa dikembalikan. Kalau cuma ingin menyembunyikannya sementara, pakai tombol Sembunyikan."
+        keterangan="Isi blok ini ikut hilang dan tidak bisa dikembalikan. Gunakan tombol Sembunyikan apabila blok ini hanya perlu disembunyikan sementara."
         teksIya="Buang blok"
         onIya={() => {
           if (akanDibuang) ubah(blok.filter((b) => b.id !== akanDibuang.id));
