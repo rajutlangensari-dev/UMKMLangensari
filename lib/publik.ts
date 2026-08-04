@@ -36,7 +36,7 @@
 
 import { unstable_cache } from 'next/cache';
 import { ambilProdukAktif } from './api';
-import { ambilUmkmAktif, ambilUmkmBySlug } from './backend';
+import { ambilAkunSemua, ambilUmkmAktif, ambilUmkmBySlug, ambilUmkmSemua } from './backend';
 import { produkDenganProfil } from './produk';
 
 /**
@@ -48,6 +48,7 @@ import { produkDenganProfil } from './produk';
  */
 export const TAG_PRODUK = 'produk';
 export const TAG_UMKM = 'umkm';
+export const TAG_AKUN = 'akun';
 
 /**
  * 60 detik, seragam untuk semua halaman.
@@ -82,4 +83,47 @@ export const umkmPublikBySlug = unstable_cache(
   (slug: string) => ambilUmkmBySlug(slug),
   ['publik-umkm-slug'],
   { revalidate: UMUR_DETIK, tags: [TAG_UMKM] }
+);
+
+/**
+ * Bahan untuk masuk memakai NAMA USAHA, bukan nama pengguna.
+ *
+ * Ada dua jalur masuk dan keduanya disengaja: ibu-ibu pemilik usaha lebih hafal
+ * nama warungnya sendiri daripada nama pengguna yang dibuatkan orang lain.
+ * Jalur nama pengguna tetap yang pertama dicoba dan tidak menyentuh berkas ini
+ * sama sekali.
+ *
+ * INI SATU-SATUNYA HAL DI BERKAS INI YANG BUKAN HALAMAN PUBLIK, dan alasannya
+ * kuat. Versi sebelumnya memanggil `ambilAkunSemua()` dan `ambilUmkmSemua()`
+ * langsung, tanpa cache, tiap kali nama pengguna tidak ketemu. Artinya SATU
+ * salah ketik = tiga perjalanan ke Apps Script. `/api/masuk` terbuka untuk
+ * siapa saja dan penguncian 15 menit itu per akun — pengenal yang tidak
+ * terdaftar tidak punya penghitung sama sekali, jadi jalur itu tidak ada
+ * remnya. Kuotanya pun satu ember dengan situs publik: yang tumbang bukan cuma
+ * loginnya.
+ *
+ * Yang disimpan sengaja cuma field yang dipakai mencocokkan. Hash sandi memang
+ * tidak pernah ikut (`portal.daftarAkun` sudah membuangnya di sisi Apps
+ * Script), tapi menyimpan seluruh baris akun ke cache yang bertahan lintas
+ * permintaan tetap menyimpan lebih banyak daripada yang dibutuhkan.
+ *
+ * Basi 60 detik tidak berbahaya di sini: akun yang baru dibuat tetap bisa masuk
+ * SEKETIKA lewat nama penggunanya, dan jalur tulisnya membuang cache ini lewat
+ * `TAG_AKUN` dan `TAG_UMKM`.
+ */
+export const bahanMasukNamaUsaha = unstable_cache(
+  async () => {
+    const [akun, umkm] = await Promise.all([ambilAkunSemua(), ambilUmkmSemua()]);
+    return {
+      akun: akun.map((a) => ({
+        namaPengguna: a.namaPengguna,
+        peran: a.peran,
+        umkmId: a.umkmId,
+        status: a.status,
+      })),
+      umkm: umkm.map((u) => ({ id: u.id, nama: u.nama })),
+    };
+  },
+  ['masuk-nama-usaha'],
+  { revalidate: UMUR_DETIK, tags: [TAG_UMKM, TAG_AKUN] }
 );

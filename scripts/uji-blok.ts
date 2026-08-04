@@ -209,14 +209,23 @@ uji('halaman bawaan tidak membuat blok tanpa bahan', () => {
   assert.ok(tanpaBio.some((b) => b.jenis === 'katalog'));
 });
 
-uji('halaman bawaan memakai data pendaftaran', () => {
+uji('hero bawaan TIDAK menyalin nama dan bio dari pendaftaran', () => {
+  // Dulu uji ini menuntut kebalikannya: `hero.judul === 'Rajut Langensari'`.
+  // Lalu implementasinya sengaja diubah supaya sampul selalu membaca Profil
+  // usaha, dan uji ini ditinggalkan merah berhari-hari — cukup lama sampai
+  // "satu yang memang gagal" jadi hal yang biasa dilihat orang.
+  //
+  // Yang dijaga sekarang justru salinannya TIDAK ada. Nama yang disalin akan
+  // membatu: pemilik mengganti nama usahanya di Profil, sampulnya tetap nama
+  // lama, dan kartu Usaha Warga menampilkan nama yang berbeda dari halamannya
+  // sendiri.
   const [hero] = halamanBawaan(
     { nama: 'Rajut Langensari', bio: 'Menganyam sejak 2012.', foto: 'foto.jpg', alamat: '', kontakWa: '' },
     'toko'
   );
   if (hero.jenis !== 'hero') throw new Error('blok pertama harus hero');
-  assert.equal(hero.judul, 'Rajut Langensari');
-  assert.equal(hero.subJudul, 'Menganyam sejak 2012.');
+  assert.equal(hero.judul, '', 'judul hero tidak boleh menyalin nama usaha');
+  assert.equal(hero.subJudul, '', 'subJudul hero tidak boleh menyalin bio');
 });
 
 uji('foto profil TIDAK disalin jadi foto sampul', () => {

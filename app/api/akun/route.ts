@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidateTag } from 'next/cache';
 import { butuhAdmin, butuhSesi } from '@/lib/otorisasi';
 import {
   ambilAkunSemua,
@@ -8,6 +9,7 @@ import {
   perbaruiAkun,
 } from '@/lib/backend';
 import { hashSandi, sandiAcak, SANDI_MIN, verifikasiSandi } from '@/lib/auth';
+import { TAG_AKUN } from '@/lib/publik';
 
 /**
  * Buat akun baru untuk usaha yang sudah terdaftar, atau super admin tambahan.
@@ -72,6 +74,12 @@ export async function POST(request: Request) {
     const pesan = err instanceof Error ? err.message : 'Akun tidak dapat dibuat.';
     return NextResponse.json({ error: pesan }, { status: 400 });
   }
+
+  // Daftar pencocok "masuk pakai nama usaha" dibuang di sini, bukan dibiarkan
+  // basi 60 detik. Tanpa ini, pemilik yang baru dibuatkan akun lalu langsung
+  // disuruh mencoba masuk di depan Korwil akan ditolak kalau ia mengetik nama
+  // usahanya — dan yang menyaksikan akan menyimpulkan akunnya gagal dibuat.
+  revalidateTag(TAG_AKUN);
 
   // Kata sandi dikembalikan SEKALI di sini dan tidak disimpan di mana pun.
   return NextResponse.json({ ok: true, namaPengguna, sandi });
@@ -159,6 +167,9 @@ export async function PATCH(request: Request) {
 
     try {
       await perbaruiAkun({ id, status });
+      // Status ikut menentukan pencocokan nama usaha: hanya akun aktif yang
+      // boleh dipakai masuk lewat nama usahanya.
+      revalidateTag(TAG_AKUN);
       return NextResponse.json({ ok: true });
     } catch (err) {
       const pesan = err instanceof Error ? err.message : 'Tidak dapat disimpan.';

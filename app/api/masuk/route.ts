@@ -1,10 +1,6 @@
 import { NextResponse } from 'next/server';
-import {
-  ambilAkunSemua,
-  ambilAkunUntukMasuk,
-  ambilUmkmSemua,
-  catatMasuk,
-} from '@/lib/backend';
+import { ambilAkunUntukMasuk, catatMasuk } from '@/lib/backend';
+import { bahanMasukNamaUsaha } from '@/lib/publik';
 import {
   buatToken,
   hashSandi,
@@ -36,19 +32,22 @@ export async function POST(request: Request) {
   }
 
   try {
-    // Nama pengguna tetap jalur utama dan tercepat. Jika tidak ditemukan, masukan
-    // dicoba sebagai nama usaha. Pemetaan ini memakai aksi backend yang sudah
-    // ada; Apps Script dan susunan sheet tidak perlu diubah.
+    // Nama pengguna tetap jalur utama dan tercepat. Jika tidak ditemukan,
+    // masukan dicoba sebagai nama usaha. Apps Script dan susunan sheet tidak
+    // perlu diubah untuk keduanya.
+    //
+    // Daftar pencocoknya diambil dari cache 60 detik, BUKAN dari backend
+    // langsung. Tanpa itu, satu salah ketik memicu tiga panggilan ke Apps
+    // Script pada jalur yang terbuka untuk siapa saja dan tidak punya
+    // penguncian percobaan — penguncian 15 menit dihitung per akun, dan
+    // pengenal yang tidak terdaftar tidak punya akun untuk dihitung.
     let akun = await ambilAkunUntukMasuk(namaPengguna);
     if (!akun) {
-      const [semuaAkun, semuaUmkm] = await Promise.all([
-        ambilAkunSemua(),
-        ambilUmkmSemua(),
-      ]);
+      const bahan = await bahanMasukNamaUsaha();
       const namaPenggunaAlias = namaPenggunaDariNamaUsaha(
         namaPengguna,
-        semuaAkun,
-        semuaUmkm
+        bahan.akun,
+        bahan.umkm
       );
       if (namaPenggunaAlias) akun = await ambilAkunUntukMasuk(namaPenggunaAlias);
     }

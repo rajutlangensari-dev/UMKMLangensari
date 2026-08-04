@@ -588,15 +588,19 @@ export function halamanBawaan(sumber: SumberBawaan, tataLetak: TataLetak): Blok[
       id: idBlok(),
       aktif: true,
       jenis: 'hero',
-      // Judul dan subJudul sengaja DIKOSONGKAN. Hero.tsx sudah punya fallback
-      // `blok.judul || umkm.nama` dan `blok.subJudul || umkm.bio`, jadi
-      // mengosongkannya berarti sampul SELALU menampilkan nama dan keterangan
-      // terbaru dari Profil usaha. Pemilik tetap bisa mengisinya dengan teks
-      // promosi khusus yang berbeda dari profil.
+      // Judul dan subJudul DIKOSONGKAN, dan memang tidak akan pernah terpakai:
+      // `components/blok/Hero.tsx` selalu membaca `umkm.nama` dan `umkm.bio`,
+      // tidak pernah menyentuh dua field ini. Penyunting halaman pun tidak
+      // menampilkan isiannya. Satu sumber, nol desinkronisasi.
       //
       // Versi sebelumnya menyalin `sumber.nama` ke sini saat UMKM dibuat.
       // Salinan itu membatu dan tidak pernah ikut berubah saat profil diubah,
       // yang menyebabkan sampul dan kartu Usaha Warga menampilkan data berbeda.
+      //
+      // Keduanya tetap ada di tipe `BlokHero` karena data lama di sheet masih
+      // memuatnya. Jangan menghidupkannya kembali tanpa mengubah Hero.tsx juga —
+      // komentar yang menjanjikan fallback yang tidak ada di kodenya persis yang
+      // membuat uji halaman bawaan basi tanpa ada yang menyadarinya.
       judul: '',
       subJudul: '',
       // Foto sampul sengaja DIKOSONGKAN, tidak diisi foto profil.
